@@ -1,0 +1,7 @@
+# Benutzer und Gruppen
+
+# Benutzer zu einer Gruppe hinzufügen (verschiedene möglichkeiten)
+
+sudo usermod -aG gruppe user
+
+sudo gpasswd -a user gruppe

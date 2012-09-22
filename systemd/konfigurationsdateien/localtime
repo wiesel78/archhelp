@@ -1,0 +1,3 @@
+# folgenden Befehl ausfuehren 
+
+ln -s /usr/share/zoneinfo/Europe/Berlin /etc/localtime

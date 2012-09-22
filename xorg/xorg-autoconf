@@ -1,0 +1,10 @@
+# fuer alle Tastaturen ein Deutsches Leyout einstellen.
+
+echo 'Section "InputClass"'                  > /etc/X11/xorg.conf.d/10-tastatur.conf
+echo '    Identifier "keyboard"'            >> /etc/X11/xorg.conf.d/10-tastatur.conf
+echo '    MatchIsKeyboard "yes"'            >> /etc/X11/xorg.conf.d/10-tastatur.conf
+echo '    Option "XkbLayout" "de"'          >> /etc/X11/xorg.conf.d/10-tastatur.conf
+echo '    Option "XkbVariant" "nodeadkeys"' >> /etc/X11/xorg.conf.d/10-tastatur.conf
+echo 'EndSection'                           >> /etc/X11/xorg.conf.d/10-tastatur.conf
+
+echo 'keyboard auf de-nodeadkeys fuer xorg gestellt'

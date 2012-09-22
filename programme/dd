@@ -1,0 +1,15 @@
+# Iso von einem Datenträger erstellen
+
+dd if=/dev/sda of=/home/user/abbild.iso
+
+
+# Datenträger mit nullen überschreiben
+
+dd if=/dev/zero of=/dev/sda bs=4K
+
+
+# um eine status ausgabe zu bekommen ein 2 terminal öffnen und eingeben :
+
+kill -USR1 `pidof dd`
+
+# ` = shift + akzenttaste

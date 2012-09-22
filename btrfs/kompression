@@ -1,0 +1,5 @@
+# um die kompression zu aktivieren bei den mount optionen compress mitgeben :
+
+mount -o compress /dev/disk/by-label/btrfs-raid /mnt
+
+# man sollte von anfang an und für immer mit compress mounten

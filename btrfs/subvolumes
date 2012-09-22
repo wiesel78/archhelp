@@ -1,0 +1,9 @@
+# um subvolumes anzulegen :
+
+mount -o compress /dev/disk/by-label/btrfs-raid /mnt
+btrfs subvolume create /mnt/vol-root
+btrfs subvolume create /mnt/vol-home
+
+# subvolumes einhängen
+
+mount -o compress,subvol=vol-root /dev/disk/by-label/btrfs-raid /mnt

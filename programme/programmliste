@@ -1,0 +1,60 @@
+Basissystem :
+base
+base-devel
+
+Bootloader :
+grub-bios
+
+Dateisystem : 
+btrfs-progs
+ntfsprogs
+ntfs-3g
+dosfstools
+
+Administrativ :
+sudo
+zsh
+grml-zsh-config
+systemd-sysvcompat
+#lshw
+
+Xorg : 
+xorg-server
+xorg-server-utils
+xorg-utils
+xorg-xinit
+#xorg-twm
+#xorg-xclock
+#xterm
+
+Xorg-Treiber : 
+xf86-input-synaptics    # touchpad
+xf86-video-nvidia
+#xf86-video-ati
+#xf86-video-cirrus
+#xf86-video-vmware
+#xf86-video-vesa
+
+Gnome :
+gnome
+#gnome-extra
+
+Netzwerk :
+networkmanager
+network-manager-applet 
+samba
+smbclient
+gvfs-smb
+
+Kommunikation :
+Telepathy-gabble
+empathy
+
+Drucker : 
+cups
+
+Multimedia :
+vlc
+clementine
+gimp
+

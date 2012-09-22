@@ -1,0 +1,24 @@
+wpa_supplicant.conf
+
+Um eine Liste der vorhandenen WLAN-Netze zu bekommen :
+
+    iwlist scanning
+
+eingeben und nach dem Netz deines begehrens ausschau halten (ESSID).
+
+Auf folgende Zeilen kommt es an
+
+1. IE: IEEE 802.111/WPA2 version 1
+2. Group Cipher : CCMP oder TKIP
+3. Pairwise : CCMP und/oder TKIP
+4. Authentication Suites : PSK
+
+
+In der wpa_supplicant.conf wird :
+
+1. mit : proto=RSN
+2. mit : group=CCMP
+3. mit : pairwise=CCMP
+4. mit : key_mgmt=WPA-PSK
+
+angegeben (je nachdem was islist ergeben hat)

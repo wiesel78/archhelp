@@ -1,0 +1,4 @@
+# raid verbund über 2 partitionen wobei metadaten mit 
+# raid1 und daten mit raid0 verarbeitet werden
+
+mkfs.btrfs -L "label" -m raid1 -d raid0 /dev/sdb1 /dev/sda1 

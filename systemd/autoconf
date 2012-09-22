@@ -1,0 +1,72 @@
+# hostname abfragen
+
+echo "Hostname : "
+read hostname
+
+
+# /etc/hostname
+
+echo ${hostname} > /etc/hostname
+
+echo "hostname ${hostname} in /etc/hostname eingetragen."
+
+
+# /etc/hosts
+echo "#<ip-address>  <hostname.domain.org>  <hostname>"             > /etc/hosts
+echo "127.0.0.1      localhost.localdomain  localhost ${hostname}" >> /etc/hosts
+echo "::1            localhost.localdomain  localhost ${hostname}" >> /etc/hosts
+
+echo "hostname ${hostname} in /etc/hosts eingetragen."
+more /etc/hosts
+
+
+# /etc/locale.conf
+
+echo "LANG=de_DE.UTF-8"     > /etc/locale.conf
+echo "LC_TIME=de_DE.UTF-8" >> /etc/locale.conf
+echo "LC_COLLATE=C"        >> /etc/locale.conf
+
+echo "locale.conf mit :"
+more /etc/locale.conf
+
+
+# /etc/vconsole.conf
+
+echo "KEYMAP=de-latin1-nodeadkeys"  > /etc/vconsole.conf
+echo "FONT=lat9w-16"               >> /etc/vconsole.conf
+echo "FONT_MAP=8859-1_to_uni"      >> /etc/vconsole.conf
+
+echo "/etc/vconsole.conf mit :"
+more /etc/vconsole.conf
+
+
+# /etc/timezone
+
+echo "Europe/Berlin" > /etc/timezone
+
+echo "/etc/timezone mit :"
+more /etc/timezone
+
+
+# /etc/localtime
+
+ln -s /usr/share/zoneinfo/Europe/Berlin /etc/localtime
+
+echo "/etc/localtime link zu /usr/share/zoneinfo/Europe/Berlin"
+
+
+# /etc/locale.gen
+
+sed -i 's/#de_DE.UTF-8 UTF-8/de_DE.UTF-8 UTF-8/' /etc/locale.gen
+sed -i 's/#de_DE ISO-8859-1/de_DE ISO-8859-1/' /etc/locale.gen
+sed -i 's/#de_DE@euro ISO-8859-15/de_DE@euro ISO-8859-15/' /etc/locale.gen
+
+echo "/etc/locale.gen : de_DE* zeilen aktiviert"
+
+# locale-gen
+
+echo "fuehre locale-gen aus"
+locale-gen
+
+# ende
+echo "fertig..."
