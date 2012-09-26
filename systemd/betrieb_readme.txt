@@ -31,5 +31,8 @@ systemctl start <unit>
 #
 # für den anfang wichtige units sind wohl
 
-network.target  bzw.  networkmanager.service (nur eins davon)
-gdm.service
+avahi-daemon.service    # notwendig für cups
+cups.service            # Drucker
+ntpd.service            # Zeit-Synchronisierung
+gdm.service             # Login-Manager
+NetworkManager.service  # Networkmanager

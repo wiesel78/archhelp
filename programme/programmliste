@@ -18,6 +18,9 @@ grml-zsh-config
 systemd-sysvcompat
 #lshw
 
+Sicherheit :
+openssh
+
 Xorg : 
 xorg-server
 xorg-server-utils
@@ -37,24 +40,41 @@ xf86-video-nvidia
 
 Gnome :
 gnome
+gdm
+gnome-alsamixer
 #gnome-extra
 
 Netzwerk :
 networkmanager
-network-manager-applet 
+network-manager-applet
+networkmanager-openvpn
+networkmanager-pptp 
 samba
 smbclient
 gvfs-smb
 
-Kommunikation :
-Telepathy-gabble
-empathy
+Internet :
+ntp
+chromium
 
-Drucker : 
+Kommunikation :
+empathy
+telepathy-gabble
+
+Drucker :
+avahi   # wird fuer cups benötigt 
 cups
+hplip
+
+Entwicklung :
+git
+geany
+gedit
+#eclipse
 
 Multimedia :
 vlc
 clementine
 gimp
+#blender
 
