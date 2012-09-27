@@ -13,6 +13,7 @@ dosfstools
 
 Administrativ :
 sudo
+ssh
 zsh
 grml-zsh-config
 systemd-sysvcompat
@@ -56,6 +57,7 @@ gvfs-smb
 Internet :
 ntp
 chromium
+transmission
 
 Kommunikation :
 empathy
