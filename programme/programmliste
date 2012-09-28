@@ -42,7 +42,7 @@ xf86-video-nvidia
 Gnome :
 gnome
 gdm
-gnome-alsamixer
+gnome-tweak-tool
 #gnome-extra
 
 Netzwerk :
