@@ -22,6 +22,10 @@ systemd-sysvcompat
 Sicherheit :
 openssh
 
+Sound :
+alsa-lib
+alsa-utils
+
 Xorg : 
 xorg-server
 xorg-server-utils
@@ -31,13 +35,10 @@ xorg-xinit
 #xorg-xclock
 #xterm
 
-Xorg-Treiber : 
+Treiber : 
+xf86-video-nouveau      # Grafik -> Xorg
+nouveau-dri             # Grafik -> 2D und 3D
 xf86-input-synaptics    # touchpad
-xf86-video-nvidia
-#xf86-video-ati
-#xf86-video-cirrus
-#xf86-video-vmware
-#xf86-video-vesa
 
 Gnome :
 gnome
