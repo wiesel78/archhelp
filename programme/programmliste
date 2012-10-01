@@ -17,6 +17,7 @@ ssh
 zsh
 grml-zsh-config
 systemd-sysvcompat
+rsync
 #lshw
 
 Sicherheit :
