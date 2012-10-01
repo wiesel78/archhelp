@@ -17,7 +17,6 @@ ssh
 zsh
 grml-zsh-config
 systemd-sysvcompat
-rsync
 #lshw
 
 Sicherheit :
@@ -82,3 +81,6 @@ clementine
 gimp
 #blender
 
+Sonstiges : 
+rsync
+jre7-openjdk
