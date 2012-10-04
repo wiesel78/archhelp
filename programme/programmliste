@@ -76,9 +76,10 @@ gedit
 #eclipse
 
 Multimedia :
-vlc
-clementine
-gimp
+vlc          # Multimediaplayer
+clementine   # Musikspieler
+gimp         # Bildbearbeitungsprogramm
+evince       # pdf Betrachter
 #blender
 
 Sonstiges : 
