@@ -51,6 +51,7 @@ networkmanager
 network-manager-applet
 networkmanager-openvpn
 networkmanager-pptp 
+nmap
 samba
 smbclient
 gvfs-smb
