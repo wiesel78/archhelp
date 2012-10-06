@@ -79,14 +79,23 @@ gedit
 #eclipse
 
 Multimedia :
-vlc          # Multimediaplayer
-clementine   # Musikspieler
-gimp         # Bildbearbeitungsprogramm
-evince       # pdf Betrachter
-libdvdread   #
-libdvdcss    # libdvd -> verschlüsselte dvds abspielen
-libdvdnav    #
-#blender
+vlc              # Multimediaplayer
+clementine       # Musikspieler
+gimp             # Bildbearbeitungsprogramm
+evince           # pdf Betrachter
+gstreamer0.10    # Multimedia Framework
+gstreamer0.10-bad
+gstreamer0.10-bad-plugins
+gstreamer0.10-ffmpeg
+gstreamer0.10-good
+gstreamer0.10-good-plugins
+gstreamer0.10-ugly
+gstreamer0.10-ugly-plugins
+libdvdread       #
+libdvdcss        # libdvd -> verschlüsselte dvds abspielen
+libdvdnav        #
+#blender         # 3d programm
+#pitivi          # videoschnittprogramm
 
 Sonstiges : 
 rsync
