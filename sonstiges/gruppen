@@ -5,3 +5,27 @@
 sudo usermod -aG gruppe user
 
 sudo gpasswd -a user gruppe
+
+
+# Benutzer aus einer Gruppe entfernen
+
+sudo gpasswd -d user gruppe
+
+# einige Gruppen
+# die auskommentierten werden nicht mehr benötigt und/oder
+# wurden durch dbus übernommen
+
+wheel       # um über sudo adminrechte zu erlangen
+users       # standard gruppe
+log         # erlaubnis Log-Dateien anzusehen
+network     # Zugriff auf einen Netzwerkmanager
+lp          # Zugriff auf /dev/parport... , Drucker usw.
+kvm         # um qemu-kvm zu nutzen
+
+#power       # Zugriff aufs Powermanagment (Runterfahren, usw.)
+#storage     # um Speichermedien via dbus einzuhängen
+#video       # für den Zugriff auf Video-Komponenten
+#audio       # für den Zugriff auf die Soundkarte
+#optical     # CD-Laufwerkzugriff : z.B. um DVD's abzuspielen
+
+

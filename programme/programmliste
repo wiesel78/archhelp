@@ -80,6 +80,9 @@ vlc          # Multimediaplayer
 clementine   # Musikspieler
 gimp         # Bildbearbeitungsprogramm
 evince       # pdf Betrachter
+libdvdread   #
+libdvdcss    # libdvd -> verschlüsselte dvds abspielen
+libdvdnav    #
 #blender
 
 Sonstiges : 
