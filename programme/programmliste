@@ -70,7 +70,7 @@ cups
 hplip
 
 VM : 
-qemu
+qemu-kvm
 
 Entwicklung :
 git
