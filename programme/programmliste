@@ -59,7 +59,7 @@ gvfs-smb
 Internet :
 ntp
 chromium
-transmission
+transmission-gtk
 
 Kommunikation :
 empathy
