@@ -84,6 +84,7 @@ vlc              # Multimediaplayer
 clementine       # Musikspieler
 gimp             # Bildbearbeitungsprogramm
 evince           # pdf Betrachter
+eog              # Eye of Gnome : Bildbetrachter
 gstreamer0.10    # Multimedia Framework
 gstreamer0.10-bad
 gstreamer0.10-bad-plugins
