@@ -52,6 +52,7 @@ network-manager-applet
 networkmanager-openvpn
 networkmanager-pptp 
 nmap
+nbd                    # gibt gerätedateien im netzwerk frei
 samba
 smbclient
 gvfs-smb
