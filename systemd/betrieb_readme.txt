@@ -1,16 +1,3 @@
-# Verwendet man ausschließlich systemd
-# kann man init=/bin/systemd nach einem reboot
-# wieder aus der bootloader konfig entnehmen
-# und die pakete :
-
-pacman -R initscripts sysvinit
-
-# deinstallieren und
-
-pacman -S systemd-sysvcompat
-
-# installieren.
-
 ########################################
 #
 # Systemd Units liegen in /lib/systemd/system
