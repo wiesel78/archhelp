@@ -16,7 +16,7 @@ sudo
 ssh
 zsh
 grml-zsh-config
-systemd-sysvcompat
+systemd-arch-units
 #lshw
 
 Sicherheit :
@@ -36,9 +36,13 @@ xorg-xinit
 #xterm
 
 Treiber : 
-xf86-video-nouveau      # Grafik -> Xorg
-nouveau-dri             # Grafik -> 2D und 3D
-xf86-input-synaptics    # touchpad
+xf86-video-nouveau      # Grafik -> Xorg-Nvidia
+nouveau-dri             # Grafik -> 2-3D für Nvidia
+#xf86-video-ati         # Grafik -> Xorg-ati
+#ati-dri                # Grafik -> 2-3D für ATI
+#xf86-video-intel       # Grafik -> Xorg-Intel
+#intel-dri              # Grafik -> 2-3D für Intel
+#xf86-input-synaptics   # touchpad
 
 Gnome :
 gnome
@@ -51,42 +55,42 @@ networkmanager
 network-manager-applet
 networkmanager-openvpn
 networkmanager-pptp 
-nmap
+nmap                   # portscanner
 nbd                    # gibt gerätedateien im netzwerk frei
-samba
-smbclient
-gvfs-smb
+samba                  #
+smbclient              # kram für windowsnetzwerke
+gvfs-smb               #
 
 Internet :
-ntp
-chromium
-transmission-gtk
+ntp                    # Zeit-Synchro
+chromium               # Browser
+transmission-gtk       # Torrent
 
 Kommunikation :
-empathy
-telepathy-gabble
+empathy                # IM-Client
+telepathy-gabble       # Bibliothek für Jabber
 
 Drucker :
-avahi   # wird fuer cups benötigt 
-cups
-hplip
+avahi                  # wird fuer cups benötigt 
+cups                   # Drucker
+hplip                  # HP Treiber Bibliothek
 
 VM : 
-qemu-kvm
+qemu-kvm               # Virtualisierung (Nutzt den eigenen Prozessor)  
 
 Entwicklung :
-git
-geany
-gedit
-#eclipse
+git                    # Versionierungstool
+geany                  # Editor und Entwicklungsumgebung
+gedit                  # Editor
+#eclipse               # Entwicklungsumgebung
 
 Multimedia :
-vlc              # Multimediaplayer
-clementine       # Musikspieler
-gimp             # Bildbearbeitungsprogramm
-evince           # pdf Betrachter
-eog              # Eye of Gnome : Bildbetrachter
-gstreamer0.10    # Multimedia Framework
+vlc                    # Multimediaplayer
+clementine             # Musikspieler
+gimp                   # Bildbearbeitungsprogramm
+evince                 # pdf Betrachter
+eog                    # Eye of Gnome : Bildbetrachter
+gstreamer0.10          # Multimedia Framework
 gstreamer0.10-bad
 gstreamer0.10-bad-plugins
 gstreamer0.10-ffmpeg
@@ -101,6 +105,6 @@ libdvdnav        #
 #pitivi          # videoschnittprogramm
 
 Sonstiges : 
-rsync
-jre7-openjdk
-preload
+rsync            # synchronisierungstools
+jre7-openjdk     # offene Implementierung von Java
+preload          # läd häufig benutzte Programme in den RAM
