@@ -1,0 +1,5 @@
+echo "[archlinuxfr]" >> /etc/pacman.conf
+echo "Server = http://repo.archlinux.fr/\$arch" >> /etc/pacman.conf
+echo "repository archlinuxfr zu pacman.conf hinzugefuegt"
+
+pacman -Syu yaourt

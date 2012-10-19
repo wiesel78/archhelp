@@ -1,0 +1,14 @@
+# AUR (ARCH USER REPOSITORY)
+
+# repository hinzufügen um yaourt installieren zu können
+# /etc/pacman.conf
+
+[archlinuxfr]
+Server = http://repo.archlinux.fr/$arch
+
+
+# dann yaourt installieren
+
+pacman -Syu yaourt
+
+
