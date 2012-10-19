@@ -106,5 +106,6 @@ libdvdnav        #
 
 Sonstiges : 
 rsync            # synchronisierungstools
+gcalctool        # Taschenrechner
 jre7-openjdk     # offene Implementierung von Java
 preload          # läd häufig benutzte Programme in den RAM
