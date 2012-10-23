@@ -49,6 +49,11 @@ gnome
 gdm
 gnome-tweak-tool
 #gnome-extra
+gnome-contacts
+gnome-documents
+gnome-online-accounts
+gnome-power-manager
+file-roller
 
 Netzwerk :
 networkmanager
