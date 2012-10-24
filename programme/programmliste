@@ -70,6 +70,7 @@ Internet :
 ntp                    # Zeit-Synchro
 chromium               # Browser
 transmission-gtk       # Torrent
+ddclient               # dns-client
 
 Kommunikation :
 empathy                # IM-Client
