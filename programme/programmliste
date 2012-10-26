@@ -52,6 +52,7 @@ gnome-power-manager
 file-roller
 
 Netzwerk :
+wireless_tools
 networkmanager
 network-manager-applet
 networkmanager-openvpn
