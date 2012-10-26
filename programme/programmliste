@@ -13,14 +13,10 @@ dosfstools
 
 Administrativ :
 sudo
-ssh
+openssh
 zsh
 grml-zsh-config
-systemd-arch-units
-#lshw
-
-Sicherheit :
-openssh
+lshw
 
 Sound :
 alsa-lib
