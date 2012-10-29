@@ -1,0 +1,30 @@
+#!/usr/bin/perl -w
+use v5.16;
+
+my $interface 	= "wlan0";
+
+
+sub iwlistscan{
+	my $interface 	= (shift (@_) or "wlan0");
+	my @iwlist 		= `iwlist $interface scan`;
+	return @iwlist;
+}
+
+sub getListOfSSID 
+{
+	my @ssid;
+	
+	foreach (@_){
+		if ( /.*ESSID[:](.*)/ ){
+			push @ssid, $_;
+		}
+	}
+	
+	return @ssid;
+}
+
+my @iwlist = iwlistscan("wlan0");
+
+foreach (getListOfSSID(@iwlist)){
+	print $_;
+}
