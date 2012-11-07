@@ -17,6 +17,7 @@ openssh
 zsh
 grml-zsh-config
 lshw
+gdisk
 
 Sound :
 alsa-lib
