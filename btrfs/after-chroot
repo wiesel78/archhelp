@@ -2,6 +2,7 @@
 # Konfiguriert nach dem chroot weiter
 #
 
+
 pacmanconf () {
 	echo "multilib auskommentieren" 
 	nano /etc/pacman.conf
@@ -27,9 +28,8 @@ konfiguration () {
 	sed -i 's/MODULES=""/MODULES="crc32c"/' /etc/mkinitcpio.conf
 	sed -i '/HOOKS/s/sata/sata btrfs/' /etc/mkinitcpio.conf
 	
-	# Erweiterte Kofiguration
+	# Erweiterte Kofiguration; Sprache, Kernel
 	pacmanconf
-	sleep 3
 	sed -i 's/#de_DE.UTF-8/de_DE.UTF-8/' /etc/locale.gen
 	sed -i 's/#de_DE/de_DE/' /etc/locale.gen
 	sed -i 's/#de_DE@euro/de_DE@euro/' /etc/locale.gen
@@ -39,7 +39,7 @@ konfiguration () {
 	mkinitcpio -p linux-ck
 	chsh -S /bin/zsh
 	
-	# Endkonfoguration
+	# Endkonfiguration; User
 	echo "--Rootpass"
 	passwd
 	echo "--User"
@@ -51,3 +51,5 @@ konfiguration () {
 	
 	exit
 }
+
+konfiguration

@@ -99,7 +99,7 @@ case ${OPT} in
 	2) installation;;
 	3) konfiguration;;
 	4) partitionierung
-	   installation
+	   installation;;
 	*) echo "Benutzung:[1|2|3]"
 	   echo	"1 - Partitionierung"
 	   echo "2 - Installation"
