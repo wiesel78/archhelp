@@ -16,11 +16,11 @@ partitionierung() {
 	read -p "Swap angeben: " SWAP 
 
 	# HDDs formatieren 
-	echo mkfs.swap -L swap ${SWAP}
-	echo mkfs.btrfs ${BTRFS_OPT} -L btrfs-root ${BTRFS_HDD}
-	echo mount -o compress /dev/disk/by-label/btrfs-root /mnt
-	echo swapon -L swap
-	echo cd /mnt
+	mkfs.swap -L swap ${SWAP}
+	mkfs.btrfs ${BTRFS_OPT} -L btrfs-root ${BTRFS_HDD}
+	mount -o compress /dev/disk/by-label/btrfs-root /mnt
+	swapon -L swap
+	cd /mnt
 	
 	# Subvolumes unter Btrfs erstellen
 	VOLUME_COUNT=0
@@ -28,27 +28,27 @@ partitionierung() {
 	while ( ${NEW_SUBVOL} -eq "true" )
 	do
 		read -p "Name des Subvol: " SUBVOL[${VOLUME_COUNT}]
-	echo	btrfs subvolume create ${SUBVOL[${VOLUME_COUNT}]}
+		btrfs subvolume create ${SUBVOL[${VOLUME_COUNT}]}
 		read -p "Weitere Subvols? [1 = true]: " EINGABE
 		if [ ${EINGABE} -eq 1 ] 
 			then
 				((VOLUME_COUNT++))
 			else
 				NEW_SUBVOL=false
-				((VOLUME_COUNT++))
 			fi
 	done
-	echo umount /mnt
-	echo $VOLUME_COUNT
+	umount /mnt
+	
 	# Subvolumes mounten
 	MOUNT_COUNT=0
 	while (( ${MOUNT_COUNT} <= ${VOLUME_COUNT} )) 
 	do
-		read -p "Einhängepunkt für {SUBVOL[MOUNTSUB]} ab /mnt: " MOUNTPOINT
-	echo	mount -o compress,subvol=${SUBVOL[${MOUNT_COUNT}]} /dev/disk/by-label/btrfs-root /mnt/$MOUNTPOINT 
-		MOUNT_COUNT++
+		read -p "Einhängepunkt für ${SUBVOL[${MOUNT_COUNT}]} ab /mnt: " MOUNTPOINT
+		mount -o compress,subvol=${SUBVOL[${MOUNT_COUNT}]} /dev/disk/by-label/btrfs-root /mnt/$MOUNTPOINT 
+		((MOUNT_COUNT++))
 	done
 	
+	# Variablen löschen; eigentlich überflüssig, aber der Eindeutigkeit halber
 	unset MOUNT_COUNT NEW_SUBVOL VOLUME_COUNT EINGABE SWAP BTRFS_HDD BTRFS_OPT
 }
 
