@@ -4,6 +4,7 @@
 # 
 # Es wird empfohlen sich das Skript vorher anzuschauen und bei
 # bedarf anzupassen, besonders wenn andere Filesysteme erwünscht sind
+#  
 #
 
 partitionierung() {
@@ -53,11 +54,14 @@ partitionierung() {
 }
 
 installation () {
+	# Wlan bei Bedarf aktivieren
 	read -p "Wlan aktivieren? [y/n]: " WLAN
 	if [${WLAN} -eq "y"] 
 		then
 			wlan
 	fi
+	
+	# Basisinstallation und fstab generieren
 	pacstrap /mnt base base-devel btrfs-progs
 	genfstab -Lp /mnt >> /mnt/etc/fstab
 	arch-chroot /mnt
@@ -68,7 +72,7 @@ installation () {
 konfiguration () {
 	# Grundkonfiguration
 	read -p "Hostname" HOST
-	echo $HOST > /etc/hostname
+	echo ${HOST} > /etc/hostname
 	echo LANG=de_DE.UTF-8 > /etc/locale.conf
 	echo LC_COLLATE=C >> /etc/locale.conf
 	echo KEYMAP=de-latin1 /etc/vconsole.conf
@@ -100,13 +104,14 @@ konfiguration () {
 	adduser
 	pacman -S --noconfirm grub-bios
 	grub-mkconfig -o /boot/grub/grub.cfg
-	read -p "Bootplatte: " BOOT
-	grub-install BOOT
+	read -p "Bootplatte: " ${BOOT}
+	grub-install ${BOOT}
 
 	exit
 	umount --all
 	reboot
-
+	
+	unset BOOT HOST
 }
 
 wlan () {
@@ -115,8 +120,8 @@ wlan () {
 	#read -p "Netzwerkkey: " WPAKEY
 	nano /etc/network.d/wireless-wpa
 	netcfg wireless-wpa
-	
 }
+
 pacman () {
 	echo "multilib auskommentieren" 
 	nano /etc/pacman.conf
@@ -126,7 +131,6 @@ pacman () {
 	echo "[repo-ck]" >> etc/pacman.conf
 	echo "SigLevel = PackageRequired" >> etc/pacman.conf
 	echo "Server = http://repo-ck.com/$arch" >> etc/pacman.conf
-	
 }
 
 
