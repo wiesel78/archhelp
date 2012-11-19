@@ -104,14 +104,13 @@ konfiguration () {
 	adduser
 	pacman -S --noconfirm grub-bios
 	grub-mkconfig -o /boot/grub/grub.cfg
-	read -p "Bootplatte: " ${BOOT}
-	grub-install ${BOOT}
+	grub-install ${BOOT_HDD}
 
 	exit
 	umount --all
 	reboot
 	
-	unset BOOT HOST
+	unset BOOT_HDD HOST
 }
 
 wlan () {
