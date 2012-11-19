@@ -9,50 +9,52 @@
 partitionierung() {
 	# Sprache auf deutsch stellen und HDDs abfragen
 	loadkeys de			
-	read -p "zu formatierende Platte angeben: " BOOT
-	gdisk $GPT
-	read -p "Platten für btrfs eingeben: " HDD
-	read -p "zusätzliche Optionen (-L schon vergeben): " OPT
+	read -p "zu formatierende Platte angeben: " BOOT_HDD
+	gdisk ${BOOT_HDD}
+	read -p "Platten für btrfs eingeben: " BTRFS_HDD
+	read -p "zusätzliche Optionen (-L schon vergeben): " BTRFS_OPT
 	read -p "Swap angeben: " SWAP 
 
 	# HDDs formatieren 
-	mkfs.swap -L swap $SWAP
-	mkfs.btrfs $OPT -L btrfs-root $HDD
-	mount -o compress /dev/disk/by-label/btrfs-root /mnt
-	swapon -L swap
-	cd /mnt
+	echo mkfs.swap -L swap ${SWAP}
+	echo mkfs.btrfs ${BTRFS_OPT} -L btrfs-root ${BTRFS_HDD}
+	echo mount -o compress /dev/disk/by-label/btrfs-root /mnt
+	echo swapon -L swap
+	echo cd /mnt
 	
-	# Subvolumes unter Btrfs erstellen und richtig mounten
-	i=0
+	# Subvolumes unter Btrfs erstellen
+	VOLUME_COUNT=0
 	NEW_SUBVOL=true
-	while ( $NEW_SUBVOL -eq "true" )
+	while ( ${NEW_SUBVOL} -eq "true" )
 	do
-		read -p "Name des Subvol: " SUBVOL[i]
-		btrfs subvolume create ${SUBVOL[i]}
-		read -p "Weitere Subvols? [y/n]" EINGABE
-		if [ EINGABE -eq "y" ] 
+		read -p "Name des Subvol: " SUBVOL[${VOLUME_COUNT}]
+	echo	btrfs subvolume create ${SUBVOL[${VOLUME_COUNT}]}
+		read -p "Weitere Subvols? [1 = true]: " EINGABE
+		if [ ${EINGABE} -eq 1 ] 
 			then
-				i=$((i+1))
+				((VOLUME_COUNT++))
 			else
-				SUBVOL=false
+				NEW_SUBVOL=false
+				((VOLUME_COUNT++))
 			fi
 	done
-	umount /mnt
-	
-	MOUNTSUB=0
-	while ( MOUNTSUB >= i )
+	echo umount /mnt
+	echo $VOLUME_COUNT
+	# Subvolumes mounten
+	MOUNT_COUNT=0
+	while (( ${MOUNT_COUNT} <= ${VOLUME_COUNT} )) 
 	do
 		read -p "Einhängepunkt für {SUBVOL[MOUNTSUB]} ab /mnt: " MOUNTPOINT
-		mount -o compress,subvol=${SUBVOL[MOUNTSUB]} /dev/disk/by-label/btrfs-root /mnt/$MOUNTPOINT 
-		MOUNTSUB=$((MOUNTSUB+1))
+	echo	mount -o compress,subvol=${SUBVOL[${MOUNT_COUNT}]} /dev/disk/by-label/btrfs-root /mnt/$MOUNTPOINT 
+		MOUNT_COUNT++
 	done
 	
-	unset MOUNTSUB SUBVOL SUB EINGABE SWAP HDD OPT
+	unset MOUNT_COUNT NEW_SUBVOL VOLUME_COUNT EINGABE SWAP BTRFS_HDD BTRFS_OPT
 }
 
 installation () {
-	read -p "Wlan aktivieren? [y/n]: " WLAN_BOOL
-	if [WLAN_BOOL -eq "y"] 
+	read -p "Wlan aktivieren? [y/n]: " WLAN
+	if [${WLAN} -eq "y"] 
 		then
 			wlan
 	fi
@@ -60,6 +62,7 @@ installation () {
 	genfstab -Lp /mnt >> /mnt/etc/fstab
 	arch-chroot /mnt
 
+	unset WLAN
 }
 
 konfiguration () {
@@ -116,7 +119,6 @@ wlan () {
 }
 pacman () {
 	echo "multilib auskommentieren" 
-	sleep ( 3 )
 	nano /etc/pacman.conf
 	echo "[archlinuxfr]" >> etc/pacman.conf
 	echo "Server = http://repo.archlinux.fr/$arch" >> etc/pacman.conf
@@ -135,16 +137,12 @@ echo "4 - 1-3"
 read -p "Option eingeben [1|2|3|4]:" OPT
 
 case $OPT in
-	1) partitionierung
-		break;;
-	2) installation
-		break;;
-	3) konfiguration
-		break;;
+	1) partitionierung;;
+	2) installation;;
+	3) konfiguration;;
 	4) partitionierung
 	   installation
-	   konfiguration
-		break;;
+	   konfiguration;;
 	*) echo "Benutzung:[1|2|3|4]"
 	   echo	"1 - Partitionierung"
 	   echo "2 - Installation"
