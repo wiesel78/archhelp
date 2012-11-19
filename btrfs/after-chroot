@@ -46,12 +46,8 @@ konfiguration () {
 	adduser
 	pacman -S --noconfirm grub-bios
 	grub-mkconfig -o /boot/grub/grub.cfg
+	read -p "Bootplatte angeben: " BOOT_HDD
 	grub-install ${BOOT_HDD}
-
-	# Umount und Reboot; Abschluss der Grundinstallation
-	exit
-	umount --all
-	reboot
 	
-	unset BOOT_HDD HOST
+	exit
 }

@@ -55,7 +55,7 @@ partitionierung() {
 	done
 	
 	# Variablen löschen; eigentlich überflüssig, aber der Eindeutigkeit halber
-	unset MOUNT_COUNT NEW_SUBVOL VOLUME_COUNT EINGABE SWAP BTRFS_HDD BTRFS_OPT
+	unset BOOT_HDD MOUNT_COUNT NEW_SUBVOL VOLUME_COUNT EINGABE SWAP BTRFS_HDD BTRFS_OPT
 }
 
 installation () {
@@ -75,6 +75,10 @@ installation () {
 	unset WLAN
 	cp after-chroot /mnt/tmp/
 	arch-chroot /mnt /tmp/after-chroot
+	
+	# Umount und Reboot; Abschluss der Grundinstallation
+	umount --all
+	reboot
 }
 
 wlan () {
