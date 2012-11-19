@@ -17,7 +17,7 @@ partitionierung() {
 	read -p "Swap angeben: " SWAP 
 
 	# HDDs formatieren 
-	mkfs.swap -L swap ${SWAP}
+	mkswap -L swap ${SWAP}
 	mkfs.btrfs ${BTRFS_OPT} -L btrfs-root ${BTRFS_HDD}
 	mount -o compress /dev/disk/by-label/btrfs-root /mnt
 	swapon -L swap
@@ -106,6 +106,7 @@ konfiguration () {
 	grub-mkconfig -o /boot/grub/grub.cfg
 	grub-install ${BOOT_HDD}
 
+	# Umount und Reboot; Abschluss der Grundinstallation
 	exit
 	umount --all
 	reboot
