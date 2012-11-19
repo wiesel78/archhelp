@@ -27,6 +27,7 @@ konfiguration () {
 	echo "::1		localhost.localdomain	localhost $HOST" >> /etc/hosts
 	sed -i 's/MODULES=""/MODULES="crc32c"/' /etc/mkinitcpio.conf
 	sed -i '/HOOKS/s/sata/sata btrfs/' /etc/mkinitcpio.conf
+	sed -i '/HOOKS/s/fsck//' /etc/mkinitcpio.conf
 	
 	# Erweiterte Kofiguration; Sprache, Kernel
 	pacmanconf
@@ -34,10 +35,14 @@ konfiguration () {
 	sed -i 's/#de_DE/de_DE/' /etc/locale.gen
 	sed -i 's/#de_DE@euro/de_DE@euro/' /etc/locale.gen
 	locale-gen
-	pacman -Syu --noconfirm linux-ck linux-ck-headers zsh
+	pacman -Syu --noconfirm linux-ck linux-ck-headers zsh acpid ntp dbus avahi cups
 	mkinitcpio -p linux
 	mkinitcpio -p linux-ck
 	chsh -S /bin/zsh
+	systemctl enable acpid.service
+	systemctl enable ntpd.service
+	systemctl enable avahi-daemon.service
+	systemctl enable cups.service
 	
 	# Endkonfiguration; User
 	echo "--Rootpass"
