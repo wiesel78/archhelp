@@ -1,0 +1,57 @@
+#
+# Konfiguriert nach dem chroot weiter
+#
+
+pacmanconf () {
+	echo "multilib auskommentieren" 
+	nano /etc/pacman.conf
+	echo "[archlinuxfr]" >> etc/pacman.conf
+	echo "Server = http://repo.archlinux.fr/\$arch" >> etc/pacman.conf
+	echo "" >> etc/pacman.conf
+	echo "[repo-ck]" >> etc/pacman.conf
+	echo "SigLevel = PackageRequired" >> etc/pacman.conf
+	echo "Server = http://repo-ck.com/\$arch" >> etc/pacman.conf
+}
+
+konfiguration () {
+	# Grundkonfiguration
+	read -p "Hostname" HOST
+	echo ${HOST} > /etc/hostname
+	echo LANG=de_DE.UTF-8 > /etc/locale.conf
+	echo LC_COLLATE=C >> /etc/locale.conf
+	echo KEYMAP=de-latin1 /etc/vconsole.conf
+	ln -s /usr/share/zoneinfo/Europe/Berlin /etc/localtime
+	echo "#<ip-address>	<hostname.domain.org>	<hostname>" > /etc/hosts
+	echo "127.0.0.1	localhost.localdomain	localhost $HOST" >> /etc/hosts
+	echo "::1		localhost.localdomain	localhost $HOST" >> /etc/hosts
+	sed -i 's/MODULES=""/MODULES="crc32c"/' /etc/mkinitcpio.conf
+	sed -i '/HOOKS/s/sata/sata btrfs/' /etc/mkinitcpio.conf
+	
+	# Erweiterte Kofiguration
+	pacmanconf
+	sleep 3
+	sed -i 's/#de_DE.UTF-8/de_DE.UTF-8/' /etc/locale.gen
+	sed -i 's/#de_DE/de_DE/' /etc/locale.gen
+	sed -i 's/#de_DE@euro/de_DE@euro/' /etc/locale.gen
+	locale-gen
+	pacman -Syu --noconfirm linux-ck linux-ck-headers zsh
+	mkinitcpio -p linux
+	mkinitcpio -p linux-ck
+	chsh -S /bin/zsh
+	
+	# Endkonfoguration
+	echo "--Rootpass"
+	passwd
+	echo "--User"
+	adduser
+	pacman -S --noconfirm grub-bios
+	grub-mkconfig -o /boot/grub/grub.cfg
+	grub-install ${BOOT_HDD}
+
+	# Umount und Reboot; Abschluss der Grundinstallation
+	exit
+	umount --all
+	reboot
+	
+	unset BOOT_HDD HOST
+}

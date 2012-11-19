@@ -22,7 +22,6 @@ partitionierung() {
 	sleep 5
 	mount -o compress /dev/disk/by-label/btrfs-root /mnt
 	swapon -L swap
-	cd /mnt
 	
 	# Subvolumes unter Btrfs erstellen
 	VOLUME_COUNT=0
@@ -30,7 +29,7 @@ partitionierung() {
 	while ( ${NEW_SUBVOL} -eq "true" )
 	do
 		read -p "Name des Subvol: " SUBVOL[${VOLUME_COUNT}]
-		btrfs subvolume create ${SUBVOL[${VOLUME_COUNT}]}
+		btrfs subvolume create /mnt/${SUBVOL[${VOLUME_COUNT}]}
 		read -p "Weitere Subvols? [y/n]: " EINGABE
 		if [ ${EINGABE} = "y" ] 
 			then
@@ -39,7 +38,6 @@ partitionierung() {
 				NEW_SUBVOL=false
 			fi
 	done
-	cd /
 	sleep 3
 	umount /mnt
 	
@@ -73,54 +71,10 @@ installation () {
 	sleep 5
 	pacstrap /mnt base base-devel btrfs-progs
 	genfstab -Lp /mnt >> /mnt/etc/fstab
-	arch-chroot /mnt
 
 	unset WLAN
-}
-
-konfiguration () {
-	# Grundkonfiguration
-	read -p "Hostname" HOST
-	echo ${HOST} > /etc/hostname
-	echo LANG=de_DE.UTF-8 > /etc/locale.conf
-	echo LC_COLLATE=C >> /etc/locale.conf
-	echo KEYMAP=de-latin1 /etc/vconsole.conf
-	ln -s /usr/share/zoneinfo/Europe/Berlin /etc/localtime
-	echo "#<ip-address>	<hostname.domain.org>	<hostname>" > /etc/hosts
-	echo "127.0.0.1	localhost.localdomain	localhost $HOST" >> /etc/hosts
-	echo "::1		localhost.localdomain	localhost $HOST" >> /etc/hosts
-	sed -i 's/MODULES=""/MODULES="crc32c"/' /etc/mkinitcpio.conf
-	sed -i '/HOOKS/s/sata/sata btrfs/' /etc/mkinitcpio.conf
-	
-	# Erweiterte Kofiguration
-	pacmanconf
-	sed -i 's/#de_DE.UTF-8/de_DE.UTF-8/' /etc/locale.gen
-	sed -i 's/#de_DE/de_DE/' /etc/locale.gen
-	sed -i 's/#de_DE@euro/de_DE@euro/' /etc/locale.gen
-	locale-gen
-	pacman -Syy
-	pacman -Syu
-	pacman -S --noconfirm linux-ck linux-ck-headers
-	mkinitcpio -p linux
-	mkinitcpio -p linux-ck
-	pacman -S --noconfirm zsh
-	chsh -S /bin/zsh
-	
-	# Endkonfoguration
-	echo "--Rootpass"
-	passwd
-	echo "--User"
-	adduser
-	pacman -S --noconfirm grub-bios
-	grub-mkconfig -o /boot/grub/grub.cfg
-	grub-install ${BOOT_HDD}
-
-	# Umount und Reboot; Abschluss der Grundinstallation
-	exit
-	umount --all
-	reboot
-	
-	unset BOOT_HDD HOST
+	cp after-chroot /mnt/tmp/
+	arch-chroot /mnt /tmp/after-chroot
 }
 
 wlan () {
@@ -131,24 +85,10 @@ wlan () {
 	netcfg wireless-wpa
 }
 
-pacmanconf () {
-	echo "multilib auskommentieren" 
-	nano /etc/pacman.conf
-	echo "[archlinuxfr]" >> etc/pacman.conf
-	echo "Server = http://repo.archlinux.fr/\$arch" >> etc/pacman.conf
-	echo "" >> etc/pacman.conf
-	echo "[repo-ck]" >> etc/pacman.conf
-	echo "SigLevel = PackageRequired" >> etc/pacman.conf
-	echo "Server = http://repo-ck.com/\$arch" >> etc/pacman.conf
-}
-
-
 echo "1 - Partitionierung"
 echo "2 - Installation"
-echo "3 - Konfiguration"
-echo "4 - 1-3"
-echo "5 - 2-3"
-read -p "Option eingeben [1|2|3|4|5]:" OPT
+echo "3 - 1 + 2"
+read -p "Option eingeben [1|2|3]:" OPT
 
 case ${OPT} in
 	1) partitionierung;;
@@ -156,13 +96,8 @@ case ${OPT} in
 	3) konfiguration;;
 	4) partitionierung
 	   installation
-	   konfiguration;;
-	5) installation
-	   konfiguration;;
-	*) echo "Benutzung:[1|2|3|4|5]"
+	*) echo "Benutzung:[1|2|3]"
 	   echo	"1 - Partitionierung"
 	   echo "2 - Installation"
-	   echo "3 - Konfiguration"
-	   echo "4 - 1-3"
-	   echo "5 - 2-3"
+	   echo "3 - 1 + 2"
 esac
