@@ -1,0 +1,153 @@
+#!/bin/bash
+#
+# Installskript für Arch-Linux mit Systemd und Btrfs
+# 
+# Es wird empfohlen sich das Skript vorher anzuschauen und bei
+# bedarf anzupassen, besonders wenn andere Filesysteme erwünscht sind
+#
+
+partitionierung() {
+	# Sprache auf deutsch stellen und HDDs abfragen
+	loadkeys de			
+	read -p "zu formatierende Platte angeben: " BOOT
+	gdisk $GPT
+	read -p "Platten für btrfs eingeben: " HDD
+	read -p "zusätzliche Optionen (-L schon vergeben): " OPT
+	read -p "Swap angeben: " SWAP 
+
+	# HDDs formatieren 
+	mkfs.swap -L swap $SWAP
+	mkfs.btrfs $OPT -L btrfs-root $HDD
+	mount -o compress /dev/disk/by-label/btrfs-root /mnt
+	swapon -L swap
+	cd /mnt
+	
+	# Subvolumes unter Btrfs erstellen und richtig mounten
+	i=0
+	NEW_SUBVOL=true
+	while ( $NEW_SUBVOL -eq "true" )
+	do
+		read -p "Name des Subvol: " SUBVOL[i]
+		btrfs subvolume create ${SUBVOL[i]}
+		read -p "Weitere Subvols? [y/n]" EINGABE
+		if [ EINGABE -eq "y" ] 
+			then
+				i=$((i+1))
+			else
+				SUBVOL=false
+			fi
+	done
+	umount /mnt
+	
+	MOUNTSUB=0
+	while ( MOUNTSUB >= i )
+	do
+		read -p "Einhängepunkt für {SUBVOL[MOUNTSUB]} ab /mnt: " MOUNTPOINT
+		mount -o compress,subvol=${SUBVOL[MOUNTSUB]} /dev/disk/by-label/btrfs-root /mnt/$MOUNTPOINT 
+		MOUNTSUB=$((MOUNTSUB+1))
+	done
+	
+	unset MOUNTSUB SUBVOL SUB EINGABE SWAP HDD OPT
+}
+
+installation () {
+	read -p "Wlan aktivieren? [y/n]: " WLAN_BOOL
+	if [WLAN_BOOL -eq "y"] 
+		then
+			wlan
+	fi
+	pacstrap /mnt base base-devel btrfs-progs
+	genfstab -Lp /mnt >> /mnt/etc/fstab
+	arch-chroot /mnt
+
+}
+
+konfiguration () {
+	# Grundkonfiguration
+	read -p "Hostname" HOST
+	echo $HOST > /etc/hostname
+	echo LANG=de_DE.UTF-8 > /etc/locale.conf
+	echo LC_COLLATE=C >> /etc/locale.conf
+	echo KEYMAP=de-latin1 /etc/vconsole.conf
+	ln -s /usr/share/zoneinfo/Europe/Berlin /etc/localtime
+	echo "#<ip-address>	<hostname.domain.org>	<hostname>" > /etc/hosts
+	echo "127.0.0.1	localhost.localdomain	localhost $HOST" >> /etc/hosts
+	echo "::1		localhost.localdomain	localhost $HOST" >> /etc/hosts
+	sed -i 's/MODULES=""/MODULES="crc32c"/' /etc/mkinitcpio.conf
+	sed -i '/HOOKS/s/sata/sata btrfs/' /etc/mkinitcpio.conf
+	
+	# Erweiterte Kofiguration
+	pacman
+	sed -i 's/#de_DE.UTF-8/de_DE.UTF-8/' /etc/locale.gen
+	sed -i 's/#de_DE/de_DE/' /etc/locale.gen
+	sed -i 's/#de_DE@euro/de_DE@euro/' /etc/locale.gen
+	locale-gen
+	pacman -Syy
+	pacman -Syu
+	pacman -S --noconfirm linux-ck linux-ck-headers
+	mkinitcpio -p linux
+	mkinitcpio -p linux-ck
+	pacman -S --noconfirm zsh
+	chsh -S /bin/zsh
+	
+	# Endkonfoguration
+	echo "--Rootpass"
+	passwd
+	echo "--User"
+	adduser
+	pacman -S --noconfirm grub-bios
+	grub-mkconfig -o /boot/grub/grub.cfg
+	read -p "Bootplatte: " BOOT
+	grub-install BOOT
+
+	exit
+	umount --all
+	reboot
+
+}
+
+wlan () {
+	cp /etc/network.d/examples/wireless-wpa /etc/network.d/
+	#read -p "Netzwerkname: " WPANAME
+	#read -p "Netzwerkkey: " WPAKEY
+	nano /etc/network.d/wireless-wpa
+	netcfg wireless-wpa
+	
+}
+pacman () {
+	echo "multilib auskommentieren" 
+	sleep ( 3 )
+	nano /etc/pacman.conf
+	echo "[archlinuxfr]" >> etc/pacman.conf
+	echo "Server = http://repo.archlinux.fr/$arch" >> etc/pacman.conf
+	echo "" >> etc/pacman.conf
+	echo "[repo-ck]" >> etc/pacman.conf
+	echo "SigLevel = PackageRequired" >> etc/pacman.conf
+	echo "Server = http://repo-ck.com/$arch" >> etc/pacman.conf
+	
+}
+
+
+echo "1 - Partitionierung"
+echo "2 - Installation"
+echo "3 - Konfiguration"
+echo "4 - 1-3"
+read -p "Option eingeben [1|2|3|4]:" OPT
+
+case $OPT in
+	1) partitionierung
+		break;;
+	2) installation
+		break;;
+	3) konfiguration
+		break;;
+	4) partitionierung
+	   installation
+	   konfiguration
+		break;;
+	*) echo "Benutzung:[1|2|3|4]"
+	   echo	"1 - Partitionierung"
+	   echo "2 - Installation"
+	   echo "3 - Konfiguration"
+	   echo "4 - 1-3"
+esac
