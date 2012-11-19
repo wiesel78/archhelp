@@ -1,10 +1,10 @@
 #!/bin/bash
 #
-# Installskript für Arch-Linux mit Systemd und Btrfs
+# Installskript für Arch-Linux mit Systemd, Btrfs, Linux-ck
 # 
 # Es wird empfohlen sich das Skript vorher anzuschauen und bei
 # bedarf anzupassen, besonders wenn andere Filesysteme erwünscht sind
-#  
+# Bei Grub ist elevater=bfq nachzutragen
 #
 
 partitionierung() {
@@ -16,9 +16,10 @@ partitionierung() {
 	read -p "zusätzliche Optionen (-L schon vergeben): " BTRFS_OPT
 	read -p "Swap angeben: " SWAP 
 
-	# HDDs formatieren 
+	# HDDs formatieren und mounten 
 	mkswap -L swap ${SWAP}
 	mkfs.btrfs ${BTRFS_OPT} -L btrfs-root ${BTRFS_HDD}
+	sleep 5
 	mount -o compress /dev/disk/by-label/btrfs-root /mnt
 	swapon -L swap
 	cd /mnt
@@ -30,14 +31,16 @@ partitionierung() {
 	do
 		read -p "Name des Subvol: " SUBVOL[${VOLUME_COUNT}]
 		btrfs subvolume create ${SUBVOL[${VOLUME_COUNT}]}
-		read -p "Weitere Subvols? [1 = true]: " EINGABE
-		if [ ${EINGABE} -eq 1 ] 
+		read -p "Weitere Subvols? [y/n]: " EINGABE
+		if [ ${EINGABE} = "y" ] 
 			then
 				((VOLUME_COUNT++))
 			else
 				NEW_SUBVOL=false
 			fi
 	done
+	cd /
+	sleep 3
 	umount /mnt
 	
 	# Subvolumes mounten
@@ -45,7 +48,11 @@ partitionierung() {
 	while (( ${MOUNT_COUNT} <= ${VOLUME_COUNT} )) 
 	do
 		read -p "Einhängepunkt für ${SUBVOL[${MOUNT_COUNT}]} ab /mnt: " MOUNTPOINT
-		mount -o compress,subvol=${SUBVOL[${MOUNT_COUNT}]} /dev/disk/by-label/btrfs-root /mnt/$MOUNTPOINT 
+		if [ ! -d /mnt/${MOUNTPOINT} ]
+			then 
+				mkdir /mnt/${MOUNTPOINT}
+		fi
+		mount -o compress,subvol=${SUBVOL[${MOUNT_COUNT}]} /dev/disk/by-label/btrfs-root /mnt/${MOUNTPOINT} 
 		((MOUNT_COUNT++))
 	done
 	
@@ -56,12 +63,14 @@ partitionierung() {
 installation () {
 	# Wlan bei Bedarf aktivieren
 	read -p "Wlan aktivieren? [y/n]: " WLAN
-	if [${WLAN} -eq "y"] 
+	if [ ${WLAN} = "y" ] 
 		then
 			wlan
 	fi
 	
 	# Basisinstallation und fstab generieren
+	sed -i 's/#Server/Server/' /etc/pacman.d/mirrorlist
+	sleep 5
 	pacstrap /mnt base base-devel btrfs-progs
 	genfstab -Lp /mnt >> /mnt/etc/fstab
 	arch-chroot /mnt
@@ -84,7 +93,7 @@ konfiguration () {
 	sed -i '/HOOKS/s/sata/sata btrfs/' /etc/mkinitcpio.conf
 	
 	# Erweiterte Kofiguration
-	pacman
+	pacmanconf
 	sed -i 's/#de_DE.UTF-8/de_DE.UTF-8/' /etc/locale.gen
 	sed -i 's/#de_DE/de_DE/' /etc/locale.gen
 	sed -i 's/#de_DE@euro/de_DE@euro/' /etc/locale.gen
@@ -122,15 +131,15 @@ wlan () {
 	netcfg wireless-wpa
 }
 
-pacman () {
+pacmanconf () {
 	echo "multilib auskommentieren" 
 	nano /etc/pacman.conf
 	echo "[archlinuxfr]" >> etc/pacman.conf
-	echo "Server = http://repo.archlinux.fr/$arch" >> etc/pacman.conf
+	echo "Server = http://repo.archlinux.fr/\$arch" >> etc/pacman.conf
 	echo "" >> etc/pacman.conf
 	echo "[repo-ck]" >> etc/pacman.conf
 	echo "SigLevel = PackageRequired" >> etc/pacman.conf
-	echo "Server = http://repo-ck.com/$arch" >> etc/pacman.conf
+	echo "Server = http://repo-ck.com/\$arch" >> etc/pacman.conf
 }
 
 
@@ -138,18 +147,22 @@ echo "1 - Partitionierung"
 echo "2 - Installation"
 echo "3 - Konfiguration"
 echo "4 - 1-3"
-read -p "Option eingeben [1|2|3|4]:" OPT
+echo "5 - 2-3"
+read -p "Option eingeben [1|2|3|4|5]:" OPT
 
-case $OPT in
+case ${OPT} in
 	1) partitionierung;;
 	2) installation;;
 	3) konfiguration;;
 	4) partitionierung
 	   installation
 	   konfiguration;;
-	*) echo "Benutzung:[1|2|3|4]"
+	5) installation
+	   konfiguration;;
+	*) echo "Benutzung:[1|2|3|4|5]"
 	   echo	"1 - Partitionierung"
 	   echo "2 - Installation"
 	   echo "3 - Konfiguration"
 	   echo "4 - 1-3"
+	   echo "5 - 2-3"
 esac
