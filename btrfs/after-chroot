@@ -4,14 +4,13 @@
 
 
 pacmanconf () {
-	echo "multilib auskommentieren" 
 	nano /etc/pacman.conf
-	echo "[archlinuxfr]" >> etc/pacman.conf
-	echo "Server = http://repo.archlinux.fr/\$arch" >> etc/pacman.conf
-	echo "" >> etc/pacman.conf
-	echo "[repo-ck]" >> etc/pacman.conf
-	echo "SigLevel = PackageRequired" >> etc/pacman.conf
-	echo "Server = http://repo-ck.com/\$arch" >> etc/pacman.conf
+	echo "[archlinuxfr]" >> /etc/pacman.conf
+	echo "Server = http://repo.archlinux.fr/\$arch" >> /etc/pacman.conf
+	echo "" >> /etc/pacman.conf
+	echo "[repo-ck]" >> /etc/pacman.conf
+	echo "SigLevel = PackageRequired" >> /etc/pacman.conf
+	echo "Server = http://repo-ck.com/\$arch" >> /etc/pacman.conf
 }
 
 konfiguration () {
@@ -20,7 +19,7 @@ konfiguration () {
 	echo ${HOST} > /etc/hostname
 	echo LANG=de_DE.UTF-8 > /etc/locale.conf
 	echo LC_COLLATE=C >> /etc/locale.conf
-	echo KEYMAP=de-latin1 /etc/vconsole.conf
+	echo KEYMAP=de-latin1 > /etc/vconsole.conf
 	ln -s /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 	echo "#<ip-address>	<hostname.domain.org>	<hostname>" > /etc/hosts
 	echo "127.0.0.1	localhost.localdomain	localhost $HOST" >> /etc/hosts
@@ -35,7 +34,7 @@ konfiguration () {
 	sed -i 's/#de_DE/de_DE/' /etc/locale.gen
 	sed -i 's/#de_DE@euro/de_DE@euro/' /etc/locale.gen
 	locale-gen
-	pacman -Syu --noconfirm linux-ck linux-ck-headers zsh acpid ntp dbus avahi cups
+	pacman -Syu --noconfirm linux-ck linux-ck-headers acpid ntp dbus avahi cups
 	mkinitcpio -p linux
 	mkinitcpio -p linux-ck
 	chsh -S /bin/zsh
@@ -45,15 +44,17 @@ konfiguration () {
 	systemctl enable cups.service
 	
 	# Endkonfiguration; User
-	echo "--Rootpass"
+	echo "Rootpasswort"
 	passwd
-	echo "--User"
+	echo "Userkonfiguration"
 	adduser
 	pacman -S --noconfirm grub-bios
 	grub-mkconfig -o /boot/grub/grub.cfg
 	read -p "Bootplatte angeben: " BOOT_HDD
 	grub-install ${BOOT_HDD}
 	
+	echo "Leaving arch-chroot"
+	sleep 3
 	exit
 }
 

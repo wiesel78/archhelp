@@ -69,16 +69,16 @@ installation () {
 	# Basisinstallation und fstab generieren
 	sed -i 's/#Server/Server/' /etc/pacman.d/mirrorlist
 	sleep 5
-	pacstrap /mnt base base-devel btrfs-progs
+	pacstrap /mnt base base-devel btrfs-progs zsh grml-zsh-config
 	genfstab -Lp /mnt >> /mnt/etc/fstab
 
 	unset WLAN
-	cp after-chroot /mnt/tmp/
+	cp ./after-chroot /mnt/tmp/
 	arch-chroot /mnt /tmp/after-chroot
 	
-	# Umount und Reboot; Abschluss der Grundinstallation
+	# Umount; Abschluss der Grundinstallation
 	umount --all
-	reboot
+	
 }
 
 wlan () {
