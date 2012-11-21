@@ -1,29 +1,38 @@
 #!/bin/bash
-#
-# Installskript für Arch-Linux mit Systemd, Btrfs, Linux-ck
-# 
-# Es wird empfohlen sich das Skript vorher anzuschauen und bei
-# bedarf anzupassen, besonders wenn andere Filesysteme erwünscht sind
-# Bei Grub ist elevater=bfq nachzutragen
-#
+#############################################################
+# A typical installscript for Arch-Linux with 				#
+# systemd, grub, btrfs, linux-ck . 							#
+#															#
+# Check and change this script for your personel use,		#
+# of course you do when you're not familiar with the 		#
+# german language. ;)										#
+# Be careful with the partioning-part and don't forget to 	#
+# add "elevator=bfq" in grub.cfg.							#
+#############################################################
 
 partitionierung() {
-	# Sprache auf deutsch stellen und HDDs abfragen
+	# change keyboard to german and get filesystem and disk names
 	loadkeys de			
 	read -p "zu formatierende Platte angeben: " BOOT_HDD
-	gdisk ${BOOT_HDD}
 	read -p "Platten für btrfs eingeben: " BTRFS_HDD
-	read -p "zusätzliche Optionen (-L schon vergeben): " BTRFS_OPT
+	read -p "Label für das Btrfs-Volume angeben (Default: btrfs-root): " BTRFS_LABEL
+	read -p "zusätzliche Optionen: " BTRFS_OPT
 	read -p "Swap angeben: " SWAP 
-
-	# HDDs formatieren und mounten 
+	gdisk ${BOOT_HDD}
+	
+	if [ -z ${BTRFS_LABEL} ]
+		then
+			BTRFS_LABEL=btrfs-root
+	fi
+	
+	# set up filesystem and mount for subvolumes 
 	mkswap -L swap ${SWAP}
-	mkfs.btrfs ${BTRFS_OPT} -L btrfs-root ${BTRFS_HDD}
+	mkfs.btrfs ${BTRFS_OPT} -L ${BTRFS_LABEL} ${BTRFS_HDD}
 	sleep 5
-	mount -o compress /dev/disk/by-label/btrfs-root /mnt
+	mount -o compress /dev/disk/by-label/${BTRFS_LABEL} /mnt
 	swapon -L swap
 	
-	# Subvolumes unter Btrfs erstellen
+	# create subvolumes
 	VOLUME_COUNT=0
 	NEW_SUBVOL=true
 	while ( ${NEW_SUBVOL} -eq "true" )
@@ -36,12 +45,12 @@ partitionierung() {
 				((VOLUME_COUNT++))
 			else
 				NEW_SUBVOL=false
-			fi
+		fi
 	done
+	
+	# umount "main_btrfs" and mount subvolumes 
 	sleep 3
 	umount /mnt
-	
-	# Subvolumes mounten
 	MOUNT_COUNT=0
 	while (( ${MOUNT_COUNT} <= ${VOLUME_COUNT} )) 
 	do
@@ -54,34 +63,37 @@ partitionierung() {
 		((MOUNT_COUNT++))
 	done
 	
-	# Variablen löschen; eigentlich überflüssig, aber der Eindeutigkeit halber
+	# delete variables; maybe unimportant, but i don't care
 	unset BOOT_HDD MOUNT_COUNT NEW_SUBVOL VOLUME_COUNT EINGABE SWAP BTRFS_HDD BTRFS_OPT
 }
 
 installation () {
-	# Wlan bei Bedarf aktivieren
+	# get wireless-lan if you need
 	read -p "Wlan aktivieren? [y/n]: " WLAN
 	if [ ${WLAN} = "y" ] 
 		then
 			wlan
 	fi
 	
-	# Basisinstallation und fstab generieren
+	# basic installation and some usefull tools 
 	sed -i 's/#Server/Server/' /etc/pacman.d/mirrorlist
 	sleep 5
 	pacstrap /mnt base base-devel btrfs-progs zsh grml-zsh-config
 	genfstab -Lp /mnt >> /mnt/etc/fstab
-
+	
 	unset WLAN
-	cp ./after-chroot /mnt/tmp/
+	cp after-chroot /mnt/tmp/
 	arch-chroot /mnt /tmp/after-chroot
 	
-	# Umount; Abschluss der Grundinstallation
+	# umount disk and //To-Do some reboot and final shit
+	# --all is a dirty trick
 	umount --all
 	
 }
 
 wlan () {
+	# setting up wlan with netcfg, dirty and quick
+	# change to user doesn't have to change wireless-wpa with nano
 	cp /etc/network.d/examples/wireless-wpa /etc/network.d/
 	#read -p "Netzwerkname: " WPANAME
 	#read -p "Netzwerkkey: " WPAKEY
@@ -89,6 +101,8 @@ wlan () {
 	netcfg wireless-wpa
 }
 
+# get options what we can do for you
+# dirty and will be changed soon
 echo "1 - Partitionierung"
 echo "2 - Installation"
 echo "3 - 1 + 2"
@@ -97,8 +111,7 @@ read -p "Option eingeben [1|2|3]:" OPT
 case ${OPT} in
 	1) partitionierung;;
 	2) installation;;
-	3) konfiguration;;
-	4) partitionierung
+	3) partitionierung
 	   installation;;
 	*) echo "Benutzung:[1|2|3]"
 	   echo	"1 - Partitionierung"

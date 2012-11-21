@@ -1,9 +1,14 @@
-#
-# Konfiguriert nach dem chroot weiter
-#
-
+#!/bin/bash
+#####################################################
+#													#
+# This scripts follows after arch-chroot 			#
+# from "arch-install".								#
+# It configures the basic installation 				#
+# for a german system and the linuc-ck-corex kernel #
+#####################################################
 
 pacmanconf () {
+	# adding important repos
 	nano /etc/pacman.conf
 	echo "[archlinuxfr]" >> /etc/pacman.conf
 	echo "Server = http://repo.archlinux.fr/\$arch" >> /etc/pacman.conf
@@ -14,7 +19,7 @@ pacmanconf () {
 }
 
 konfiguration () {
-	# Grundkonfiguration
+	# basic configuration for a german system
 	read -p "Hostname" HOST
 	echo ${HOST} > /etc/hostname
 	echo LANG=de_DE.UTF-8 > /etc/locale.conf
@@ -24,17 +29,18 @@ konfiguration () {
 	echo "#<ip-address>	<hostname.domain.org>	<hostname>" > /etc/hosts
 	echo "127.0.0.1	localhost.localdomain	localhost $HOST" >> /etc/hosts
 	echo "::1		localhost.localdomain	localhost $HOST" >> /etc/hosts
+	# adding modules for btrfs and btrfs-subvolumes in mkinit
 	sed -i 's/MODULES=""/MODULES="crc32c"/' /etc/mkinitcpio.conf
 	sed -i '/HOOKS/s/sata/sata btrfs/' /etc/mkinitcpio.conf
 	sed -i '/HOOKS/s/fsck//' /etc/mkinitcpio.conf
-	
-	# Erweiterte Kofiguration; Sprache, Kernel
-	pacmanconf
 	sed -i 's/#de_DE.UTF-8/de_DE.UTF-8/' /etc/locale.gen
 	sed -i 's/#de_DE/de_DE/' /etc/locale.gen
 	sed -i 's/#de_DE@euro/de_DE@euro/' /etc/locale.gen
 	locale-gen
-	pacman -Syu --noconfirm linux-ck linux-ck-headers acpid ntp dbus avahi cups
+	
+	# installing some services and adding them to systemd and also corex-kernel
+	pacmanconf
+	pacman -Syu --noconfirm linux-ck-corex linux-ck-corex-headers acpid ntp dbus avahi cups
 	mkinitcpio -p linux
 	mkinitcpio -p linux-ck
 	chsh -S /bin/zsh
@@ -42,20 +48,29 @@ konfiguration () {
 	systemctl enable ntpd.service
 	systemctl enable avahi-daemon.service
 	systemctl enable cups.service
+	ntp -gq
+	hwclock -w
 	
-	# Endkonfiguration; User
+	bios
+	# adding user and setting root
 	echo "Rootpasswort"
 	passwd
 	echo "Userkonfiguration"
 	adduser
-	pacman -S --noconfirm grub-bios
-	grub-mkconfig -o /boot/grub/grub.cfg
-	read -p "Bootplatte angeben: " BOOT_HDD
-	grub-install ${BOOT_HDD}
 	
 	echo "Leaving arch-chroot"
 	sleep 3
 	exit
+}
+
+bios() {
+	# grub-install on boot hdd
+	read -p "Bootpartition eingeben: " BOOT_HDD
+	pacman -S --noconfirm grub-bios
+	grub-mkconfig -o /boot/grub/grub.cfg
+	grub-install ${BOOT_HDD}
+	
+	unset BOOT_HDD
 }
 
 konfiguration
