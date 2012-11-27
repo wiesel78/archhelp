@@ -14,13 +14,13 @@ partitionierung() {
 	# change keyboard to german and get filesystem and disk names
 	loadkeys de			
 	read -p "zu formatierende Platte angeben: " BOOT_HDD
+	gdisk ${BOOT_HDD}
 	read -p "Platten für btrfs eingeben: " BTRFS_HDD
 	read -p "Label für das Btrfs-Volume angeben (Default: btrfs-root): " BTRFS_LABEL
 	read -p "zusätzliche Optionen: " BTRFS_OPT
 	read -p "Swap angeben: " SWAP 
-	gdisk ${BOOT_HDD}
 	
-	if [ -z ${BTRFS_LABEL} ]
+	if [ ${BTRFS_LABEL} -eq "" ]
 		then
 			BTRFS_LABEL=btrfs-root
 	fi
@@ -59,7 +59,7 @@ partitionierung() {
 			then 
 				mkdir /mnt/${MOUNTPOINT}
 		fi
-		mount -o compress,subvol=${SUBVOL[${MOUNT_COUNT}]} /dev/disk/by-label/btrfs-root /mnt/${MOUNTPOINT} 
+		mount -o compress,subvol=${SUBVOL[${MOUNT_COUNT}]} /dev/disk/by-label/${BTRFS_LABEL} /mnt/${MOUNTPOINT} 
 		((MOUNT_COUNT++))
 	done
 	
@@ -75,19 +75,26 @@ installation () {
 			wlan
 	fi
 	
+	read -p "Ethernet aktivieren? [y/n]: " ETH
+	if [ ${ETH} = "y" ] 
+		then
+			cp /etc/network.d/examples/ethernet-dhcp /etc/network.d/
+			netcfg ethernet-dhcp
+	fi
+	
 	# basic installation and some usefull tools 
 	sed -i 's/#Server/Server/' /etc/pacman.d/mirrorlist
 	sleep 5
-	pacstrap /mnt base base-devel btrfs-progs zsh grml-zsh-config
+	pacstrap /mnt base base-devel btrfs-progs zsh grml-zsh-config wpa_supplicant
 	genfstab -Lp /mnt >> /mnt/etc/fstab
 	
-	unset WLAN
-	cp after-chroot /mnt/tmp/
-	arch-chroot /mnt /tmp/after-chroot
+	unset WLAN ETH
+	cp after-chroot /mnt/root/
+	arch-chroot /mnt /mnt/root/after-chroot
 	
 	# umount disk and //To-Do some reboot and final shit
 	# --all is a dirty trick
-	umount --all
+	# umount --all
 	
 }
 

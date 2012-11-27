@@ -18,9 +18,19 @@ pacmanconf () {
 	echo "Server = http://repo-ck.com/\$arch" >> /etc/pacman.conf
 }
 
-konfiguration () {
+bios() {
+	# grub-install on boot hdd
+	read -p "Bootpartition eingeben: " BOOT_HDD
+	pacman -S --noconfirm grub-bios
+	grub-mkconfig -o /boot/grub/grub.cfg
+	grub-install ${BOOT_HDD}
+	
+	unset BOOT_HDD
+}
+
+configuration () {
 	# basic configuration for a german system
-	read -p "Hostname" HOST
+	read -p "Hostname: " HOST
 	echo ${HOST} > /etc/hostname
 	echo LANG=de_DE.UTF-8 > /etc/locale.conf
 	echo LC_COLLATE=C >> /etc/locale.conf
@@ -43,7 +53,7 @@ konfiguration () {
 	pacman -Syu --noconfirm linux-ck-corex linux-ck-corex-headers acpid ntp dbus avahi cups
 	mkinitcpio -p linux
 	mkinitcpio -p linux-ck
-	chsh -S /bin/zsh
+	chsh -s /bin/zsh root
 	systemctl enable acpid.service
 	systemctl enable ntpd.service
 	systemctl enable avahi-daemon.service
@@ -63,14 +73,5 @@ konfiguration () {
 	exit
 }
 
-bios() {
-	# grub-install on boot hdd
-	read -p "Bootpartition eingeben: " BOOT_HDD
-	pacman -S --noconfirm grub-bios
-	grub-mkconfig -o /boot/grub/grub.cfg
-	grub-install ${BOOT_HDD}
-	
-	unset BOOT_HDD
-}
 
-konfiguration
+configuration
