@@ -45,7 +45,6 @@ Gnome :
 gnome
 gdm
 gnome-tweak-tool
-#gnome-extra
 gnome-contacts
 gnome-documents
 gnome-online-accounts
@@ -53,6 +52,7 @@ gnome-power-manager
 gnome-user-share
 gnome-screenshot
 file-roller
+#gnome-extra
 
 Netzwerk :
 wireless_tools
@@ -86,6 +86,7 @@ Entwicklung :
 git                    # Versionierungstool
 geany                  # Editor und Entwicklungsumgebung
 gedit                  # Editor
+openmpi
 #eclipse               # Entwicklungsumgebung
 
 Multimedia :
