@@ -71,8 +71,6 @@ ntp                    # Zeit-Synchro
 chromium               # Browser
 transmission-gtk       # Torrent
 ddclient               # dns-client
-
-Kommunikation :
 empathy                # IM-Client
 telepathy-gabble       # Bibliothek für Jabber
 
@@ -96,6 +94,7 @@ clementine             # Musikspieler
 gimp                   # Bildbearbeitungsprogramm
 evince                 # pdf Betrachter
 eog                    # Eye of Gnome : Bildbetrachter
+libreoffice
 gstreamer0.10          # Multimedia Framework
 gstreamer0.10-bad
 gstreamer0.10-bad-plugins
@@ -115,3 +114,4 @@ rsync            # synchronisierungstools
 gcalctool        # Taschenrechner
 jre7-openjdk     # offene Implementierung von Java
 preload          # läd häufig benutzte Programme in den RAM
+flashplugin
