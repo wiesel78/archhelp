@@ -12,3 +12,6 @@ Server = http://repo.archlinux.fr/$arch
 pacman -Syu yaourt
 
 
+# update ausführen mit den aur paketen 
+
+yaourt -Syua
