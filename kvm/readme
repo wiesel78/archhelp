@@ -1,0 +1,22 @@
+## das zu installierende paket heißt : qemu-kvm
+#
+# pacman -S qemu-kvm
+#
+#
+## um der VM mehr als 128mb RAM (z.B. 1024mb) zuzuweisen sollte man 
+## in der /etc/fstab folgendes einfügen : 
+#
+# none /dev/shm tmpfs default,size=1024M 0 0
+#
+#
+## danach /dev/shm remounten
+#
+# mount -o remount /dev/shm
+
+
+# um mit kvm die virtualisierung zu beschleunigen
+# sollte kvm-intel bzw kvm-amd geladen werden
+
+modprobe kvm kvm-intel
+
+# hierzu muss man mitglied der Gruppe kvm sein.

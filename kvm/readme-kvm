@@ -1,6 +1,0 @@
-# um mit kvm die virtualisierung zu beschleunigen
-# sollte kvm-intel bzw kvm-amd geladen werden
-
-modprobe kvm kvm-intel
-
-# hierzu muss man mitglied der Gruppe kvm sein.
