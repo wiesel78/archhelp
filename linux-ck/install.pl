@@ -70,16 +70,16 @@ if(existPacmanKey($pacman_key)){
     }
 }
 
-#if( isRoot() ){
-#    `pacman -Syy`;
-#}elsif(progIsInstall("sudo")){
-#    `sudo pacman -Syy`;
-#}else{
-#    die "root was needed : pacman -Syy";
-#}
+if( isRoot() ){
+    `pacman -Syy`;
+}elsif(progIsInstall("sudo")){
+    `sudo pacman -Syy`;
+}else{
+    die "root was needed : pacman -Syy";
+}
+
 
 say "bitte wählen sie den passenden ck-kernel";
-
 foreach (@kernels){
     say "$i : $_";
     $i = $i + 1;
