@@ -39,10 +39,10 @@ sub progInstall{
         return 1;
     }elsif(progExist($program)){
         if(isRoot){
-            my $_ = `pacman -S $program --noconfirm`;
+            my $_ = system("pacman -S $program --noconfirm");
             return 1;
         }elsif(progIsInstall("sudo")){
-            my $_ = `sudo pacman -S $program --noconfirm`;
+            my $_ = system("sudo pacman -S $program --noconfirm");
             return 1;
         }
     }
@@ -55,10 +55,10 @@ sub progRemove{
     
     if(progIsInstall($program)){
         if(isRoot){
-            my $_ = `pacman -R $program --noconfirm`;
+            my $_ = system("pacman -R $program --noconfirm");
             return 1;
         }elsif(progIsInstall("sudo")){
-            my $_ = `sudo pacman -R $program --noconfirm`;
+            my $_ = system("sudo pacman -R $program --noconfirm");
             return 1;
         }
     }

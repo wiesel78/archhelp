@@ -50,4 +50,4 @@ if(existShm($fstab)){
 
 
 ## /dev/shm remounten um die aenderungen wirksam zu machen
-`mount -o remount /dev/shm`;
+system("mount -o remount /dev/shm");
