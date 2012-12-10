@@ -1,6 +1,7 @@
 #!/usr/bin/perl -w
 use v5.16;
-require("../.header/perl.pl");
+use FindBin;
+require($FindBin::RealBin."/../.header/perl.pl");
 
 ## funktions deklaration 
 sub existShm{
@@ -38,10 +39,10 @@ if(existShm($fstab)){
         print "gewünschte größe des Gast-Arbeitsspeichers (MB): ";
         chomp(my $size = <STDIN>);
         open (my $fh, ">> ", $fstab) or die "konnte $fstab nicht beschreiben";
-        print $fh "\nnone /dev/shm tmpfs default,size=". $size ."M 0 0\n";
+        print $fh "none /dev/shm tmpfs defaults,size=". $size ."M 0 0\n";
         close $fh;
         print ">>fstab :\n";
-        print "\nnone /dev/shm tmpfs default,size=". $size ."M 0 0\n";
+        print "none /dev/shm tmpfs defaults,size=". $size ."M 0 0\n";
     }else{
         die "keine schreibrechte fuer $fstab \n";
     }

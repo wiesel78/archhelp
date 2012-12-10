@@ -1,0 +1,18 @@
+-loadkeys de
+-partitionieren
+	root
+	home
+	swap
+
+-formatieren
+-mounten nach /mnt 
+-pacstrap /mnt base base-devel 
+	pacstrap /mnt grub-bios btrfs-progs 
+	pacstrap /mnt wireless_tools wpa_supplicant
+
+-genfstab -Lp /mnt >> /mnt/etc/fstab
+-arch-chroot /mnt
+-passwd
+-grub-install /dev/sdX
+-/boot/grub/grub.cfg bearbeiten falls nötig
+-mkinitcpio -p linux
