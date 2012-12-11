@@ -1,0 +1,15 @@
+#!/usr/bin/perl
+use v5.16;
+use FindBin;
+
+my $dir = $FindBin::RealBin;
+my $path = $FindBin::RealBin."/Makefile";
+
+if( (-e $path and -w $path) or (! -e $path and -w $dir) ){
+    open (my $fh, " +> ", $path) or die "fehler beim schreiben";
+    print $fh `$dir/configure.pl $dir/programmliste`;
+    close $fh;
+}else{
+    die "keine schreibrechte";
+}
+

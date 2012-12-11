@@ -1,29 +1,53 @@
-Basissystem :
+[basissystem]
 base
 base-devel
 
-Bootloader :
+[bootloader]
 grub-bios
 
-Dateisystem : 
+[dateisystem] 
 btrfs-progs
 ntfsprogs
 ntfs-3g
 dosfstools
+libdvdread
+libdvdcss
+libdvdnav
 
-Administrativ :
+[netzwerk]
+wireless_tools
+networkmanager
+network-manager-applet
+networkmanager-openvpn
+networkmanager-pptp 
+nmap
+nbd
+samba
+smbclient
+gvfs-smb
+
+[administration]
 sudo
 openssh
 zsh
 grml-zsh-config
 lshw
 gdisk
+rsync
+preload
 
-Sound :
+[treiber]
 alsa-lib
 alsa-utils
+xf86-video-nouveau
+nouveau-dri
+#xf86-video-ati
+#ati-dri
+#xf86-video-intel
+#intel-dri
+xf86-input-synaptics
 
-Xorg : 
+[xorg]
 xorg-server
 xorg-server-utils
 xorg-utils
@@ -32,16 +56,7 @@ xorg-xinit
 #xorg-xclock
 #xterm
 
-Treiber : 
-xf86-video-nouveau      # Grafik -> Xorg-Nvidia
-nouveau-dri             # Grafik -> 2-3D für Nvidia
-#xf86-video-ati         # Grafik -> Xorg-ati
-#ati-dri                # Grafik -> 2-3D für ATI
-#xf86-video-intel       # Grafik -> Xorg-Intel
-#intel-dri              # Grafik -> 2-3D für Intel
-#xf86-input-synaptics   # touchpad
-
-Gnome :
+[gnome]
 gnome
 gdm
 gnome-tweak-tool
@@ -51,52 +66,43 @@ gnome-online-accounts
 gnome-power-manager
 gnome-user-share
 gnome-screenshot
+gcalctool
 file-roller
 #gnome-extra
 
-Netzwerk :
-wireless_tools
-networkmanager
-network-manager-applet
-networkmanager-openvpn
-networkmanager-pptp 
-nmap                   # portscanner
-nbd                    # gibt gerätedateien im netzwerk frei
-samba                  #
-smbclient              # kram für windowsnetzwerke
-gvfs-smb               #
+[internet]
+ntp
+chromium
+transmission-gtk
+ddclient
+empathy
+telepathy-gabble
+flashplugin
 
-Internet :
-ntp                    # Zeit-Synchro
-chromium               # Browser
-transmission-gtk       # Torrent
-ddclient               # dns-client
-empathy                # IM-Client
-telepathy-gabble       # Bibliothek für Jabber
+[drucker]
+avahi
+cups
+hplip
 
-Drucker :
-avahi                  # wird fuer cups benötigt 
-cups                   # Drucker
-hplip                  # HP Treiber Bibliothek
+[vm]
+qemu-kvm  
 
-VM : 
-qemu-kvm               # Virtualisierung (Nutzt den eigenen Prozessor)  
-
-Entwicklung :
-git                    # Versionierungstool
-geany                  # Editor und Entwicklungsumgebung
-gedit                  # Editor
+[entwicklung]
+git
+geany
+gedit
 openmpi
-#eclipse               # Entwicklungsumgebung
+jre7-openjdk
+#eclipse
 
-Multimedia :
-vlc                    # Multimediaplayer
-clementine             # Musikspieler
-gimp                   # Bildbearbeitungsprogramm
-evince                 # pdf Betrachter
-eog                    # Eye of Gnome : Bildbetrachter
+[multimedia]
+vlc
+clementine
+gimp
+evince
+eog
 libreoffice
-gstreamer0.10          # Multimedia Framework
+gstreamer0.10
 gstreamer0.10-bad
 gstreamer0.10-bad-plugins
 gstreamer0.10-ffmpeg
@@ -104,15 +110,5 @@ gstreamer0.10-good
 gstreamer0.10-good-plugins
 gstreamer0.10-ugly
 gstreamer0.10-ugly-plugins
-libdvdread       #
-libdvdcss        # libdvd -> verschlüsselte dvds abspielen
-libdvdnav        #
-#blender         # 3d programm
-#pitivi          # videoschnittprogramm
-
-Sonstiges : 
-rsync            # synchronisierungstools
-gcalctool        # Taschenrechner
-jre7-openjdk     # offene Implementierung von Java
-preload          # läd häufig benutzte Programme in den RAM
-flashplugin
+blender
+pitivi
