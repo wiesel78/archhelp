@@ -38,9 +38,14 @@ if(existShm($fstab)){
     if( -w $fstab ){
         print "gewünschte größe des Gast-Arbeitsspeichers (MB): ";
         chomp(my $size = <STDIN>);
-        open (my $fh, ">> ", $fstab) or die "konnte $fstab nicht beschreiben";
-        print $fh "none /dev/shm tmpfs defaults,size=". $size ."M 0 0\n";
-        close $fh;
+        
+        fstabAddEntry(  $fstab, 
+                        "none", 
+                        "/dev/shm", 
+                        "tmpfs", 
+                        "defaults,size=". $size ."M",
+                        0, 0 ) or die "irgendwas ist schief gelaufen";
+        
         print ">>fstab :\n";
         print "none /dev/shm tmpfs defaults,size=". $size ."M 0 0\n";
     }else{
