@@ -56,24 +56,24 @@ if(existRepoCK($conf)){
     die "no permission to write $conf";
 }
 
-if(existPacmanKey($pacman_key)){
-    say "pacman-key $pacman_key von graysky in der trustdb";
-}else{
+unless(existPacmanKey($pacman_key)){
     if( isRoot() ){
-        `pacman-key -r 6176ED4B`;
-        `pacman-key --lsign-key 6176ED4B`;
+        system("pacman-key -r 6176ED4B");
+        system("pacman-key --lsign-key 6176ED4B");
     }elsif(progIsInstall("sudo")){
-        `sudo pacman-key -r 6176ED4B --noconfirm`;
-        `sudo pacman-key --lsign-key 6176ED4B --noconfirm`;
+        system("sudo pacman-key -r 6176ED4B --noconfirm");
+        system("sudo pacman-key --lsign-key 6176ED4B --noconfirm");
     }else{
         die "root was needed : pacman-key -r 6176ED4B";
     }
+    
+    say "pacman-key $pacman_key von graysky in der trustdb";
 }
 
 if( isRoot() ){
-    `pacman -Syy`;
+    system("pacman -Syy");
 }elsif(progIsInstall("sudo")){
-    `sudo pacman -Syy`;
+    system("sudo pacman -Syy");
 }else{
     die "root was needed : pacman -Syy";
 }
@@ -91,14 +91,14 @@ do{
 $i = 1 unless $i;
 $i = $i - 1;
 
-if(progIsInstall("$kernels[$i]") and progIsInstall("$kernels[$i]-headers")){
-    say "$kernels[$i] und $kernels[$i]-headers sind installiert";
-}else{
+unless(progIsInstall("$kernels[$i]") and progIsInstall("$kernels[$i]-headers")){
     if( isRoot() ){
-        $_ = `pacman -S $kernels[$i] $kernels[$i]-headers`;
+        system("pacman -S $kernels[$i] $kernels[$i]-headers");
     }elsif(progIsInstall("sudo")){
-        $_ = `sudo pacman -S $kernels[$i] $kernels[$i]-headers`;
+        system("sudo pacman -S $kernels[$i] $kernels[$i]-headers");
     }else{
         die "root was needed : pacman -S irgendwas";
     }
+    
+    say "$kernels[$i] und $kernels[$i]-headers sind installiert";
 }
