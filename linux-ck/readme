@@ -12,7 +12,8 @@ Server = http://repo-ck.com/$arch
 
 pacman-key -r 6176ED4B
 pacman-key --lsign-key 6176ED4B
-
+pacman-key -r 5EE46C4C
+pacman-key --lsign-key 5EE46C4C
 
 # pacman-Datenbank aktualisieren
 
@@ -22,7 +23,7 @@ pacman -Syy
 # Es gibt optimierte Kernel für verschieden Prozessoren
 # linux-ck       = für alle / falls man sich also nicht sicher ist
 # linux-ck-atom  = für alle Intel-Atom Prozessoren
-# linux-ck-corex = für alle Dual -und Quad-Cores von Intel
+# linux-ck-core2 = für alle Dual -und Quad-Cores von Intel
 # linux-ck-kx    = für die meisten AMD's
 # linux-ck-p4    = für die Pentium-4 Reihe
 # linux-ck-pentm = für die Pentium-M Reihe
@@ -30,7 +31,7 @@ pacman -Syy
 # falls man Dual oder Quad-Core Prozessoren von Intel hat
 # sollte man also die linux-ck-corex Pakete installieren
 
-pacman -S linux-ck-corex linux-ck-corex-headers
+pacman -S linux-ck-core2 linux-ck-core2-headers
 
 
 # Nun muss man natürlich noch im Bootmanager einstellen

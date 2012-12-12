@@ -30,14 +30,34 @@ sub existPacmanKey{
     return 0;
 }
 
+sub addPacmanKey{
+    $pacman_key = shift @_;
+    
+    unless(existPacmanKey($pacman_key)){
+        if( isRoot() ){
+            system("pacman-key -r $pacman_key");
+            system("pacman-key --lsign-key $pacman_key");
+            return 1;
+        }elsif(progIsInstall("sudo")){
+            system("sudo pacman-key -r $pacman_key --noconfirm");
+            system("sudo pacman-key --lsign-key $pacman_key --noconfirm");
+            return 1;
+        }
+        
+        return 0;
+    }
+    
+    return 1;
+}
+
 ## variables
-my $i = 1;
-my $conf = "/etc/pacman.conf";
-my $pacman_key = "6176ED4B";
-my @kernels = qw(
+my $i           = 1;
+my $conf        = "/etc/pacman.conf";
+my @pacman_keys = ("6176ED4B", "5EE46C4C");
+my @kernels     = qw(
                 linux-ck 
                 linux-ck-atom 
-                linux-ck-corex 
+                linux-ck-core2 
                 linux-ck-kx 
                 linux-ck-p4 
                 linux-ck-pentm);
@@ -56,19 +76,12 @@ if(existRepoCK($conf)){
     die "no permission to write $conf";
 }
 
-unless(existPacmanKey($pacman_key)){
-    if( isRoot() ){
-        system("pacman-key -r 6176ED4B");
-        system("pacman-key --lsign-key 6176ED4B");
-    }elsif(progIsInstall("sudo")){
-        system("sudo pacman-key -r 6176ED4B --noconfirm");
-        system("sudo pacman-key --lsign-key 6176ED4B --noconfirm");
-    }else{
-        die "root was needed : pacman-key -r 6176ED4B";
-    }
-    
-    say "pacman-key $pacman_key von graysky in der trustdb";
+
+foreach (@pacman_keys){
+    addPacmanKey($_) or die "konnte key ( $_ ) nicht hinzufuegen.";
+    say "key $_ in trustdb";
 }
+
 
 if( isRoot() ){
     system("pacman -Syy");
