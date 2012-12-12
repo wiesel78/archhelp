@@ -1,9 +1,9 @@
-[basissystem]
-base
-base-devel
+#[basissystem]
+#base
+#base-devel
 
-[bootloader]
-grub-bios
+#[bootloader]
+#grub-bios
 
 [dateisystem] 
 btrfs-progs

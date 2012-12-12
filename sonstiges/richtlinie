@@ -15,4 +15,15 @@
 -passwd
 -grub-install /dev/sdX
 -/boot/grub/grub.cfg bearbeiten falls nötig
+-systemd conf (archhelp autoconf)
 -mkinitcpio -p linux
+-(archhelp/programme) programmliste anpassen 
+-(archhelp/programme) ./configure und make ausführen 
+-systemctl enable *
+    avahi-daemon.service
+    cups.service
+    gdm.service
+    NetworkManager.service
+    ntpd.service
+
+reboot

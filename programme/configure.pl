@@ -14,7 +14,7 @@ foreach (<>){
         my @progs;
         $groupname = $1;
         $groups{$groupname} = \@progs;
-    }elsif( /\s*(.*)\s*#*.*/ ){
+    }elsif( /\s*(.*\w{1,}.*)\s*#*.*/ ){
         push @{$groups{$groupname}}, $1;
     }
 }
