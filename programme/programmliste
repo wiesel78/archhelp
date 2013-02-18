@@ -35,6 +35,7 @@ lshw
 gdisk
 rsync
 preload
+arch-install-scripts
 
 [treiber]
 alsa-lib
