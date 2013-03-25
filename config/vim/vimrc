@@ -1,0 +1,27 @@
+set number
+set autoindent
+set shiftwidth=4
+set expandtab
+set tabstop=4
+set ignorecase
+set incsearch
+set mouse=a
+syntax on
+
+"--------------
+" autocomplete
+"--------------
+inoremap ( ()<Left>
+inoremap [ []<Left>
+inoremap { {}<Left>
+
+ noremap <silent> <F12> :ls<CR>:edit #
+inoremap <silent> <F12> <C-C>:ls<CR>:edit #
+
+ noremap <C-o> :write<CR>
+inoremap <C-o> <C-C>:write<CR>
+
+
+ noremap <C-x> :q<CR>
+inoremap <C-x> <C-C>:q<CR>
+
