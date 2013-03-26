@@ -1,0 +1,4 @@
+# paket installieren
+pacman -S nfs-utils
+
+

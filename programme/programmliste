@@ -19,7 +19,8 @@ wireless_tools
 networkmanager
 network-manager-applet
 networkmanager-openvpn
-networkmanager-pptp 
+networkmanager-pptp
+nfs-utils 
 nmap
 nbd
 samba
