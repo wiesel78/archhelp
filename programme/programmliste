@@ -36,6 +36,7 @@ gdisk
 rsync
 preload
 arch-install-scripts
+numlockx
 
 [treiber]
 alsa-lib
