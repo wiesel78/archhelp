@@ -38,16 +38,18 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
-beautiful.init("/usr/share/awesome/themes/default/theme.lua")
+beautiful.init(awful.util.getdir("config") .. "/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
---terminal = "gnome-terminal"
-terminal = "urxvtc -name Terminal -fn \"xft:Monospace:pixelsize:11\" -fade 20 +sb -depth 32 -fg white -bg rgba:2000/2000/2000/dddd"
+terminal = "urxvtc"
 editor = os.getenv("EDITOR") or "nano"
 editor_cmd = terminal .. " -e " .. editor
 
--- Default Web-Browser
+-- The default browser
 browser = "chromium"
+
+-- The default Directory-Viewer
+file_manager = "nautilus"
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
@@ -77,7 +79,7 @@ local layouts =
 -- {{{ Wallpaper
 if beautiful.wallpaper then
     for s = 1, screen.count() do
-        gears.wallpaper.maximized(beautiful.wallpaper, s, true)
+        gears.wallpaper.maximized(beautiful.wallpaper, s, false)
     end
 end
 -- }}}
@@ -87,7 +89,7 @@ end
 tags = {}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag({ 1, "web", 3, 4, 5, 6, 7, 8, 9 }, s, layouts[2])
+    tags[s] = awful.tag({ 1, "www", "video", "audio", 5, 6, 7, 8, 9 }, s, layouts[2])
 end
 -- }}}
 
@@ -100,9 +102,15 @@ myawesomemenu = {
    { "quit", awesome.quit }
 }
 
+myprogrammenu = {
+   { "browser", browser },
+   { "file manager", file_manager },
+   { "steam", "steam" }
+}
+
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "open terminal", terminal },
-                                    { "browser", browser }
+                                    { "program", myprogrammenu },
+                                    { "open terminal", terminal }
                                   }
                         })
 
@@ -274,7 +282,30 @@ globalkeys = awful.util.table.join(
                   awful.util.getdir("cache") .. "/history_eval")
               end),
     -- Menubar
-    awful.key({ modkey }, "p", function() menubar.show() end)
+    awful.key({ modkey }, "p", function() menubar.show() end),
+    
+    -- Custom
+	awful.key({ modkey }, "e", 
+	          function() 
+			      awful.util.spawn( file_manager , false)
+			  end),
+
+	-- Fn Buttons
+    awful.key({ }, "XF86AudioRaiseVolume", 
+              function ()
+                  awful.util.spawn(
+                      "/usr/bin/amixer -q set Master 5\\%+", false)
+              end),
+    awful.key({ }, "XF86AudioLowerVolume",
+              function()
+                  awful.util.spawn(
+                      "/usr/bin/amixer -q set Master 5\\%-", false)
+              end),
+    awful.key({ }, "XF86AudioMute",
+              function()
+                  awful.util.spawn(
+                      "/usr/bin/amixer -q set Master toggle", false)
+              end)
 )
 
 clientkeys = awful.util.table.join(
@@ -294,22 +325,7 @@ clientkeys = awful.util.table.join(
         function (c)
             c.maximized_horizontal = not c.maximized_horizontal
             c.maximized_vertical   = not c.maximized_vertical
-        end),
-
-    awful.key({}, "XF86AudioRaiseVolume", function ()
-        awful.util.spawn(
-            "/usr/bin/amixer -q set Master 5\\%+", 
-            false) end),
-
-    awful.key({}, "XF86AudioLowerVolume", function ()
-        awful.util.spawn(
-            "/usr/bin/amixer -q set Master 5\\%-", 
-            false) end),
-
-    awful.key({}, "XF86AudioMute", function ()
-        awful.util.spawn(
-            "/usr/bin/amixer -q set Master toggle", 
-            false) end)
+        end)
 )
 
 -- Compute the maximum number of digit we need, limited to 9
@@ -447,6 +463,6 @@ client.connect_signal("focus", function(c) c.border_color = beautiful.border_foc
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 
--- autostart
-awful.util.spawn_with_shell("urxvtd -f")
 awful.util.spawn_with_shell("numlockx on")
+awful.util.spawn_with_shell("urxvtd -f")
+
