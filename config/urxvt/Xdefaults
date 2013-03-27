@@ -4,10 +4,9 @@ urxvt*loginShell: true
 urxvt*scrollBar: false
 urxvt*secondaryScroll: true
 urxvt*saveLines: 65535
-urxvt*cursorBlink: true
 urxvt*urgentOnBell: true
-!urxvt*internalBorder: 0
-!urxvt*externalBorder: 0
+urxvt*internalBorder: 1
+urxvt*externalBorder: 1
 
 !Extensions
 urxvt*perl-lib: /usr/lib/urxvt/perl/
@@ -21,18 +20,15 @@ urxvt*depth: 32
 urxvt*fade: 20 
 
 ! - tabbing
-urxvt.tabbed.scrollBar: false
-urxvt.tabbed.tabbar-fg: 2
-urxvt.tabbed.tabbar-bg: 0
-urxvt.tabbed.tab-fg: 3
-urxvt.tabbed.tab-bg: 0
-urxvt.tabbed.background: [10]#000000
-urxvt.tabbed.secondaryScroll: true
-urxvt.tabbed.font: xft:Bitstream Vera Sans Mono:pixelsize=11
-urxvt.tabbed.urlLauncher: chromium
+URxvt.tabbed.tabbar-fg: 8
+URxvt.tabbed.tabbar-bg: 0
+URxvt.tabbed.tab-fg: 8
+URxvt.tabbed.tab-bg: 0
+Urxvt.tabbed.scrollBar: false
 
 ! - cursor
-urxvt*cursorColor: #DDDDDD
+urxvt*cursorColor: [10]#888888
+urxvt*cursorBlink: true
 
 ! - pseudo transparenz
 urxvt*shading: 15
@@ -43,7 +39,8 @@ urxvt.background: [10]#000000
 urxvt.foreground: white
 
 ! black
-URxvt*color0  : #2E3436
+!URxvt*color0  : #2E3436
+URxvt*color0  : #000000
 URxvt*color8  : #555753
 ! red
 URxvt*color1  : #CC0000
@@ -66,13 +63,5 @@ URxvt*color14 : #34E2E2
 ! white
 URxvt*color7  : #D3D7CF
 URxvt*color15 : #EEEEEC
-
-
-
-
-
-
-
-
 
 
