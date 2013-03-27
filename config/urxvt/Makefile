@@ -8,9 +8,9 @@ urxvt-sync-to-client: Xdefaults tabbed
 	if [ ! -e /usr/lib/urxvt/perl/tabbed.bak ]; \
 	then sudo cp /usr/lib/urxvt/perl/tabbed /usr/lib/urxvt/perl/tabbed.bak; \
 	fi
-	cp tabbed /usr/lib/urxvt/perl/tabbed
+	sudo cp tabbed /usr/lib/urxvt/perl/tabbed
 
 urxvt-sync-to-repo: ${HOME}/.Xdefaults /usr/lib/urxvt/perl/tabbed
-	cp /usr/lib/urxvt/perl/tabbed tabbed
 	cp ${HOME}/.Xdefaults Xdefaults
+	cp /usr/lib/urxvt/perl/tabbed tabbed
 
