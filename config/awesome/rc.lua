@@ -1,15 +1,18 @@
 -- Standard awesome library
-local gears = require("gears")
-local awful = require("awful")
-awful.rules = require("awful.rules")
+local gears     = require("gears")
+local awful     = require("awful")
+awful.rules     = require("awful.rules")
 require("awful.autofocus")
 -- Widget and layout library
-local wibox = require("wibox")
+local wibox     = require("wibox")
 -- Theme handling library
 local beautiful = require("beautiful")
 -- Notification library
-local naughty = require("naughty")
-local menubar = require("menubar")
+local naughty   = require("naughty")
+local menubar   = require("menubar")
+-- Keydoc Libary
+local keydoc    = require("keydoc")
+local autostart = require("autostart")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -89,7 +92,7 @@ end
 tags = {}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag({ 1, "www", "video", "audio", 5, 6, 7, 8, 9 }, s, layouts[2])
+    tags[s] = awful.tag({ 1, 2, 3, 4, 5, 6, 7, 8, 9 }, s, layouts[6])
 end
 -- }}}
 
@@ -102,14 +105,10 @@ myawesomemenu = {
    { "quit", awesome.quit }
 }
 
-myprogrammenu = {
-   { "browser", browser },
-   { "file manager", file_manager },
-   { "steam", "steam" }
-}
-
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "program", myprogrammenu },
+                                    { "browser", browser },
+                                    { "file manager", file_manager },
+                                    { "steam", "steam" },
                                     { "open terminal", terminal }
                                   }
                         })
@@ -256,7 +255,9 @@ globalkeys = awful.util.table.join(
         end),
 
     -- Standard program
-    awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
+    awful.key({ modkey,           }, "Return", 
+            function () awful.util.spawn(terminal) end,
+            "Terminal"),
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
 
@@ -269,10 +270,15 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
 
-    awful.key({ modkey, "Control" }, "n", awful.client.restore),
+    awful.key({ modkey, "Control" }, "n", 
+            awful.client.restore,
+            "Restore" ),
 
     -- Prompt
-    awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end),
+    keydoc.group("Bar"),
+    awful.key({ modkey },            "r",     
+            function () mypromptbox[mouse.screen]:run() end,
+            "Open ShellPrompt" ),
 
     awful.key({ modkey }, "x",
               function ()
@@ -280,15 +286,19 @@ globalkeys = awful.util.table.join(
                   mypromptbox[mouse.screen].widget,
                   awful.util.eval, nil,
                   awful.util.getdir("cache") .. "/history_eval")
-              end),
+              end,
+              "Open LuaPrompt" ),
     -- Menubar
-    awful.key({ modkey }, "p", function() menubar.show() end),
+    awful.key({ modkey }, "p", function() menubar.show() end,
+        "Show Menubar"),
     
     -- Custom
+    keydoc.group("Costum"),
 	awful.key({ modkey }, "e", 
 	          function() 
 			      awful.util.spawn( file_manager , false)
-			  end),
+			  end,
+              "Open Nautilus File Manager"),
 
 	-- Fn Buttons
     awful.key({ }, "XF86AudioRaiseVolume", 
@@ -305,7 +315,10 @@ globalkeys = awful.util.table.join(
               function()
                   awful.util.spawn(
                       "/usr/bin/amixer -q set Master toggle", false)
-              end)
+              end),
+    awful.key({ modkey }, "F1", 
+            keydoc.display, 
+            "Show this Page" )
 )
 
 clientkeys = awful.util.table.join(
@@ -333,6 +346,7 @@ keynumber = 0
 for s = 1, screen.count() do
    keynumber = math.min(9, math.max(#tags[s], keynumber))
 end
+
 
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it works on any keyboard layout.
@@ -374,6 +388,7 @@ clientbuttons = awful.util.table.join(
 
 -- Set keys
 root.keys(globalkeys)
+
 -- }}}
 
 -- {{{ Rules
@@ -464,5 +479,5 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- }}}
 
 awful.util.spawn_with_shell("numlockx on")
-awful.util.spawn_with_shell("urxvtd -f")
+awful.util.spawn_with_shell("if [ ! `ps -e | grep urxvtd` ]; then  urxvtd -f; fi")
 

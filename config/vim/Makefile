@@ -5,6 +5,6 @@ vim-sync-to-client:
 
 vim-sync-to-repo:
 	if [ -e ${HOME}/.vimrc ]; then \
-    cp ${HOME}/.vimrc vimrc; \
-    fi
+	cp ${HOME}/.vimrc vimrc; \
+	fi
 
