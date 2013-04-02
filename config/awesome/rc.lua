@@ -406,6 +406,8 @@ awful.rules.rules = {
       properties = { floating = true } },
     { rule = { class = "gimp" },
       properties = { floating = true } },
+    { rule = { class = "urxvt" },
+      properties = { size_hints_honor = false } },
     -- Set Firefox to always map on tags number 2 of screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { tag = tags[1][2] } },
@@ -422,6 +424,14 @@ client.connect_signal("manage", function (c, startup)
             client.focus = c
         end
     end)
+
+    --if c.name:find("urxvt") then
+    --    c.maximized_vertical = not c.maximized_vertical
+    --    c.maximized_vertical = not c.maximized_vertical
+    --    local tmpfocus = client.focus
+    --    client.focus = c
+    --    client.focus = tmpfocus
+    --end
 
     if not startup then
         -- Set the windows at the slave,
@@ -478,6 +488,4 @@ client.connect_signal("focus", function(c) c.border_color = beautiful.border_foc
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 
-awful.util.spawn_with_shell("numlockx on")
-awful.util.spawn_with_shell("if [ ! `ps -e | grep urxvtd` ]; then  urxvtd -f; fi")
-
+require("autostart")
