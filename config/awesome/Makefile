@@ -2,7 +2,7 @@ CONFIG = ${HOME}/.config/
 
 all:
 
-awesome-sync-to-client: rc.lua
+awesome-sync-to-client:
 	mkdir -p $(CONFIG)/awesome/
 	if [ ! -e $(CONFIG)/awesome.bak.tar.gz ]; then \
 	tar -cvzf $(CONFIG)/awesome.bak.tar.gz $(CONFIG)/awesome/*; \
