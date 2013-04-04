@@ -1,0 +1,10 @@
+# 1. von port:9666 von server1 auf einen port:8000 auf server2 umleiten
+# 2. von server2 wieder zurück auf server1
+# in diesem fall ist server1 und server2 derselbe server (127.0.0.1)
+
+iptables -t nat -A PREROUTING -p tcp --dport 9666 -j DNAT --to-destination 127.0.0.1:8000
+iptables -t nat -A POSTROUTING -p tcp --dport 8000 -j MASQUERADE
+
+# dieses Beispiel ist für die click'n'load unterstüzung von pyload gedacht
+# click'n'load (Port:9666) soll auf das WebInterface von PyLoad (Port:8000)
+umgeleitet werden
