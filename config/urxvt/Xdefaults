@@ -7,6 +7,8 @@ urxvt*saveLines: 65535
 urxvt*urgentOnBell: true
 urxvt*internalBorder: 0
 urxvt*externalBorder: 0
+urxvt*lineSpace: 3
+urxvt*letterSpace: 1
 
 !Extensions
 urxvt*perl-lib: /usr/lib/urxvt/perl/
@@ -26,8 +28,9 @@ URxvt.tabbed.tab-fg: 8
 URxvt.tabbed.tab-bg: 0
 
 ! - cursor
-urxvt*cursorColor: [10]#888888
+urxvt*cursorColor: [10]#000000
 urxvt*cursorBlink: true
+urxvt*cursorUnderline: true
 
 ! - pseudo transparenz
 urxvt*shading: 15

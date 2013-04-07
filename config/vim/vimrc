@@ -11,9 +11,9 @@ syntax on
 "--------------
 " autocomplete
 "--------------
-inoremap ( (<space><space>)<Left><Left>
-inoremap [ [<space><space>]<Left><Left>
-inoremap { {<space><space>}<Left><Left>
+inoremap ( ()<Left>
+inoremap [ []<Left>
+inoremap { {}<Left>
 inoremap < <><Left>
 inoremap " ""<Left>
 
