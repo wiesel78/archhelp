@@ -19,7 +19,8 @@ wireless_tools
 networkmanager
 network-manager-applet
 networkmanager-openvpn
-networkmanager-pptp 
+networkmanager-pptp
+nfs-utils 
 nmap
 nbd
 samba
@@ -31,10 +32,13 @@ sudo
 openssh
 zsh
 grml-zsh-config
+rxvt-unicode
 lshw
 gdisk
 rsync
 preload
+arch-install-scripts
+numlockx
 
 [treiber]
 alsa-lib
@@ -80,6 +84,7 @@ ddclient
 empathy
 telepathy-gabble
 flashplugin
+freetalk
 
 [drucker]
 avahi
@@ -102,6 +107,8 @@ vlc
 clementine
 gimp
 evince
+eog
+p7zip
 libreoffice
 gstreamer0.10
 gstreamer0.10-bad

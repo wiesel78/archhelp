@@ -1,0 +1,69 @@
+!General
+urxvt*termName: rxvt-256color
+urxvt*loginShell: true
+urxvt*scrollBar: false
+urxvt*secondaryScroll: true
+urxvt*saveLines: 65535
+urxvt*urgentOnBell: true
+urxvt*internalBorder: 0
+urxvt*externalBorder: 0
+urxvt*lineSpace: 3
+urxvt*letterSpace: 1
+
+!Extensions
+urxvt*perl-lib: /usr/lib/urxvt/perl/
+urxvt*perl-ext-common: default,matcher,searchable-scrollback,tabbed
+urxvt*urlLauncher: /usr/bin/chromium
+urxvt*matcher.button: 1
+
+! - fonts
+urxvt*font: xft:Monospace:pixelsize:11
+urxvt*depth: 32
+urxvt*fade: 20 
+
+! - tabbing
+URxvt.tabbed.tabbar-fg: 8
+URxvt.tabbed.tabbar-bg: 0
+URxvt.tabbed.tab-fg: 8
+URxvt.tabbed.tab-bg: 0
+
+! - cursor
+urxvt*cursorColor: [10]#000000
+urxvt*cursorBlink: true
+urxvt*cursorUnderline: true
+
+! - pseudo transparenz
+urxvt*shading: 15
+urxvt*inheritPixmap: true
+
+! - color scheme
+urxvt.background: [10]#000000
+urxvt.foreground: white
+
+! black
+!URxvt*color0  : #2E3436
+URxvt*color0  : #000000
+URxvt*color8  : #555753
+! red
+URxvt*color1  : #CC0000
+URxvt*color9  : #EF2929
+! green
+urxvt*color2  : #4E9A06
+URxvt*color10 : #8AE234
+! yellow
+URxvt*color3  : #C4A000
+URxvt*color11 : #FCE94F
+! blue
+URxvt*color4  : #3465A4
+URxvt*color12 : #729FCF
+! magenta
+URxvt*color5  : #75507B
+URxvt*color13 : #AD7FA8
+! cyan
+URxvt*color6  : #06989A
+URxvt*color14 : #34E2E2
+! white
+URxvt*color7  : #D3D7CF
+URxvt*color15 : #EEEEEC
+
+
