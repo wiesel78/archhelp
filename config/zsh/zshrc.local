@@ -1,1 +1,3 @@
+prompt off
 PS1='%F{green}%B%n%b@%F{red}%B%m%b %F{blue}%~%b %% '
+
