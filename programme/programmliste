@@ -20,6 +20,8 @@ networkmanager
 network-manager-applet
 networkmanager-openvpn
 networkmanager-pptp
+avahi
+nss-mdns
 nfs-utils 
 nmap
 nbd
@@ -38,6 +40,7 @@ gdisk
 rsync
 preload
 arch-install-scripts
+vim
 numlockx
 
 [treiber]
@@ -63,36 +66,23 @@ xorg-xinit
 
 [gnome]
 gnome
-gdm
-gnome-tweak-tool
-gnome-contacts
-gnome-documents
-gnome-online-accounts
-gnome-power-manager
-gnome-user-share
-gnome-screenshot
-gcalctool
-eog
 transmission-gtk
 file-roller
-#gnome-extra
 
 [internet]
 ntp
 chromium
 ddclient
-empathy
 telepathy-gabble
 flashplugin
 freetalk
 
 [drucker]
-avahi
 cups
 hplip
 
 [vm]
-qemu-kvm  
+qemu  
 
 [entwicklung]
 git
@@ -106,8 +96,6 @@ eclipse
 vlc
 clementine
 gimp
-evince
-eog
 p7zip
 libreoffice
 gstreamer0.10
