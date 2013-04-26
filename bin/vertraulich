@@ -1,0 +1,104 @@
+
+container="~/Dokumente/Verschlüsseltes/vertraulich.img"
+mountpoint="/mnt/vertraulich"
+lname=vertraulich
+
+for i in "$@"
+do
+
+  case ${i} in
+  on)
+    ## Container entschluesseln und an $mountpoint binden
+    # modul loop laden
+    if [ -z "`lsmod | grep '^loop\s'`"  ]
+    then
+      sudo modprobe loop
+      echo "modul loop geladen"
+    fi
+
+    loopdev="`losetup -f`"
+    
+    if [ -n "`losetup -j ${container}`" ]
+    then
+      firstloop="`losetup -j ${container} | cut -d ':' -f 1`"
+    else
+      # container an loopdevice haengen
+      sudo losetup ${loopdev} ${container}
+      echo "geraet ${loopdev} mit ${container} erstellt"
+    fi
+    
+    if [ ! -e "/dev/mapper/${lname}" ]
+    then
+      # loopdevice entschluesseln und an $lname binden
+      sudo cryptsetup luksOpen ${loopdev} ${lname}
+      echo "Container entschluesseln"
+    fi
+    
+    if [ ! -e "${mountpoint}" ]
+    then
+      # mountpoint erstellen
+      sudo mkdir -p ${mountpoint}
+      echo "${mountpoint} erstellen"
+    fi
+    
+    if [ -z "`cat /proc/mounts | grep ${mountpoint}`" ]
+    then
+      # entschluesselten container an mountpoint mounten
+      sudo mount /dev/mapper/${lname} ${mountpoint}
+      echo "Container nach ${mountpoint} mounten"
+    fi
+    ;;
+  off)
+    sync
+
+    loopdev="`losetup -j ${container} | cut -d ':' -f 1`"
+
+    if [ -n "`cat /proc/mounts | grep ${mountpoint}`" ]
+    then
+      sudo umount ${mountpoint}
+      echo "${mountpoint} wurde ausgehangen"
+    fi
+
+    if [ -e "/dev/mapper/${lname}" ]
+    then
+      sudo cryptsetup luksClose ${lname}
+      echo "Container wurde geschlossen" 
+    fi
+
+    if [ -e "${mountpoint}" ]
+    then
+      sudo rmdir ${mountpoint}
+      echo "${mountpoint} wurde geloescht"
+    fi
+
+    if [ -n "`losetup -j ${container}`" ]
+    then
+      sudo losetup -d ${loopdev}
+      echo "${loopdev} wurde deaktiviert"
+    fi
+
+    if [ -n "`lsmod | grep '^loop\s'`" ]
+    then
+      sudo modprobe -r loop
+      echo "loop modul wurde geunloadet"
+    fi
+    ;;
+  open)
+    if [ "`cat /proc/mounts | grep ${mountpoint}`" ]
+    then
+      nautilus ${mountpoint}
+    else
+      vertraulich on
+      nautilus ${mountpoint}
+    fi
+    ;;
+  close)
+    vertraulich off
+    ;;
+  *)
+    echo "keine gültige operation"
+    ;;
+  esac
+
+done
+ 
