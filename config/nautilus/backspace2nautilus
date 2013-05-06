@@ -1,0 +1,1 @@
+sed -i 's/;\s\((gtk_accel_path\s"<Actions>\/ShellActions\/Up"\s\)"<Alt>Up")/\1"BackSpace")/' $HOME/.config/nautilus/accels
