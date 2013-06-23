@@ -1,4 +1,4 @@
-CONFIG = ${HOME}/.config/
+CONFIG = ${HOME}/.config
 
 all:
 

@@ -23,11 +23,11 @@ my $fstab = "/etc/fstab";
 
 ## programm
 
-## ist qemu-kvm installiert
-if (progInstall("qemu-kvm")){
-    say "qemu-kvm ist installiert.";
+## ist qemu installiert
+if (progInstall("qemu")){
+    say "qemu ist installiert.";
 }else{
-    die "qemu-kvm wurde nicht erfolgreich installiert.";
+    die "qemu wurde nicht erfolgreich installiert.";
 }
 
 

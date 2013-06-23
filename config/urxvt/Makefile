@@ -2,7 +2,9 @@ all:
 
 urxvt-sync-to-client:
 	if [ ! -e ${HOME}/.Xdefaults.bak ]; then \
+    if [ -e ${HOME}/.Xdefaults ]; then \
 	cp ${HOME}/.Xdefaults ${HOME}/.Xdefaults.bak; \
+    fi \
 	fi
 	cp Xdefaults ${HOME}/.Xdefaults
 	if [ ! -e /usr/lib/urxvt/perl/tabbed.bak ]; then \
