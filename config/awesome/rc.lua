@@ -14,6 +14,8 @@ local menubar   = require("menubar")
 local keydoc    = require("keydoc")
 local autostart = require("autostart")
 
+local vicious   = require("vicious")
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -409,6 +411,8 @@ awful.rules.rules = {
       properties = { floating = true } },
     { rule = { class = "urxvt" },
       properties = { size_hints_honor = false } },
+    { rule = { class = "Chromium" }, 
+      properties = { floating = false } }
     -- Set Firefox to always map on tags number 2 of screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { tag = tags[1][2] } },
