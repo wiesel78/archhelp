@@ -127,6 +127,14 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- Create a textclock widget
 mytextclock = awful.widget.textclock()
 
+-- Vicous Memory Widget
+mytextmem = wibox.widget.textbox()
+vicious.register(mytextmem, vicious.widgets.mem, "$1% ($2MB/$3MB) |", 13)
+
+-- Vicious Gmail Widget
+mytextgmail = wibox.widget.textbox()
+vicious.register(mytextgmail, vicious.widgets.gmail, "Mails ${count} | " , 300)
+
 -- Create a wibox for each screen and add it
 mywibox = {}
 mypromptbox = {}
@@ -204,9 +212,11 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
+    right_layout:add(mytextgmail)
+    right_layout:add(mytextmem)
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
-
+    
     -- Now bring it all together (with the tasklist in the middle)
     local layout = wibox.layout.align.horizontal()
     layout:set_left(left_layout)
@@ -494,3 +504,4 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- }}}
 
 require("autostart")
+
