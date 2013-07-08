@@ -51,7 +51,7 @@ editor = os.getenv("EDITOR") or "nano"
 editor_cmd = terminal .. " -e " .. editor
 
 -- The default browser
-browser = "chromium"
+browser = "firefox"
 
 -- The default Directory-Viewer
 file_manager = "nautilus"
@@ -422,7 +422,9 @@ awful.rules.rules = {
     { rule = { class = "urxvt" },
       properties = { size_hints_honor = false } },
     { rule = { class = "Chromium" }, 
-      properties = { floating = false } }
+      properties = { floating = false } },
+    { rule = { class = "Firefox" },
+      properties = { floating = false} }
     -- Set Firefox to always map on tags number 2 of screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { tag = tags[1][2] } },
