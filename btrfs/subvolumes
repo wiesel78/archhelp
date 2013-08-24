@@ -7,3 +7,10 @@ btrfs subvolume create /mnt/vol-home
 # subvolumes einhängen
 
 mount -o compress,subvol=vol-root /dev/disk/by-label/btrfs-raid /mnt
+
+# Kernel Parameter
+
+set rootsubvolume="vol-root"
+set btrfsdev="btrfs-raid"
+
+linux ${rootsubvolume}/boot/vmlinuz-linux root=LABEL=${btrfsdev} ro rootflags=subvol=${rootsubvolume} 
