@@ -6,7 +6,7 @@
 #grub-bios
 
 [dateisystem] 
-btrfs-progs
+#btrfs-progs
 ntfsprogs
 ntfs-3g
 dosfstools
@@ -15,7 +15,8 @@ libdvdcss
 libdvdnav
 
 [netzwerk]
-wireless_tools
+#wireless_tools
+wpa_supplicant
 networkmanager
 network-manager-applet
 networkmanager-openvpn
