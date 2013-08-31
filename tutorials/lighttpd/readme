@@ -1,0 +1,68 @@
+# lighttpd : small and fast webserver alternate to apache
+# install 
+
+pacman -S lighttpd
+
+# start 
+
+sudo systemctl start lighttpd.service
+
+# start with system
+
+sudo systemctl enable lighttpd.service
+
+# the lighttpd conf is : /etc/lighttpd/lighttpd.conf
+
+
+## add cgi and fastcgi to the module array in 
+# /etc/lighttpd/lighttpd.conf
+
+server.modules = (  "mod_access",
+
+                    "mod_fastcgi", 
+                    "mod_cgi",
+
+                    "mod_accesslog" )
+
+
+## if you want php
+# install php
+
+pacman -S php php-cgi
+
+# and at this to the conf /etc/lighttpd/lighttpd.conf
+
+fastcgi.server = ( ".php" => 
+    (
+        "localhost" => 
+        (
+            "bin-path" => "/usr/bin/php-cgi",
+            "socket" => "/tmp/php.socket"
+        )
+    ) 
+)
+
+# restart lighttpd with sudo systemctl restart lighttpd.service
+
+#######################################################
+
+# css problem #
+# 
+# open /etc/lighttpd.conf and look at mimetype.assign array for 
+# ".css" => "text/css"
+# if not found then push it
+# example :
+
+
+mimetype.assign = ( ".html" => "text/html",
+                    ".txt" => "text/plain",
+
+                    ".css" => "text/css",     
+                    
+                    ".jpg" => "image/jpeg", 
+                    ".png" => "image/png", 
+                    "" => "application/octet-stream" )
+
+
+
+
