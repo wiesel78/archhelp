@@ -42,7 +42,16 @@ fastcgi.server = ( ".php" =>
     ) 
 )
 
+## if you want python
+# add this to the conf /etc/lighttpd/lighttpd.conf
+
+cgi.assign = ( ".py" => "/usr/bin/python" )
+static-file.exclude-extensions = ( ".py" )
+
+
 # restart lighttpd with sudo systemctl restart lighttpd.service
+
+
 
 #######################################################
 
