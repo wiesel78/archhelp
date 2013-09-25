@@ -39,3 +39,6 @@ smbclient -L server
 # zu einer freigabe verbinden
 smbclient //server/freigabe
 
+# mit welchen benutzer man sich anmelden möchte kann man mit -U angeben
+smbclient -U gast //server/freigabe
+
