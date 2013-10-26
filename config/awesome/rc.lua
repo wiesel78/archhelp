@@ -53,6 +53,12 @@ editor_cmd = terminal .. " -e " .. editor
 -- The default browser
 browser = "firefox"
 
+-- MusicPlayer
+music = "clementine"
+
+-- Default IDE
+ide = "jetbrains-webstorm"
+
 -- The default Directory-Viewer
 file_manager = "nautilus"
 
@@ -109,8 +115,9 @@ myawesomemenu = {
 
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "browser", browser },
+                                    { "ide", ide },
                                     { "file manager", file_manager },
-                                    { "clementine", "clementine"},
+                                    { "musik", music},
                                     { "steam", "steam" },
                                     { "open terminal", terminal }
                                   }
