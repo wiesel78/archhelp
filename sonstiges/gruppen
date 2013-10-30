@@ -21,6 +21,7 @@ log         # erlaubnis Log-Dateien anzusehen
 network     # Zugriff auf einen Netzwerkmanager
 lp          # Zugriff auf /dev/parport... , Drucker usw.
 kvm         # um qemu-kvm zu nutzen
+mpd         # Gruppe fuer den User mpd
 
 #power       # Zugriff aufs Powermanagment (Runterfahren, usw.)
 #storage     # um Speichermedien via dbus einzuhängen
