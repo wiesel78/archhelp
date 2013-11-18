@@ -28,20 +28,21 @@
 (require 'prelude-xml)
 
 ;;; Commentary: some useful things
-;; per default prelude uses super and its awful with awesome
-(setq mac-command-modifier 'meta)
-(setq mac-option-modifier 'super)
-;; disable guru-mode to use the arrow keys for navigation per default
-(setq prelude-guru nil)
-
-;; line numbers are always good
-(global-linum-mode 1)
-
-;; enable cua mode for copy/paste/cut/redo, like in all modern editors
-(cua-mode 1)
-
 ;; preload auto-install
-(prelude-require-packages '(lua-mode php-mode web-mode auto-complete))
+(prelude-require-packages '(lua-mode web-mode auto-complete))
+
+;; web-mode hook autoindent 2
+(defun web-mode-hook ()
+  "Hooks for web mode."
+  (setq web-mode-markup-indent-offset 2)
+)
+(add-hook 'web-mode-hook 'web-mode-hook)
+
+;; auto-complete config
+(require 'auto-complete-config)
+(ac-config-default)
+(ac-set-trigger-key "TAB")
+(setq ac-auto-start nil)
 
 ;; footer for prelude
 (provide 'prelude-modules)
