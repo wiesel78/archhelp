@@ -6,18 +6,14 @@
 ;; Disable guru-mode to use the arrow keys for navigation per default
 (setq prelude-guru nil)
 
-;; Pretty alignment
-(global-set-key (kbd "C-x \\") 'align-regexp)
-
 ;; Perform general buffer cleanup
 (global-set-key (kbd "C-c n") 'cleanup-buffer)
 
-;; Font size
-(define-key global-map (kbd "C-+") 'text-scale-increase)
-(define-key global-map (kbd "C--") 'text-scale-decrease)
-
 ;; Jump to definition in current file.
 (global-set-key (kbd "M-i") 'ido-goto-symbol)
+
+;; Time stamp
+(global-set-keys (kbd "C-x C-t") 'insert-date)
 
 ;; Footer
 (provide 'keybindings)
