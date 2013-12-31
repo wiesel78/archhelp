@@ -138,10 +138,6 @@ mytextclock = awful.widget.textclock()
 mytextmem = wibox.widget.textbox()
 vicious.register(mytextmem, vicious.widgets.mem, "$1% ($2MB/$3MB) |", 13)
 
--- Vicious Gmail Widget
-mytextgmail = wibox.widget.textbox()
-vicious.register(mytextgmail, vicious.widgets.gmail, "Mails ${count} | " , 300)
-
 -- Create a wibox for each screen and add it
 mywibox = {}
 mypromptbox = {}
@@ -219,7 +215,6 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
-    right_layout:add(mytextgmail)
     right_layout:add(mytextmem)
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
@@ -335,6 +330,16 @@ globalkeys = awful.util.table.join(
               function()
                   awful.util.spawn(
                       "/usr/bin/amixer -q set Master toggle", false)
+              end),
+    awful.key({ }, "XF86ScreenSaver", 
+              function ()
+                  awful.util.spawn(
+                      "/usr/bin/xset dpms force off", false)
+              end),
+    awful.key({ }, "XF86Launch1", 
+              function ()
+                  awful.util.spawn(
+                      "/usr/bin/systemctl suspend", false)
               end),
     awful.key({ modkey }, "F1", 
             keydoc.display, 
