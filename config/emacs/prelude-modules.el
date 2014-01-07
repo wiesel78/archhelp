@@ -24,25 +24,14 @@
 ;; (require 'prelude-scala)
 (require 'prelude-scheme)
 ;; (require 'prelude-scss)
-(require 'prelude-web)
+;;(require 'prelude-web)
 (require 'prelude-xml)
 
-;;; Commentary: some useful things
-;; preload auto-install
-(prelude-require-packages '(lua-mode web-mode auto-complete))
-
-;; web-mode hook autoindent 2
-(defun web-mode-hook ()
-  "Hooks for web mode."
-  (setq web-mode-markup-indent-offset 2)
-)
-(add-hook 'web-mode-hook 'web-mode-hook)
-
 ;; auto-complete config
-(require 'auto-complete-config)
-(ac-config-default)
-(ac-set-trigger-key "TAB")
-(setq ac-auto-start nil)
+;;(require 'auto-complete-config)
+;;(ac-config-default)
+;;(ac-set-trigger-key "TAB")
+;;(setq ac-auto-start nil)
 
 ;; footer for prelude
 (provide 'prelude-modules)

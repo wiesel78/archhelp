@@ -13,7 +13,10 @@
 (global-set-key (kbd "M-i") 'ido-goto-symbol)
 
 ;; Time stamp
-(global-set-keys (kbd "C-x C-t") 'insert-date)
+(global-set-key (kbd "C-x C-t") 'insert-date)
+
+;; Sudo file
+(global-set-key (kbd "C-x C-v") 'sudo-edit)
 
 ;; Footer
 (provide 'keybindings)
