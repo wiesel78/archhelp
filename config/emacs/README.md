@@ -7,10 +7,10 @@ und einigen Erweiterungen.
 `make to-client` Kopiert Konfiguration auf einen Client
 
 Erweiterungen
-  * `web-mode, lua-mode, autocomplete` sind als Zusatzmodule definiert
+  * `web-mode, lua-mode, autocomplete` sind als Zusatzmodule definiert (`autocomplete` ist deaktiviert)
   * `C-x C-v` öffne Datei mit sudo
   * Zeilennummern aktiviert
   * `Shift - ArrowKeys` zum Wechseln der Fenster
   * Cut and Paste aktiviert
   * UTF-8 als Standard Encoding
-  * `C-x cc` Räumt den aktuellen Buffer auf (Whitespaces und Tabs)
+  * `C-c n` Räumt den aktuellen Buffer auf (Whitespaces und Tabs)
