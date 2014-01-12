@@ -26,12 +26,7 @@
 ;; (require 'prelude-scss)
 ;;(require 'prelude-web)
 (require 'prelude-xml)
-
-;; auto-complete config
-;;(require 'auto-complete-config)
-;;(ac-config-default)
-;;(ac-set-trigger-key "TAB")
-;;(setq ac-auto-start nil)
+(require 'prelude-ido)
 
 ;; footer for prelude
 (provide 'prelude-modules)

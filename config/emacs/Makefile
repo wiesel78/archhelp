@@ -5,13 +5,13 @@ all:
 from-client:
 	if [ -d $(CONFIG)/ ]; then \
 	cp $(CONFIG)/prelude-modules.el ./prelude-modules.el; \
-	cp -r $(CONFIG)/personal/* ./personal; \
+	cp -r $(CONFIG)/personal/ ./; \
 	fi
 
 to-client:
 	mkdir -p $(CONFIG)
 	cp ./prelude-modules.el $(CONFIG)/prelude-modules.el
-	cp -r ./personal/* $(CONFIG)/personal
+	cp -r ./personal/ $(CONFIG)/
 
 fresh-client:
 	./deploy.sh

@@ -1,4 +1,6 @@
-;; Functions for coding
+;;; package --- Summary
+;;; Commentary: Functions for coding
+
 ;; Cleanup buffers
 (defun cleanup-buffer()
   "Perfom a bunch of Operations on the whitespace content of a buffer."
@@ -70,6 +72,20 @@
            (add-to-list 'symbol-names name)
            (add-to-list 'name-and-pos (cons name position))))))))
 
+
+;;; Commentary: Following code is inspired by Graphene
+;; set C-x k to kill active buffer
+(defun kill-default-buffer ()
+  "Kill the currently active buffer -- set to C-x k so that users are not asked which buffer they want to kill."
+  (interactive)
+  (let (kill-buffer-query-functions) (kill-buffer)))
+
+(defun insert-semicolon-at-end-of-line ()
+  "Add a closing semicolon from anywhere in the line."
+  (interactive)
+  (save-excursion
+    (end-of-line)
+    (insert ";")))
 
 
 ;; Footer

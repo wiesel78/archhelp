@@ -1,8 +1,5 @@
-;;; package ---  Summary
+;;; package --- Summary :
 ;;; Commentary: configure hooks and modes
-
-;; preload auto-install
-(prelude-require-packages '(lua-mode web-mode auto-complete))
 
 ;; web-mode hook autoindent 2
 (defun web-mode-hook ()
@@ -17,14 +14,5 @@
   )
 (add-hook 'python-mode-hook 'python-mode-hook)
 
-;; c-mode conf
-;; basic indent like linux kernel
-(setq c-basic-offset 8)
-
-;; <RET> indents new line
- (defun my-make-CR-do-indent ()
-   (define-key c-mode-base-map "\C-m" 'c-context-line-break))
-(add-hook 'c-initialization-hook 'my-make-CR-do-indent)
-
-;; footer for hook_conf
-(provide 'hook_conf)
+;; footer for hook-conf
+(provide 'hook-conf)
