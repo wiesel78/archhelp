@@ -1,16 +1,16 @@
 all:
 
-zsh-sync-to-client:
-	cp zshrc.local ${HOME}/.zshrc.local
+pull-phil:
+	cp _phil/zshrc.local ${HOME}/.zshrc.local
 
-zsh-sync-to-repo:
+push-phil:
 	if [ -e ${HOME}/.zshrc.local ]; then \
-	cp ${HOME}/.zshrc.local zshrc.local; \
+	cp ${HOME}/.zshrc.local _phil/zshrc.local; \
 	fi
 
 # henriks configuration im ordner _henrik
-from-client:
+push-henrik:
 	cp -f ${HOME}/.zshrc ./_henrik/zshrc
 
-to-client:
+pull-henrik:
 	cp -f ./_henrik/zshrc ${HOME}/.zshrc
