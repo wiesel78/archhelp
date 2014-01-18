@@ -1,10 +1,10 @@
 all:
 
-vim-sync-to-client:
-	cp vimrc ${HOME}/.vimrc
+pull-phil:
+	cp _phil/vimrc ${HOME}/.vimrc
 
-vim-sync-to-repo:
+push-phil:
 	if [ -e ${HOME}/.vimrc ]; then \
-	cp ${HOME}/.vimrc vimrc; \
+	cp ${HOME}/.vimrc _phil/vimrc; \
 	fi
 
