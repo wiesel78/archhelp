@@ -1,18 +1,18 @@
 all:
 
-urxvt-sync-to-client:
+pull-phil:
 	if [ ! -e ${HOME}/.Xdefaults.bak ]; then \
     if [ -e ${HOME}/.Xdefaults ]; then \
 	cp ${HOME}/.Xdefaults ${HOME}/.Xdefaults.bak; \
     fi \
 	fi
-	cp Xdefaults ${HOME}/.Xdefaults
+	cp _phil/Xdefaults ${HOME}/.Xdefaults
 	if [ ! -e /usr/lib/urxvt/perl/tabbed.bak ]; then \
 	sudo cp /usr/lib/urxvt/perl/tabbed /usr/lib/urxvt/perl/tabbed.bak; \
 	fi
-	sudo cp tabbed /usr/lib/urxvt/perl/tabbed
+	sudo cp _phil/tabbed /usr/lib/urxvt/perl/tabbed
 
-urxvt-sync-to-repo: 
-	cp ${HOME}/.Xdefaults Xdefaults
-	cp /usr/lib/urxvt/perl/tabbed tabbed
+push-phil: 
+	cp ${HOME}/.Xdefaults _phil/Xdefaults
+	cp /usr/lib/urxvt/perl/tabbed _phil/tabbed
 
