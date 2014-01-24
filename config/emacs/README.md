@@ -1,9 +1,9 @@
 # Emacs
 
 Ausgestattet mit
-..*[Prelude](http://batsov.com/prelude/) ,
-..*[better-defaults](https://github.com/technomancy/better-defaults),
-..*[solarized-theme](https://github.com/sellout/emacs-color-theme-solarized)
+..[Prelude](http://batsov.com/prelude/) ,
+..[better-defaults](https://github.com/technomancy/better-defaults),
+..[solarized-theme](https://github.com/sellout/emacs-color-theme-solarized)
 und einigen Erweiterungen.
 
 `make fresh-client` Installiert Prelude auf einem neuen Client
