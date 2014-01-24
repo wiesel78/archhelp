@@ -6,7 +6,8 @@ local awful = require("awful")
 
 theme = {}
 
-theme.wallpaper = awful.util.getdir("config") .. "/background.jpg"
+-- we don't need a wallpaper we generate ours random
+-- theme.wallpaper = awful.util.getdir("config") .. "/background.jpg"
 
 theme.font          = "sans 8"
 
@@ -92,7 +93,7 @@ theme.layout_dwindle = "/usr/share/awesome/themes/default/layouts/dwindlew.png"
 
 theme.awesome_icon = "/usr/share/awesome/icons/awesome16.png"
 
--- Define the icon theme for application icons. If not set then the icons 
+-- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
 theme.icon_theme = nil
 

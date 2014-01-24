@@ -16,7 +16,8 @@ local vicious = require("vicious")
 local autostart = require("autostart")
 -- loading battery
 local battery = require("battery")
-
+-- loading wallpaper
+local wp = require("wpchange")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -46,7 +47,18 @@ end
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
 -- beautiful.init("/usr/share/awesome/themes/default/theme.lua")
-beautiful.init("/home/madbone/.config/awesome/theme.lua")
+beautiful.init(awful.util.getdir("config").."/theme.lua")
+
+-- set wp path and init script
+local wp_path = os.getenv("HOME").."/Downloads/ponyThings/ponyLand"
+wp.init(wp_path)
+-- get the frist wp on startup
+wp.change_wp()
+
+-- startup timer and set it to 5 minutes
+local timer = timer({ timeout = (5 * 60) })
+timer:connect_signal("timeout", function() wp.change_wp() end)
+timer:start()
 
 -- This is used later as the default terminal and editor to run.
 terminal = "lilyterm"
@@ -130,13 +142,7 @@ datewidget = wibox.widget.textbox()
 
 -- battery
 batterywidget = wibox.widget.textbox()
---[[
-bat_clo = battery.batclosure("BAT0")
-batterywidget.bat_clo()
-battimer = timer({ timeout = 30 })
-battimer:add_signal("timeout", function() batterywidget.text = bat_clo() end)
-battimer:start()
-]]
+
 -- memory progress
 memwidget = awful.widget.progressbar()
 
