@@ -49,17 +49,6 @@ end
 -- beautiful.init("/usr/share/awesome/themes/default/theme.lua")
 beautiful.init(awful.util.getdir("config").."/theme.lua")
 
--- set wp path and init script
-local wp_path = os.getenv("HOME").."/Downloads/ponyThings/ponyLand"
-wp.init(wp_path)
--- get the frist wp on startup
-wp.change_wp()
-
--- startup timer and set it to 5 minutes
-local timer = timer({ timeout = (5 * 60) })
-timer:connect_signal("timeout", function() wp.change_wp() end)
-timer:start()
-
 -- This is used later as the default terminal and editor to run.
 terminal = "lilyterm"
 editor = os.getenv("EDITOR") or "emacs -nw"
@@ -91,11 +80,11 @@ local layouts =
 -- }}}
 
 -- {{{ Wallpaper
-if beautiful.wallpaper then
-   for s = 1, screen.count() do
-      gears.wallpaper.maximized(beautiful.wallpaper, s, true)
-   end
-end
+-- if beautiful.wallpaper then
+--   for s = 1, screen.count() do
+--      gears.wallpaper.maximized(beautiful.wallpaper, s, true)
+--   end
+-- end
 -- }}}
 
 -- {{{ Tags
@@ -137,6 +126,19 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 
 
 -- init widgets
+
+-- wallpaper widget
+-- set wp path and init script
+local wp_path = os.getenv("HOME").."/Bilder/ponyThings/ponyLand"
+wp.init(wp_path)
+-- get the frist wp on startupy
+wp.change_wp()
+
+-- startup timer and set it to 5 minutes
+local timer = timer({ timeout = (5 * 60) })
+timer:connect_signal("timeout", function() wp.change_wp() end)
+timer:start()
+
 -- date
 datewidget = wibox.widget.textbox()
 

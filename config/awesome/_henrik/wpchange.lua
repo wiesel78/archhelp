@@ -1,5 +1,5 @@
 -- {{{ Script to set random wallpaper
--- written in pure lua
+-- written in lua
 -- }}}
 
 local math = math
@@ -24,11 +24,11 @@ function change_wp()
 
 
    for file in lfs.dir(wp_path) do
-      if (count ==  state) then
+      if (count == state) then
          local file_attr = lfs.attributes(wp_path.."/"..file)
          local file_mode = file_attr.mode
 
-         if string.find(file_mode, "file") and string.match(file, "%.jpg$") then
+         if string.match(file, "%.jpg$") or string.match(file, "%.png$")  then
             for s = 1, screen.count()  do
                gears.wallpaper.maximized(wp_path.."/"..file, s, true)
             end
