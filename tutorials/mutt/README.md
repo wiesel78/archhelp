@@ -36,15 +36,15 @@ der rest ergibt sich aus der oberflaeche
     gpg -aesr mustermann@gmail.com textdatei
 ```
 
-Es so etwas wie textdatei.asc raus.  
+Es kommt so etwas wie textdatei.asc raus.  
 
-Jetzt so wie oben per mutt verschicken
+Jetzt so wie oben per Mutt verschicken
 
 ```
     cat textdatei.asc | mutt mustermann@gmail.com -s "betreff"
 ```
   
-und in einem Rutsch
+und alles zusammen in einem Rutsch
 
 ```
     cat text.txt | gpg -aesr mustermann@gmail.com | mutt mustermann@.gmail.com -s "betreff"
