@@ -1,0 +1,29 @@
+# default editor
+set editor=`echo \$EDITOR`
+
+# name und passwort
+set my_name = 'wurst78'
+set my_pass = 'Hanswurst_5758'
+set realname = 'Philip Ullrich'
+
+# imap (eingang)
+set imap_user=$my_name
+set imap_pass=$my_pass
+set folder=imaps://imap.gmail.com/
+set imap_check_subscribed
+set imap_keepalive = 300
+set mail_check = 120
+set spoolfile=+INBOX
+mailboxes imaps://imap.gmail.com/INBOX
+
+# smtp (ausgang)
+set from = $my_user@gmail.com
+set use_from = yes
+set smtp_url=smtps://$my_user:$my_pass@smtp.gmail.com
+set ssl_force_tls = yes
+
+set header_cache = ~/.cache/mutt
+set message_cachedir = "~/.cache/mutt"
+
+
+
