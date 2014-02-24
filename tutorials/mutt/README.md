@@ -43,5 +43,9 @@ Jetzt so wie oben per mutt verschicken
 ```
     cat textdatei.asc | mutt mustermann@gmail.com -s "betreff"
 ```
+  
+und in einem Rutsch
 
-
+```
+    cat text.txt | gpg -aesr mustermann@gmail.com | mutt mustermann@.gmail.com -s "betreff"
+```
