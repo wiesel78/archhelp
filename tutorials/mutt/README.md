@@ -6,6 +6,11 @@
     sudo pacman -Syu mutt 
 ```
 
+## Konfiguration
+
+Die Konfigurationsdatei kann unter anderem .muttrc im HOME-Ordner sein. 
+Eine Beispielkonfiguration liegt in diesem Ordner.
+
 ## Starten
 
 ```
