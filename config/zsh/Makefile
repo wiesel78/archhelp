@@ -1,11 +1,11 @@
 all:
 
 pull-phil:
-	cp _phil/zshrc.local ${HOME}/.zshrc.local
+	cp _phil/{.zshrc.local,.dircolors} ${HOME}/
 
 push-phil:
 	if [ -e ${HOME}/.zshrc.local ]; then \
-	cp ${HOME}/.zshrc.local _phil/zshrc.local; \
+	cp ${HOME}/{.zshrc.local,.dircolors} _phil/; \
 	fi
 
 # henriks configuration im ordner _henrik

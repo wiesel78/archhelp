@@ -11,11 +11,6 @@ syntax on
 "--------------
 " autocomplete
 "--------------
-inoremap ( ()<Left>
-inoremap [ []<Left>
-inoremap { {}<Left>
-inoremap < <><Left>
-inoremap " ""<Left>
 
  noremap <silent> <F12> :ls<CR>:edit #
 inoremap <silent> <F12> <C-C>:ls<CR>:edit #

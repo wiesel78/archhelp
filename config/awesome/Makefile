@@ -9,7 +9,7 @@ push-phil:
 
 pull-phil:
 	mkdir -p $(CONFIG)/awesome/
-	cp -r ./_phil/ $(CONFIG)/awesome/
+	cp -r ./_phil/* $(CONFIG)/awesome/
 
 
 # henriks configuration, dateien im ordner _henrik
@@ -21,4 +21,4 @@ push-henrik:
 
 pull-henrik:
 	mkdir -p $(CONFIG)/awesome/
-	cp -r ./_henrik/ $(CONFIG)/awesome/
+	cp -r ./_henrik/* $(CONFIG)/awesome/
