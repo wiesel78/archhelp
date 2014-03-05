@@ -83,14 +83,14 @@ fi
 
 # just type '...' to get '../..'
 rationalise-dot() {
-local MATCH
-if [[ $LBUFFER =~ '(^|/| |	|'$'\n''|\||;|&)\.\.$' ]]; then
-  LBUFFER+=/
-  zle self-insert
-  zle self-insert
-else
-  zle self-insert
-fi
+    local MATCH
+    if [[ $LBUFFER =~ '(^|/| |  |'$'\n''|\||;|&)\.\.$' ]]; then
+        LBUFFER+=/
+        zle self-insert
+        zle self-insert
+    else
+        zle self-insert
+    fi
 }
 zle -N rationalise-dot
 bindkey . rationalise-dot
@@ -193,9 +193,10 @@ alias -g ex='emacsclient -c'
 alias -g vgaleft='xrandr --output VGA-0 --left-of LVDS-0'
 alias -g vgaright='xrandr --output VGA-1 --right-of LVDS-1'
 alias -g nvlc='vlc -I ncurses'
+alias -g vi="emacsclient -t"
 
 ## instead of global aliase it might be better to use grmls $abk assoc array, whose contents are expanded after pressing ,.
-#$abk[SnL]="| sort -n | less"
+abk[SnL]="| sort -n | less"
 
 ## get top 10 shell commands:
 alias top10='print -l ${(o)history%% *} | uniq -c | sort -nr | head -n 10'
@@ -299,6 +300,26 @@ hex() {
     fi
 }
 
+## switches between actual netctl profile and given
+switch-to() {
+    if [[ -n "$1" ]]; then
+        `sudo netctl switch-to $1`
+    else
+        print 'Usage: switch-to <netctl profile>'
+        return 1
+    fi
+}
+
+## show netctl status to given profile
+status-net() {
+    if [[ -n "$1" ]]; then
+        `sudo netctl status $1`
+    else
+        print 'Usage: status-net <netctl profile>'
+        return 1
+    fi
+}
+
 ## log out? set timeout in seconds...
 ## ...and do not log out in some specific terminals:
 #if [[ "${TERM}" == ([Exa]term*|rxvt|dtterm|screen*) ]] ; then
@@ -336,6 +357,21 @@ hex() {
 #vimhelp ()    { vim -c "help $1" -c on -c "au! VimEnter *" }
 
 # configure path
-export PATH=$PATH:~/Entwicklung/workspace/bash:~/.gem/ruby/2.0.0/bin/
+export PATH=$PATH:~/Entwicklung/workspace/bash:~/.gem/ruby/2.0.0/bin/:/opt/cube/bin/:/opt/scalasca/bin/:/opt/scorep/bin/
+
+# set emacs as default editor
+export ALTERNATE_EDTOR=""
+export EDITOR="emacsclient -t"
+export TERM=xterm-256color
+
+# set prompt bart
+autoload -Uz promptinit
+promptinit
+prompt elite
+
+# add custom completions
+fpath=(~/.zsh/completion $fpath)
+autoload -U compinit
+compinit
 
 ## END OF FILE #################################################################
