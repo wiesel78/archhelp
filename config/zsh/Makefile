@@ -10,7 +10,7 @@ push-phil:
 
 # henriks configuration im ordner _henrik
 push-henrik:
-	cp -f ${HOME}/.zshrc ./_henrik/zshrc
+	cp -fr ${HOME}/{.zshrc,.zsh} ./_henrik/
 
 pull-henrik:
-	cp -f ./_henrik/zshrc ${HOME}/.zshrc
+	cp -fr ./_henrik/{.zshrc, .zsh} ${HOME}/
