@@ -46,7 +46,8 @@ For every stream increment the tcp-port variable `port "6600"` and the http port
 The lighttpd.con has a streaming part for mpd with password protection. So you can safely reverse-proxy it through your webserver to the internet.
 
 Before we can power up the mpd we need the systemd service.
-Copy the `mpd/mpd0.service` file to `/etc/systemd/system/multi-user.target.wants/` and adjust the `ExecStart` path for every streaming instance.
+Copy the `mpd/mpd0.service` file to `/etc/systemd/system/multi-user.target.wants/` and adjust the `ExecStart` path.
+Do this for every streaming instance.
 
 At least we can power up mpd with `systemctl [enable|start] mpd0`
 
