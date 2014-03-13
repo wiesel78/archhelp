@@ -11,7 +11,7 @@ it will be too much and I think you only need a short reference and not a whole 
 So I refer to blogs and wikis where you can read for further information.
 And read the config files, the most important parts have comments.
 
-Feel free to contribute, give feedback or bug report. The latter can be raised via the Issue section.
+Feel free to contribute, give feedback or bug reports. The latter can be raised via the Issue section.
 
 ## Basic Stack Setup
 
@@ -34,18 +34,19 @@ or if you understand german [Llmp-Stack](https://wiki.archlinux.de/title/Lighttp
 
 `pacman -S mpd`
 
-For webstreaming with mpd we use 3 instaces, located under /srv/mpd/glblsteam[012]
+For webstreaming with mpd we use 3 instaces, located under `/srv/mpd/glblsteam[012]`.
 Copy mpd/mpd.conf to your streaming directories and adjust the paths.
 
 For every stream increment the tcp-port variable `port "6600"` and the http port variable `port "7701"` in mpd.conf
 
 `chown -R mpd:mpd /var/lib/mpd`
+
 `ln -s /path/to/music /srv/mpd/music`
 
 The lighttpd.con has a streaming part for mpd with password protection. So you can safely reverse-proxy it through your webserver to the internet.
 
 Before we can power up the mpd we need the systemd service.
-Copy the mpd/mpd0.service file to /etc/systemd/system/multi-user.target.wants/ and adjust the `ExecStart` path for every streaming instance.
+Copy the `mpd/mpd0.service` file to `/etc/systemd/system/multi-user.target.wants/` and adjust the `ExecStart` path for every streaming instance.
 
 At least we can power up mpd with `systemctl [enable|start] mpd0`
 
