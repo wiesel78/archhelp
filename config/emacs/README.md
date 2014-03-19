@@ -11,9 +11,15 @@ und einigen Erweiterungen.
 
 Erweiterungen
 * `web-mode, lua-mode, autocomplete, sr-speedbar ` sind als Zusatzmodule definiert (`autocomplete` ist deaktiviert)
-* `C-x C-v` öffne Datei mit sudo
+* `C-x C-v` - öffne Datei mit sudo
 * Zeilennummern aktiviert
-* `Shift - ArrowKeys` zum Wechseln der Fenster
+* `Shift - ArrowKeys` - zum Wechseln der Fenster
 * Cut and Paste aktiviert
 * UTF-8 als Standard Encoding
-* `C-c n` Räumt den aktuellen Buffer auf (Whitespaces und Tabs)
+* `C-c n` - Räumt den aktuellen Buffer auf (Whitespaces und Tabs)
+* smex aktiviert
+* `M-i` - Go to symbol
+* `C-x C-t` - Insert Timestamp
+* `C-x k` - Kill current buffer
+* `C-c b` - sr-speedbar-toogle
+* `C-q` - auto-complete trigger

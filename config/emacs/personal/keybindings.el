@@ -1,6 +1,9 @@
-;;; package --- Summary
-;;; Commentary: Some neat keybindings helping a lot
+;;; keybindings --- Personel Keybindings
 
+;;; Commentary:
+;; Some neat keybindings helping a lot.
+
+;;; Code:
 ;; Per default prelude uses super and its awful with awesome
 (setq mac-command-modifier 'meta)
 (setq mac-option-modifier 'super)
@@ -8,13 +11,10 @@
 ;; Disable guru-mode to use the arrow keys for navigation per default
 (setq prelude-guru nil)
 
-;; Perform general buffer cleanup
-(global-set-key (kbd "C-c n") 'cleanup-buffer)
-
 ;; Jump to definition in current file.
 (global-set-key (kbd "M-i") 'ido-goto-symbol)
 
-;; Time stamp
+;; Time Stamm
 (global-set-key (kbd "C-x C-t") 'insert-date)
 
 ;; Sudo file
@@ -33,5 +33,8 @@
 ;; speedbar binding
 (global-set-key (kbd "C-c b") 'sr-speedbar-toggle)
 
-;; Footer
+;; provide ac trigger
+(global-set-key (kbd "C-q") 'auto-complete)
+
 (provide 'keybindings)
+;;; keybindings.el ends here

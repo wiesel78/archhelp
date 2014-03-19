@@ -1,6 +1,9 @@
-;;; package --- Summary :
-;;; Commentary: configure hooks and modes
+;;; hook-conf --- Personel hook configuration.
 
+;;; Commentary:
+;; Configure hooks and modes
+
+;;; Code:
 ;; web-mode hook autoindent 2
 (defun web-mode-hook ()
   "Hooks for web mode."
@@ -8,11 +11,13 @@
   )
 (add-hook 'web-mode-hook 'web-mode-hook)
 
-(defun python-mode-hook()
-  "Hooks for python mode."
-  (setq python-indent-offset 4)
-  )
-(add-hook 'python-mode-hook 'python-mode-hook)
+;; google c style
+(add-hook 'c-mode-common-hook 'google-set-c-style)
+(add-hook 'c-mode-common-hook 'google-make-newline-indent)
 
-;; footer for hook-conf
+;; ac hook
+(defun auto-complete-mode())
+(add-hook 'auto-complete-mode 'auto-complete-mode)
+
 (provide 'hook-conf)
+;;; hook-conf.el ends here
