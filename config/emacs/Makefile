@@ -10,8 +10,8 @@ from-client:
 
 to-client:
 	mkdir -p $(CONFIG)
-	cp ./prelude-modules.el $(CONFIG)/prelude-modules.el
-	cp -r ./personal/ $(CONFIG)/
+	cp ./prelude-modules.el $(CONFIG)prelude-modules.el
+	cp -r ./personal/ $(CONFIG)
 
 fresh-client:
 	./deploy.sh
