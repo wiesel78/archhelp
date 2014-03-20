@@ -1,10 +1,10 @@
-#compdef switch-to
+#compdef status-net
 
 #
-# A simple completion script for the switch-to alias.
+# A simple completion script for the status-net alias.
 # Ideas are from:
 # http://askql.wordpress.com/2011/01/11/zsh-writing-own-completion/ and
-# http://www.linux-mag.com/id/1106/
+# http://www.linux-mag.com/id/1106/ 
 #
 
 local state line
@@ -15,8 +15,8 @@ _arguments "1:[Netctl profile]:->profile"
 case $state in
      profile)
         # provides no file only completion
-        _files -W $profile_dir && return 0
-     ;;
+         _files -W $profile_dir && return 0
+        ;;
 esac
 
 return 1

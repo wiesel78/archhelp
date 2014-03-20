@@ -8,9 +8,10 @@ push-phil:
 	cp ${HOME}/{.zshrc.local,.dircolors} _phil/; \
 	fi
 
-# henriks configuration im ordner _henrik
+# henriks configuration in _henrik
 push-henrik:
 	cp -fr ${HOME}/{.zshrc,.zsh} ./_henrik/
 
 pull-henrik:
-	cp -fr ./_henrik/{.zshrc, .zsh} ${HOME}/
+	cp -fr ./_henrik/{.zshrc,.zsh} ${HOME}/
+	chmod -R 755 ${HOME}/.zsh
