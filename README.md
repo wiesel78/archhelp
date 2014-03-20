@@ -20,3 +20,10 @@ problem that get in our way.
   * Install scripts around and for Ach Linux
   * Configurations for well known programs
   * How-To's
+
+Usage:
+---
+Mostly you can checkout the configuration with:
+```
+ make pull-[phill|henrik]
+```

@@ -1,6 +1,6 @@
 # ZSH
 
-# _henrik
+## _henrik
 Main configuration is from [Grml](grml.org) .
 
 Features:
@@ -18,4 +18,4 @@ Features:
 * `status-net` - Netctl status alias with auto-completion.
 * Zsh prompt elite
 
-# _phill
+## _phill
