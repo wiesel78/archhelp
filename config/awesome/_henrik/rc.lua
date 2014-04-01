@@ -15,7 +15,7 @@ local vicious = require("vicious")
 -- loading autostart
 local autostart = require("autostart")
 -- loading battery
-local battery = require("battery")
+-- local battery = require("battery")
 -- loading wallpaper
 local wp = require("wpchange")
 
@@ -79,14 +79,6 @@ local layouts =
    }
 -- }}}
 
--- {{{ Wallpaper
--- if beautiful.wallpaper then
---   for s = 1, screen.count() do
---      gears.wallpaper.maximized(beautiful.wallpaper, s, true)
---   end
--- end
--- }}}
-
 -- {{{ Tags
 -- Define a tag table which hold all screen tags.
 tags = {
@@ -143,7 +135,7 @@ timer:start()
 datewidget = wibox.widget.textbox()
 
 -- battery
-batterywidget = wibox.widget.textbox()
+-- batterywidget = wibox.widget.textbox()
 
 -- memory progress
 memwidget = awful.widget.progressbar()
@@ -166,7 +158,7 @@ cpuwidget:set_color({ type = "linear", from = {0,0}, to = {10,0}, stops = {{0, "
 
 -- register widgets
 vicious.register(datewidget, vicious.widgets.date, "%b %d, %R", 60)
-vicious.register(batterywidget, vicious.widgets.bat, battery.batclosure("BAT0"), 31, "BAT0")
+-- vicious.register(batterywidget, vicious.widgets.bat, battery.batclosure("BAT0"), 31, "BAT0")
 vicious.register(memwidget, vicious.widgets.mem, "$1", 13)
 vicious.register(cpuwidget, vicious.widgets.cpu, "$1")
 
@@ -250,7 +242,7 @@ for s = 1, screen.count() do
    -- Widgets that are aligned to the right
    local right_layout = wibox.layout.fixed.horizontal()
    if s == 1 then right_layout:add(wibox.widget.systray()) end
-   right_layout:add(batterywidget)
+   -- right_layout:add(batterywidget)
    right_layout:add(cpuwidget)
    right_layout:add(memwidget)
    right_layout:add(mytextclock)

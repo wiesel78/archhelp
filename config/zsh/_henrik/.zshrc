@@ -160,7 +160,9 @@ bindkey -M isearch . self-insert
 ## '.' though. If you want that too, use the following line:
 #zstyle ':completion:*' special-dirs true
 
-## aliases ##
+###############################################################################
+## Aliases
+###############################################################################
 
 ## translate
 #alias u='translate -i'
@@ -207,7 +209,9 @@ alias top10='print -l ${(o)history%% *} | uniq -c | sort -nr | head -n 10'
 ## Execute \kbd{./configure --help}
 #alias CH="./configure --help"
 
-## miscellaneous code ##
+###############################################################################
+## Miscellaneous code - Usefull functions
+###############################################################################
 
 ## Use a default width of 80 for manpages for more convenient reading
 export MANWIDTH=${MANWIDTH:-80}
@@ -320,6 +324,26 @@ status-net() {
     fi
 }
 
+## creates a list with installed pacman pkg
+pkglist() {
+    if [[ -n "$1" ]]; then
+        pacman -Qqne > $1
+    else
+        print 'Usage: pkglist <pkglist/path/and/name>'
+        return 1
+    fi
+}
+
+## reinstall everything from a pkg list
+pkgrestore() {
+    if [[ -n "$1" ]]; then
+        pacman -S --needed $(< $1 )
+    else
+        print 'Usage: pkgrestore </path/to/pkglist>'
+        return 1
+    fi
+}
+
 ## log out? set timeout in seconds...
 ## ...and do not log out in some specific terminals:
 #if [[ "${TERM}" == ([Exa]term*|rxvt|dtterm|screen*) ]] ; then
@@ -356,22 +380,72 @@ status-net() {
 #vimpm ()      { vim `perldoc -l $1 | sed -e 's/pod$/pm/'` }
 #vimhelp ()    { vim -c "help $1" -c on -c "au! VimEnter *" }
 
-# configure path
+###############################################################################
+## Path configuration and custom enviroment
+###############################################################################
+
 export PATH=$PATH:~/Entwicklung/workspace/bash:~/.gem/ruby/2.0.0/bin/:/opt/cube/bin/:/opt/scalasca/bin/:/opt/scorep/bin/
 
-# set emacs as default editor
+## set emacs as default editor
 export ALTERNATE_EDTOR=""
 export EDITOR="emacsclient -t"
 export TERM=xterm-256color
 
-# set prompt bart
-autoload -Uz promptinit
-promptinit
-prompt elite
-
-# add custom completions
+## add custom completions
 fpath=(~/.zsh/completion $fpath)
 autoload -U compinit
 compinit
 
-## END OF FILE #################################################################
+###############################################################################
+## Prompt settings
+###############################################################################
+
+prompt off
+## prompt style from http://matija.suklje.name/my-very-own-zsh-prompt
+
+## Shows state of the Versioning Control System (e.g. Git, Subversion, Mercurial
+autoload -Uz vcs_info
+
+## Needed for a pretty prompt
+setopt prompt_subst # Enables additional prompt extentions
+autoload -U colors && colors    # Enables colours
+
+zstyle ':vcs_info:*' stagedstr '%F{green}●%f'
+zstyle ':vcs_info:*' unstagedstr '%F{yellow}●%f'
+zstyle ':vcs_info:*' check-for-changes true
+zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b%F{red}:%f%F{yellow}%r%f'
+zstyle ':vcs_info:*' enable git svn
+
+## formats cvs output
+precmd () {
+    if [[ -z $(git ls-files --other --exclude-standard 2> /dev/null) ]] {
+            zstyle ':vcs_info:*' formats "%F %{$fg[cyan]%} [%b%c%u%f%F%{$fg[cyan]%}] %f"
+        } else {
+            zstyle ':vcs_info:*' formats "%F %{$fg[cyan]%} [%b%c%u%f%F%{$fg[red]%}●%f%F%{$fg[cyan]%}] %f"
+        }
+        vcs_info
+}
+
+## Detects the VCS and shows the appropriate sign
+function prompt_char {
+    git branch >/dev/null 2>/dev/null && echo '±' && return
+    hg root >/dev/null 2>/dev/null && echo  '☿' && return
+    svn info >/dev/null 2>/dev/null && echo '⚡' && return
+    echo '%#'
+}
+
+## default prompt
+export PROMPT='%(!.%B%U%F%{blue%}%n%f%u%b.%F{blue}%n%f) at %F{magenta}%m%f on %F{yellow}%y%f in %F{cyan}%~%f
+{%F{red}%?%f ${vcs_info_msg_0_} %(!.%F{red}$(prompt_char)%f.$(prompt_char)) } : %{$reset_color%}'
+
+## default prompt's right side
+export RPROMPT='%F%{$fg[cyan]%}%D{%e.%b.%y %H.%M}%f %{$reset_color%}'
+
+## prompt for loops
+export PROMPT2='{%_}  '
+
+## prompt for selections
+export PROMPT3='{ … }  '
+
+###############################################################################
+### END OF FILE ###############################################################
