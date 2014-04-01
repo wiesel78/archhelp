@@ -435,7 +435,7 @@ function prompt_char {
 }
 
 ## default prompt
-export PROMPT='%(!.%B%U%F%{blue%}%n%f%u%b.%F{blue}%n%f) at %F{magenta}%m%f on %F{yellow}%y%f in %F{cyan}%~%f
+export PROMPT='%(!.%B%U%F%{$fg[blue]%}%n%f%u%b.%F{blue}%n%f) at %F{magenta}%m%f on %F{yellow}%y%f in %F{cyan}%~%f
 {%F{red}%?%f ${vcs_info_msg_0_} %(!.%F{red}$(prompt_char)%f.$(prompt_char)) } : %{$reset_color%}'
 
 ## default prompt's right side
