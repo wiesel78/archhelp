@@ -17,7 +17,7 @@ local autostart = require("autostart")
 -- loading battery
 -- local battery = require("battery")
 -- loading wallpaper
-local wp = require("wpchange")
+local wp = require("wp_changer")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -103,7 +103,7 @@ myawesomemenu = {
 }
 
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "open terminal", terminal }
+                             { "open terminal", terminal }
 }
                        })
 
@@ -114,22 +114,26 @@ mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- }}}
 
--- {{{ Wibox
 
+--[[ wallpaper changer
+   Changes the desktop wallpaper after n seconds.
+   You have to change the wp_path to your wallpaper folder
+   and choose if seek files recursivly or not.
+   Set the timeout to your needs.
+]]
 
--- init widgets
-
--- wallpaper widget
--- set wp path and init script
 local wp_path = os.getenv("HOME").."/Bilder/ponyThings/ponyLand"
-wp.init(wp_path)
--- get the frist wp on startupy
+wp.init(wp_path, true)
+-- get the frist wp on start up
 wp.change_wp()
 
--- startup timer and set it to 5 minutes
-local timer = timer({ timeout = (5 * 60) })
-timer:connect_signal("timeout", function() wp.change_wp() end)
+-- startup timer and set it to 20 minutes
+local timer = timer({ timeout = (20 * 60) })
+timer:connect_signal("timeout", function() wp.change_wp()  end)
 timer:start()
+
+-- {{{ Wibox
+-- init widgets
 
 -- date
 datewidget = wibox.widget.textbox()
@@ -181,36 +185,36 @@ mytaglist.buttons = awful.util.table.join(
 mytasklist = {}
 mytasklist.buttons = awful.util.table.join(
    awful.button({ }, 1, function (c)
-                   if c == client.focus then
-                      c.minimized = true
-                   else
-                      -- Without this, the following
-                      -- :isvisible() makes no sense
-                      c.minimized = false
-                      if not c:isvisible() then
-                         awful.tag.viewonly(c:tags()[1])
-                      end
-                      -- This will also un-minimize
-                      -- the client, if needed
-                      client.focus = c
-                      c:raise()
-                   end
+         if c == client.focus then
+            c.minimized = true
+         else
+            -- Without this, the following
+            -- :isvisible() makes no sense
+            c.minimized = false
+            if not c:isvisible() then
+               awful.tag.viewonly(c:tags()[1])
+            end
+            -- This will also un-minimize
+            -- the client, if needed
+            client.focus = c
+            c:raise()
+         end
    end),
    awful.button({ }, 3, function ()
-                   if instance then
-                      instance:hide()
-                      instance = nil
-                   else
-                      instance = awful.menu.clients({ width=250 })
-                   end
+         if instance then
+            instance:hide()
+            instance = nil
+         else
+            instance = awful.menu.clients({ width=250 })
+         end
    end),
    awful.button({ }, 4, function ()
-                   awful.client.focus.byidx(1)
-                   if client.focus then client.focus:raise() end
+         awful.client.focus.byidx(1)
+         if client.focus then client.focus:raise() end
    end),
    awful.button({ }, 5, function ()
-                   awful.client.focus.byidx(-1)
-                   if client.focus then client.focus:raise() end
+         awful.client.focus.byidx(-1)
+         if client.focus then client.focus:raise() end
 end))
 
 for s = 1, screen.count() do
@@ -272,14 +276,14 @@ globalkeys = awful.util.table.join(
    awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
 
    awful.key({ modkey,           }, "j",
-             function ()
-                awful.client.focus.byidx( 1)
-                if client.focus then client.focus:raise() end
+      function ()
+         awful.client.focus.byidx( 1)
+         if client.focus then client.focus:raise() end
    end),
    awful.key({ modkey,           }, "k",
-             function ()
-                awful.client.focus.byidx(-1)
-                if client.focus then client.focus:raise() end
+      function ()
+         awful.client.focus.byidx(-1)
+         if client.focus then client.focus:raise() end
    end),
    awful.key({ modkey,           }, "w", function () mymainmenu:show() end),
 
@@ -290,11 +294,11 @@ globalkeys = awful.util.table.join(
    awful.key({ modkey, "Control" }, "k", function () awful.screen.focus_relative(-1) end),
    awful.key({ modkey,           }, "u", awful.client.urgent.jumpto),
    awful.key({ modkey,           }, "Tab",
-             function ()
-                awful.client.focus.history.previous()
-                if client.focus then
-                   client.focus:raise()
-                end
+      function ()
+         awful.client.focus.history.previous()
+         if client.focus then
+            client.focus:raise()
+         end
    end),
 
    -- Standard program
@@ -317,30 +321,30 @@ globalkeys = awful.util.table.join(
    awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end),
 
    awful.key({ modkey }, "x",
-             function ()
-                awful.prompt.run({ prompt = "Run Lua code: " },
-                                 mypromptbox[mouse.screen].widget,
-                                 awful.util.eval, nil,
-                                 awful.util.getdir("cache") .. "/history_eval")
+      function ()
+         awful.prompt.run({ prompt = "Run Lua code: " },
+            mypromptbox[mouse.screen].widget,
+            awful.util.eval, nil,
+            awful.util.getdir("cache") .. "/history_eval")
    end),
    -- Menubar
    awful.key({ modkey }, "p", function() menubar.show() end),
 
    -- Fn Buttons
    awful.key({ }, "XF86AudioRaiseVolume",
-             function ()
-                awful.util.spawn(
-                   "/usr/bin/amixer -q set Master 5\\%+", false)
+      function ()
+         awful.util.spawn(
+            "/usr/bin/amixer -q set Master 5\\%+", false)
    end),
    awful.key({ }, "XF86AudioLowerVolume",
-             function()
-                awful.util.spawn(
-                   "/usr/bin/amixer -q set Master 5\\%-", false)
+      function()
+         awful.util.spawn(
+            "/usr/bin/amixer -q set Master 5\\%-", false)
    end),
    awful.key({ }, "XF86AudioMute",
-             function()
-                awful.util.spawn(
-                   "/usr/bin/amixer -q set Master toggle", false)
+      function()
+         awful.util.spawn(
+            "/usr/bin/amixer -q set Master toggle", false)
    end)
 )
 
@@ -352,15 +356,15 @@ clientkeys = awful.util.table.join(
    awful.key({ modkey,           }, "o",      awful.client.movetoscreen                        ),
    awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end),
    awful.key({ modkey,           }, "n",
-             function (c)
-                -- The client currently has the input focus, so it cannot be
-                -- minimized, since minimized clients can't have the focus.
-                c.minimized = true
+      function (c)
+         -- The client currently has the input focus, so it cannot be
+         -- minimized, since minimized clients can't have the focus.
+         c.minimized = true
    end),
    awful.key({ modkey,           }, "m",
-             function (c)
-                c.maximized_horizontal = not c.maximized_horizontal
-                c.maximized_vertical   = not c.maximized_vertical
+      function (c)
+         c.maximized_horizontal = not c.maximized_horizontal
+         c.maximized_vertical   = not c.maximized_vertical
    end)
 )
 
@@ -370,34 +374,34 @@ clientkeys = awful.util.table.join(
 for i = 1, 9 do
    globalkeys = awful.util.table.join(globalkeys,
                                       awful.key({ modkey }, "#" .. i + 9,
-                                                function ()
-                                                   local screen = mouse.screen
-                                                   local tag = awful.tag.gettags(screen)[i]
-                                                   if tag then
-                                                      awful.tag.viewonly(tag)
-                                                   end
+                                         function ()
+                                            local screen = mouse.screen
+                                            local tag = awful.tag.gettags(screen)[i]
+                                            if tag then
+                                               awful.tag.viewonly(tag)
+                                            end
                                       end),
                                       awful.key({ modkey, "Control" }, "#" .. i + 9,
-                                                function ()
-                                                   local screen = mouse.screen
-                                                   local tag = awful.tag.gettags(screen)[i]
-                                                   if tag then
-                                                      awful.tag.viewtoggle(tag)
-                                                   end
+                                         function ()
+                                            local screen = mouse.screen
+                                            local tag = awful.tag.gettags(screen)[i]
+                                            if tag then
+                                               awful.tag.viewtoggle(tag)
+                                            end
                                       end),
                                       awful.key({ modkey, "Shift" }, "#" .. i + 9,
-                                                function ()
-                                                   local tag = awful.tag.gettags(client.focus.screen)[i]
-                                                   if client.focus and tag then
-                                                      awful.client.movetotag(tag)
-                                                   end
+                                         function ()
+                                            local tag = awful.tag.gettags(client.focus.screen)[i]
+                                            if client.focus and tag then
+                                               awful.client.movetotag(tag)
+                                            end
                                       end),
                                       awful.key({ modkey, "Control", "Shift" }, "#" .. i + 9,
-                                                function ()
-                                                   local tag = awful.tag.gettags(client.focus.screen)[i]
-                                                   if client.focus and tag then
-                                                      awful.client.toggletag(tag)
-                                                   end
+                                         function ()
+                                            local tag = awful.tag.gettags(client.focus.screen)[i]
+                                            if client.focus and tag then
+                                               awful.client.toggletag(tag)
+                                            end
    end))
 end
 
@@ -459,14 +463,14 @@ client.connect_signal("manage", function (c, startup)
                             -- buttons for the titlebar
                             local buttons = awful.util.table.join(
                                awful.button({ }, 1, function()
-                                               client.focus = c
-                                               c:raise()
-                                               awful.mouse.client.move(c)
+                                     client.focus = c
+                                     c:raise()
+                                     awful.mouse.client.move(c)
                                end),
                                awful.button({ }, 3, function()
-                                               client.focus = c
-                                               c:raise()
-                                               awful.mouse.client.resize(c)
+                                     client.focus = c
+                                     c:raise()
+                                     awful.mouse.client.resize(c)
                                end)
                             )
 

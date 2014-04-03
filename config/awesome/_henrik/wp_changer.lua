@@ -1,52 +1,73 @@
--- {{{ Script to set random wallpaper
--- written in lua
--- }}}
+--[[ Wpchange is a script written in lua.
+   Usage: Initialize this script with it's init() function.
+   After that you can change the wallpaper everytime you call
+   change_wp().]]
 
 local math = math
 local os = os
 local string = string
+local coroutine = require("coroutine")
+local table = require("table")
+local lfs = require("lfs")
+
+-- awesome utils
 local screen = screen
 local gears = require("gears")
-local lfs = require("lfs")
 local beautiful = require("beautiful")
+local awfule = require("awful")
 
-module("wpchange")
+module("wp_changer")
 
-local size = 0
-local wp_path = ""
+local files = {}
 
 -- changes the background theme with gears
--- path: folderpath
 function change_wp()
-   local count = 1
    math.randomseed( os.time() )
-   local state = math.random(size)
+   local state = math.random(#files)
 
-
-   for file in lfs.dir(wp_path) do
-      if (count == state) then
-         local file_attr = lfs.attributes(wp_path.."/"..file)
-         local file_mode = file_attr.mode
-
-         if string.match(file, "%.jpg$") or string.match(file, "%.png$")  then
-            for s = 1, screen.count()  do
-               gears.wallpaper.maximized(wp_path.."/"..file, s, true)
-            end
-         else
-            state = state + 1
-         end
-      end
-      count = count + 1
+   for s = 1, screen.count()  do
+      -- state + 1, cause tables start with index 1
+      gears.wallpaper.maximized(files[state+1], s, true)
    end
 end
 
 
--- get size of all wallpapers in dir
-function init(path)
-   wp_path = path
-   local count = 0
-   for file in lfs.dir(path) do
-      count = count + 1
+-- Search for wallpapers and store them in a set
+-- We do it recursive or plane.
+function init(path, recursive)
+   if recursive then
+      for filename in dirtree(path) do
+         if string.match(filename, "%.jpg$") or string.match(filename, "%.png$") then
+            table.insert(files, filename)
+         end
+      end
+   else
+      for filename in lfs.dir(path) do
+         if string.match(filename, "%.jpg$") or string.match(filename, "%.png$") then
+            table.insert(files, path.."/"..filename)
+         end
+      end
    end
-   size = count
+end
+
+-- recursive iterator
+function dirtree(dir)
+   if string.sub(dir, -1) == "/" then
+      dir=string.sub(dir, 1, -2)
+   end
+
+   local function yieldtree(dir)
+      for entry in lfs.dir(dir) do
+         if entry ~= "." and entry ~= ".." then
+            entry=dir.."/"..entry
+            local attr=lfs.attributes(entry)
+            coroutine.yield(entry,attr)
+            if attr.mode == "directory" then
+               yieldtree(entry)
+            end
+         end
+      end
+   end
+
+   return coroutine.wrap(function() yieldtree(dir) end)
 end

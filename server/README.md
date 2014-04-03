@@ -52,3 +52,8 @@ Do this for every streaming instance.
 At least we can power up mpd with `systemctl [enable|start] mpd0`
 
 If there are questions read [MPD](https://wiki.archlinux.org/index.php/Music_Player_Daemon).
+
+## Setting up a mailserver with postfix, postfixadmin, dovecot and roundcubemail
+
+I don't want to write a full How-To, this is just a "speed-run" to make my configuration work.
+For a detailed explanation or custom setup I refer to the well written repo [MailServer](https://github.com/geekinthesticks/ArchLinux-Mail-Server/blob/master/archlinux_mail_server.org).
