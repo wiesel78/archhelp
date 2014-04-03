@@ -191,7 +191,7 @@ alias -g N='&>/dev/null &'
 #alias -g T='|tail'
 #alias -g V='| vim -'
 alias -g e='emacsclient -t'
-alias -g ex='emacsclient -c'
+alias -g ex='emacsclient -c &'
 alias -g vgaleft='xrandr --output VGA-0 --left-of LVDS-0'
 alias -g vgaright='xrandr --output VGA-1 --auto --right-of LVDS-1 --output LVDS-1 --auto'
 alias -g nvlc='vlc -I ncurses'
@@ -449,3 +449,4 @@ export PROMPT3='{ … }  '
 
 ###############################################################################
 ### END OF FILE ###############################################################
+###############################################################################
