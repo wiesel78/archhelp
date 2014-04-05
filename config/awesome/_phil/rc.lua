@@ -16,6 +16,8 @@ local autostart = require("autostart")
 
 local vicious   = require("vicious")
 
+local wp = require("wp_changer")
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -46,7 +48,8 @@ end
 beautiful.init(awful.util.getdir("config") .. "/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "urxvtc"
+-- terminal = "urxvtc"
+terminal = "lilyterm"
 editor = os.getenv("EDITOR") or "nano"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -516,6 +519,23 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
+
+--[[ wallpaper changer
+   Changes the desktop wallpaper after n seconds.
+   You have to change the wp_path to your wallpaper folder
+   and choose if seek files recursivly or not.
+   Set the timeout to your needs.
+]]
+
+local wp_path = os.getenv("HOME").."/Bilder/Wallpaper/Sexy/bestof"
+wp.init(wp_path, true)
+-- get the frist wp on start up
+wp.change_wp()
+
+-- startup timer and set it to 5 minutes
+local timer = timer({ timeout = (5 * 60)})
+timer:connect_signal("timeout", function() wp.change_wp() end)
+timer:start()
 
 require("autostart")
 
