@@ -1,0 +1,18 @@
+[Unit]
+Description=Static IP Connectivity
+Wants=network.target
+Before=network.target
+BindsTo=sys-subsystem-net-devices-wlan0.device
+After=sys-subsystem-net-devices-wlan0.device
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/ip link set dev wlan0 up
+ExecStart=/usr/bin/ip addr add 192.168.88.1/24 dev wlan0
+
+ExecStop=/usr/bin/ip addr flush dev wlan0
+ExecStop=/usr/bin/ip link set dev wlan0 down
+
+[Install]
+WantedBy=multi-user.target
