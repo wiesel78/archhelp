@@ -12,7 +12,7 @@ Some notes about my configuration:
 * Check you have the correct state files in `battery.lua` (line ~21)
 * Change the path of the wp_changer to your wallpaper folder (`rc.lua` line ~53)
 
-#### Phil
+#### _phil
 wp_change require 'lfs' : 
 ```
     sudo pacman -S luarocks
