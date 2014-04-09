@@ -288,6 +288,31 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
 
+    awful.key({ modkey, "Shift"   }, "Left", 
+        function ( c )
+            local currentidx = awful.tag.getidx()
+            if currentidx == 1 then
+                awful.client.movetotag( tags[ client.focus.screen ][ 9 ] )
+                awful.tag.viewonly( tags[client.focus.screen][9] )
+            else
+                awful.client.movetotag( tags[client.focus.screen][ currentidx - 1] )
+                awful.tag.viewprev()
+            end
+        end),
+
+    awful.key({ modkey, "Shift"   }, "Right", 
+        function ( c )
+            local currentidx = awful.tag.getidx()
+            if currentidx == 9 then
+                awful.client.movetotag( tags[client.focus.screen][1] )
+                awful.tag.viewonly( tags[client.focus.screen][1] )
+            else
+                awful.client.movetotag( tags[client.focus.screen][ currentidx + 1] )
+                awful.tag.viewnext()
+            end
+        end),
+
+
     awful.key({ modkey, "Control" }, "n", 
             awful.client.restore,
             "Restore" ),
