@@ -421,11 +421,13 @@ for i = 1, keynumber do
                       end
                   end),
         awful.key({ modkey, "Shift" }, "#" .. i + 9,
-                  function ()
-                      if client.focus and tags[client.focus.screen][i] then
-                          awful.client.movetotag(tags[client.focus.screen][i])
-                      end
-                  end),
+            function ()
+                local currentscreen = client.focus.screen
+                if client.focus and tags[client.focus.screen][i] then
+                    awful.client.movetotag(tags[ currentscreen ][i])
+                    awful.tag.viewonly( tags[ currentscreen ][i] )
+                end
+            end),
         awful.key({ modkey, "Control", "Shift" }, "#" .. i + 9,
                   function ()
                       if client.focus and tags[client.focus.screen][i] then
