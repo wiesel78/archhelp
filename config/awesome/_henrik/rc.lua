@@ -122,7 +122,7 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
    Set the timeout to your needs.
 ]]
 
-local wp_path = os.getenv("HOME").."/Bilder/ponyThings/ponyLand"
+local wp_path = os.getenv("HOME").."/Bilder/ponyThings/ponyLand/ponySpace"
 wp.init(wp_path, true)
 -- get the frist wp on start up
 wp.change_wp()
@@ -405,7 +405,7 @@ for i = 1, 9 do
    end))
 end
 
-clientbuttons = awful.util.table.join(
+clientbuttonsend = awful.util.table.join(
    awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
    awful.button({ modkey }, 1, awful.mouse.client.move),
    awful.button({ modkey }, 3, awful.mouse.client.resize))
