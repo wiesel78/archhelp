@@ -28,7 +28,7 @@ function change_wp()
    for s = 1, screen.count()  do
       -- state + 1, cause tables start with index 1
       -- gears.wallpaper.maximized(files[state+1], s, true)
-      gears.wallpaper.fit(files[state+1], s, "#000000")
+      gears.wallpaper.fit(files[state], s, "#000000")
    end
 end
 
@@ -36,17 +36,10 @@ end
 -- Search for wallpapers and store them in a set
 -- We do it recursive or plane.
 function init(path, recursive)
-   if recursive then
-      for filename in dirtree(path) do
-         if string.match(filename, "%.jpg$") or string.match(filename, "%.png$") then
-            table.insert(files, filename)
-         end
-      end
-   else
-      for filename in lfs.dir(path) do
-         if string.match(filename, "%.jpg$") or string.match(filename, "%.png$") then
-            table.insert(files, path.."/"..filename)
-         end
+   -- if recursive flag is set we go recursive down the folder path or not if not set
+   for filename in (recursive and dirtree(path) or lfs.dir(path)) do
+      if string.match(filename, "%.jpg$") or string.match(filename, "%.png$") then
+         table.insert(files, filename)
       end
    end
 end
