@@ -6,8 +6,14 @@ Ausgestattet mit
 ..[solarized-theme](https://github.com/sellout/emacs-color-theme-solarized)
 und einigen Erweiterungen.
 
+## Usage
+
 `make fresh-client` Installiert Prelude auf einem neuen Client
 `make to-client` Kopiert Konfiguration auf einen Client
+
+Wenn ihr systemd als Initsystem einsetzt, dann könnt ihr mit der File `emacs@service`
+Emacs beim Systemstart mit starten lassen. Die File wird nach `/usr/lib/systemd/system` kopiert und
+mit `systemctl [enable|start] emacs@<username>` gestartet.
 
 Erweiterungen
 * `web-mode, lua-mode, autocomplete, sr-speedbar ` sind als Zusatzmodule definiert (`autocomplete` ist deaktiviert)

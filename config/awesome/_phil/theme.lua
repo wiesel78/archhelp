@@ -6,7 +6,7 @@ local awful = require("awful")
 
 theme = {}
 
-theme.wallpaper     = awful.util.getdir("config") .. "/wallpaper.jpg"
+-- theme.wallpaper     = awful.util.getdir("config") .. "/wallpaper.jpg"
 
 theme.font          = "sans 8"
 

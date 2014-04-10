@@ -16,6 +16,8 @@ local autostart = require("autostart")
 
 local vicious   = require("vicious")
 
+local wp = require("wp_changer")
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -46,7 +48,8 @@ end
 beautiful.init(awful.util.getdir("config") .. "/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "urxvtc"
+-- terminal = "urxvtc"
+terminal = "lilyterm"
 editor = os.getenv("EDITOR") or "nano"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -285,6 +288,35 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
 
+    awful.key({ modkey, "Shift"   }, "Left", 
+        function ( c )
+            -- save current tag in currentidx
+            local currentidx = awful.tag.getidx()
+
+            if currentidx == 1 then
+                awful.client.movetotag( tags[ client.focus.screen ][ 9 ] )
+                awful.tag.viewonly( tags[client.focus.screen][9] )
+            else
+                awful.client.movetotag( tags[client.focus.screen][ currentidx - 1] )
+                awful.tag.viewprev()
+            end
+        end),
+
+    awful.key({ modkey, "Shift"   }, "Right", 
+        function ( c )
+            -- save current tag in currentidx
+            local currentidx = awful.tag.getidx()
+
+            if currentidx == 9 then
+                awful.client.movetotag( tags[client.focus.screen][1] )
+                awful.tag.viewonly( tags[client.focus.screen][1] )
+            else
+                awful.client.movetotag( tags[client.focus.screen][ currentidx + 1] )
+                awful.tag.viewnext()
+            end
+        end),
+
+
     awful.key({ modkey, "Control" }, "n", 
             awful.client.restore,
             "Restore" ),
@@ -392,12 +424,20 @@ for i = 1, keynumber do
                           awful.tag.viewtoggle(tags[screen][i])
                       end
                   end),
+
+        -- move client and view to specific tag
         awful.key({ modkey, "Shift" }, "#" .. i + 9,
-                  function ()
-                      if client.focus and tags[client.focus.screen][i] then
-                          awful.client.movetotag(tags[client.focus.screen][i])
-                      end
-                  end),
+            function ()
+                -- save the focused screen-index in currentscreen
+                local currentscreen = client.focus.screen
+                
+                if client.focus and tags[client.focus.screen][i] then
+                    awful.client.movetotag(tags[ currentscreen ][i])
+                    
+                    -- set the tag[i] visible
+                    awful.tag.viewonly( tags[ currentscreen ][i] )
+                end
+            end),
         awful.key({ modkey, "Control", "Shift" }, "#" .. i + 9,
                   function ()
                       if client.focus and tags[client.focus.screen][i] then
@@ -516,6 +556,23 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
+
+--[[ wallpaper changer
+   Changes the desktop wallpaper after n seconds.
+   You have to change the wp_path to your wallpaper folder
+   and choose if seek files recursivly or not.
+   Set the timeout to your needs.
+]]
+
+local wp_path = os.getenv("HOME").."/Bilder/Wallpaper/Sexy/bestof"
+wp.init(wp_path, true)
+-- get the frist wp on start up
+wp.change_wp()
+
+-- startup timer and set it to 5 minutes
+local timer = timer({ timeout = (5 * 60)})
+timer:connect_signal("timeout", function() wp.change_wp() end)
+timer:start()
 
 require("autostart")
 

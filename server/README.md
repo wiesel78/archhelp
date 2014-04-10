@@ -53,6 +53,24 @@ At least we can power up mpd with `systemctl [enable|start] mpd0`
 
 If there are questions read [MPD](https://wiki.archlinux.org/index.php/Music_Player_Daemon).
 
+## Munin
+
+Munin is a monitoring tool for single server and multiple server infrastructures.
+
+`pacman -S munin munin-node` and on every node `pacman -S munin-node`
+
+Copy and adjust the config to your needs. Run on every node `muni-node-configure --suggest`
+to see suggested plugins.
+
+To install the suggested plugins use `munin-node-configure --shell | sh`
+
+Create the html dir (you set in munin.conf) under your webserver root and change the owner to munin:http and add
+munin to the http group.
+
+Run `crontab /etc/munin/munin-cront-entry -u munin` and `usermod -aG log munin` because munin plugins read log files.
+
+Start munin with `systemctl start munin-node` on every node and `systemctl enable munin-node`.
+
 ## Setting up a mailserver with postfix, postfixadmin, dovecot and roundcubemail
 
 I don't want to write a full How-To, this is just a "speed-run" to make my configuration work.
