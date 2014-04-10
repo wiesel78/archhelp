@@ -290,7 +290,9 @@ globalkeys = awful.util.table.join(
 
     awful.key({ modkey, "Shift"   }, "Left", 
         function ( c )
+            -- save current tag in currentidx
             local currentidx = awful.tag.getidx()
+
             if currentidx == 1 then
                 awful.client.movetotag( tags[ client.focus.screen ][ 9 ] )
                 awful.tag.viewonly( tags[client.focus.screen][9] )
@@ -302,7 +304,9 @@ globalkeys = awful.util.table.join(
 
     awful.key({ modkey, "Shift"   }, "Right", 
         function ( c )
+            -- save current tag in currentidx
             local currentidx = awful.tag.getidx()
+
             if currentidx == 9 then
                 awful.client.movetotag( tags[client.focus.screen][1] )
                 awful.tag.viewonly( tags[client.focus.screen][1] )
@@ -420,11 +424,17 @@ for i = 1, keynumber do
                           awful.tag.viewtoggle(tags[screen][i])
                       end
                   end),
+
+        -- move client and view to specific tag
         awful.key({ modkey, "Shift" }, "#" .. i + 9,
             function ()
+                -- save the focused screen-index in currentscreen
                 local currentscreen = client.focus.screen
+                
                 if client.focus and tags[client.focus.screen][i] then
                     awful.client.movetotag(tags[ currentscreen ][i])
+                    
+                    -- set the tag[i] visible
                     awful.tag.viewonly( tags[ currentscreen ][i] )
                 end
             end),
