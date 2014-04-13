@@ -78,7 +78,6 @@ Wenn man die Verbindung hergestellt hat, kann man mit "ip addr" die Lokale IP im
   
   if [ $UNIVPN_REMOTE = $5 ]
   then 
-      echo "hallo " > /home/wiesel/blublub
       /usr/bin/ip route add $UNIVPN_SUBNET dev $1
   fi
   
