@@ -21,15 +21,20 @@ module("wp_changer")
 local files = {}
 
 -- changes the background theme with gears
-function change_wp()
-   math.randomseed( os.time() )
-   local state = math.random(#files)
+function change_wp( wallpaperType , backgroundColor )
+    wallpaperType = wallpaperType or "fit"
+    backgroundColor = backgroundColor or "#000000"
+    
+    math.randomseed( os.time() )
+    local state = math.random(#files)
 
-   for s = 1, screen.count()  do
-      -- state + 1, cause tables start with index 1
-      -- gears.wallpaper.maximized(files[state+1], s, true)
-      gears.wallpaper.fit(files[state], s, "#000000")
-   end
+    for s = 1, screen.count()  do
+        -- state + 1, cause tables start with index 1
+        -- gears.wallpaper.maximized(files[state], s, true)
+        if wallpaperType == "fit" then
+            gears.wallpaper.fit(files[state], s, backgroundColor)
+        end
+    end
 end
 
 
