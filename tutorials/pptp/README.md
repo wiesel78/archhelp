@@ -40,6 +40,12 @@ Normales starten mit
 
 ``` 
   sudo pon univpn 
+```  
+  
+Zum beenden der Verbindung  
+
+```
+  sudo poff univpn
 ```
 
 ## Routing  
