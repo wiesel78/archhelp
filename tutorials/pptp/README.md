@@ -18,7 +18,8 @@ pptpsetup macht alles für uns, wir müssen ihm nur alle Informationen geben.
   sudo pptpsetup --create univpn --server vpn.uni-potsdam.de --username name@uni-potsdam.de --password deinpasswort --encrypt 
 ```  
 
-Das erstellt uns eine Datei in /etc/ppp/peers/ namens univpn  
+Das erstellt uns eine Datei in /etc/ppp/peers/ namens univpn.   
+
 Löschen kann man die Datei direkt oder mit dem Befehl   
 
 ``` 
@@ -33,7 +34,8 @@ Für den ersten start sollte man sich von pptpclient alle möglichen Information
   sudo pon univpn debug dump logfd 2 nodetach 
 ```  
 
-Wenn alles gut ging sollte man "ip addr" das gerät ppp0 sehen  
+Wenn alles gut ging sollte man "ip addr" das gerät ppp0 sehen.    
+
 Normales starten mit  
 
 ``` 
