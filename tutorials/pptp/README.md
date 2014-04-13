@@ -67,7 +67,7 @@ Man kann die jeweiligen Routen wieder löschen in dem man statt add ein delete s
 
 ### Automatisches Routen  
 
-Wenn man die Verbindung hergestellt hat, kann man mit "ip addr" die Lokale IP im VPN Netzwerk und die Öffentliche Server IP des VPN Servers entnehmen. Um beim Start der VPN Verbindung die Route hinzu zu fügen und beim beenden die Route zu entfernen erstellt man sich jeweils ein Script in dem Ordnern /etc/ppp/ip-up.d und /etc/ppp/ip-down.d  
+Wenn man die Verbindung hergestellt hat, kann man mit "ip addr" die Lokale IP im VPN Netzwerk und die Öffentliche Server IP des VPN Servers entnehmen. Um beim Start der VPN Verbindung die Route hinzu zu fügen und beim beenden die Route zu entfernen erstellt man sich jeweils ein Script in den Ordnern /etc/ppp/ip-up.d und /etc/ppp/ip-down.d  
 
 /etc/ppp/ip-up.d/10-univpn-route-add.sh  
 ```
