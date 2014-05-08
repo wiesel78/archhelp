@@ -12,8 +12,6 @@ local naughty = require("naughty")
 local menubar = require("menubar")
 -- loading vicious
 local vicious = require("vicious")
--- loading autostart
-local autostart = require("autostart")
 -- loading battery
 -- local battery = require("battery")
 -- loading wallpaper
@@ -53,6 +51,12 @@ beautiful.init(awful.util.getdir("config").."/theme.lua")
 terminal = "lilyterm"
 editor = os.getenv("EDITOR") or "emacs -nw"
 editor_cmd = terminal .. " -e " .. editor
+
+-- Run xmodmap if .Xmodmap exists.
+local f = io.open(os.getenv("HOME") .. ".Xmodmap", "r")
+if f~= nil then
+   os.execute("xmodmap " .. f .. " &")
+end
 
 -- Default modkey.
 -- Usually, Mod4 Is The Key With A Logo Between Control And Alt.
@@ -274,7 +278,8 @@ globalkeys = awful.util.table.join(
    awful.key({ modkey,           }, "Left",   awful.tag.viewprev       ),
    awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
    awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
-
+   awful.key({ modkey,           }, "e",      function() awful.util.spawn("emacsclient -c") end),
+   awful.key({ modkey            }, "c",      function() awful.util.spawn("chromium") end),
    awful.key({ modkey,           }, "j",
       function ()
          awful.client.focus.byidx( 1)
@@ -507,5 +512,3 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
-
-require("autostart")
