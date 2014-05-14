@@ -1,12 +1,15 @@
-;;; package --- Summary
-;;; Commentary: define required packages
+;;; pkg.el --- Let prelude load packages
+
+;;; Commentary:
+;;; Load own packages from melpa.
 
 ;;; Code:
-;; preload auto-install
-(prelude-require-packages '(lua-mode web-mode auto-complete smartparens
-                                     smex sr-speedbar exec-path-from-shell
-                                     google-c-style color-theme-solarized))
 
-;; Footer
+(prelude-require-packages '(lua-mode google-c-style smex better-defaults
+                                     zlc xterm-color smart-operator
+                                     paradox god-mode jedi python-environment
+                                     yasnippet))
+
 (provide 'pkg)
+
 ;;; pkg.el ends here
