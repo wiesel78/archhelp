@@ -1,19 +1,19 @@
 # Emacs
 
-Ausgestattet mit
+Provided with:
 ..[Prelude](http://batsov.com/prelude/) ,
-..[better-defaults](https://github.com/technomancy/better-defaults),
-..[solarized-theme](https://github.com/sellout/emacs-color-theme-solarized)
-und einigen Erweiterungen.
+..[God-Mode](https://github.com/chrisdone/god-mode)
+..[Dark-Blue Theme](https://github.com/emacs-jp/replace-colorthemes/blob/master/dark-blue-theme.el)
+and some other configurations. Check `personel/`
 
 ## Usage
 
-`make fresh-client` Installiert Prelude auf einem neuen Client
-`make to-client` Kopiert Konfiguration auf einen Client
+`make fresh-client` Installs Prelude on a new client.
+`make to-client` Copies this configuration to `~/.emacs.d/personal/`
 
-Wenn ihr systemd als Initsystem einsetzt, dann könnt ihr mit der File `emacs@service`
-Emacs beim Systemstart mit starten lassen. Die File wird nach `/usr/lib/systemd/system` kopiert und
-mit `systemctl [enable|start] emacs@<username>` gestartet.
+If you're using systemd as init system you can use the `emacs@service` file to load emacs
+within your system boot. This file goes to `/usr/lib/systemd/system`. After that 
+you can [enable|start] it with `systemctl [enable|start] emacs@<username>`.
 
 Erweiterungen
 * `web-mode, lua-mode, autocomplete, sr-speedbar ` sind als Zusatzmodule definiert (`autocomplete` ist deaktiviert)
