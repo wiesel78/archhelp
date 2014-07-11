@@ -13,11 +13,11 @@ curl -L https://github.com/bbatsov/prelude/raw/master/utils/installer.sh | sh
 cd personal
 curl -O https://raw.githubusercontent.com/emacs-jp/replace-colorthemes/master/dark-blue-theme.el
  
-# Install yasnippets
+# Install yasnippets:
 cd ../snippets
 git clone https://github.com/AndreaCrotti/yasnippet-snippets.git 
 
 cd cwd
-cp -f prelude-modules.el ${CONFIG}/prelude-modules.el
-cp -rf personal/ ${CONFIG}/
+cp -f prelude-modules.el ${emacs}/prelude-modules.el
+cp -rf personal/ ${emacs}/
 echo "Config successfully copied."
