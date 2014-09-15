@@ -1,26 +1,25 @@
-# avahi installieren
+## avahi installieren
 
 ```
 pacman -S avahi nss-mdns
 ```
 
+um netzwerknamen der form name.local zu aktivieren
+folgendes in /etc/nsswitch.conf umschreiben
 
-# um netzwerknamen der form name.local zu aktivieren
-# folgendes in /etc/nsswitch.conf umschreiben
-
-# von
+#### von
 
 ```
 hosts: files myhostname dns
 ```
 
-# zu
+#### zu
 
 ```
 hosts: files myhostname mdns_minimal [NOTFOUND=return] dns
 ```
 
-# danach in systemd aktivieren
+### danach in systemd aktivieren
 
 ```
 systemctl enable avahi-daemon.service
@@ -28,17 +27,17 @@ systemctl restart avahi-daemon.service
 ```
 
 
-# falls avahi mit dem fehlerstatus 255 stop
-# sollte man in der datei /etc/avahi/avahi-daemon.conf
-# folgendes umschreiben
+falls avahi mit dem fehlerstatus 255 stop
+sollte man in der datei /etc/avahi/avahi-daemon.conf
+folgendes umschreiben
 
-# von 
+#### von 
 
 ```
 #disallow-other-stacks=no
 ```
 
-# zu
+#### zu
 
 ```
 disallow-other-stacks=yes
