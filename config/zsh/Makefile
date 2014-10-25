@@ -8,10 +8,15 @@ push-phil:
 	cp ${HOME}/{.zshrc.local,.dircolors} _phil/; \
 	fi
 
-# henriks configuration in _henrik
+
 push-henrik:
-	cp -fr ${HOME}/{.zshrc,.zsh} ./_henrik/
+	cp -fr ${HOME}/.oh-my-zsh/custom ./_henrik/
+	cp -f ${HOME}/.zshrc ./_henrik/zshrc
 
 pull-henrik:
-	cp -fr ./_henrik/{.zshrc,.zsh} ${HOME}/
-	chmod -R 755 ${HOME}/.zsh
+	cp -fr ./_henrik/custom ${HOME}/.oh-my-zsh/
+	cp -f ./zshrc ${HOME}/.zshrc
+
+fresh-henrik:
+	curl -L http://install.ohmyz.sh | sh
+	pull-henrik
