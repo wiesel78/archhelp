@@ -5,6 +5,9 @@
 ;;; It uses graphene as a base for sane defaults.
 
 ;;; Code:
+
+;;; System setup
+;;;
 ;; Add user information
 (setq user-full-name "Henrik Jürges")
 (setq user-mail-address "juerges.henrik@gmail.com")
@@ -16,6 +19,8 @@
 ;; Require common lisp
 (require 'cl)
 
+;;; ELPA setup
+;;;
 ;; Require Emacs package functionality
 (require 'package)
 
@@ -37,6 +42,7 @@
                            company-ghc
                            ;; misc
                            org
+                           whitespace
                            solarized-theme)
   "My default packages.")
 
@@ -54,7 +60,9 @@
     (when (not (package-installed-p pkg))
       (package-install pkg))))
 
-;; Load graphene for a clean setup and sane defaults
+;;; Custom setup
+;;;
+;; Load graphene for fancy and shiny graphics
 (require 'graphene)
 
 ;; Disable menu
@@ -69,20 +77,27 @@
 (when (fboundp 'windmove-default-keybindings)
   (windmove-default-keybindings))
 
+;; Show trailing whitespaces
+(setq nobreak-char-display t)
+
 ;; Use the system clipboard
 (setq x-select-enable-clipboard t)
 
 ;; Set key bindings
 (global-set-key (kbd "M-SPC") 'company-complete)
 
+;;; OCaml: Tuareg plugin setup
+;;;
 ;; Customize Tuareg
-(setq tuareg-lazy-= t)
-(setq tuareg-lazy-paren t)
 (setq tuareg-in-indent 0)
 (add-hook 'tuareg-mode-hook
           ;; Turn on autofill minor mode.
           (lambda () (auto-fill-mode 1)))
+(autoload 'tuareg-mode "tuareg" "Major mode for OCaml" t)
+(autoload 'camldebug "camldebug" "Run caml debugger" t)
 
+;;; Haskell: Haskell-Mode GHC Company-ghc SHM plugins setup
+;;;
 ;; Config for Haskell
 (add-hook 'haskell-mode-hook 'structured-haskell-mode)
 (eval-after-load 'haskell-mode
@@ -121,5 +136,4 @@
 (custom-set-variables '(company-ghc-show-info t))
 
 (provide 'init)
-
 ;;; init.el ends here
