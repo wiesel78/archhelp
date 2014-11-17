@@ -22,4 +22,4 @@ push-henrik:
 pull-henrik:
 	mkdir -p $(CONFIG)/awesome/
 	cp -r ./_henrik/* $(CONFIG)/awesome/
-    echo "Successfully deployed."
+	echo "Successfully deployed."
