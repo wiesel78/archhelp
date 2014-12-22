@@ -18,7 +18,5 @@ wp_change require 'lfs' :
     sudo pacman -S luarocks
     sudo luarocks install luafilesystem
 ```
-or on arch linux just
-`sudo pacman -S lua51-filesystem`  
 Change wp_path to your wallpaper folder (`rc.lua` line ~530)
 

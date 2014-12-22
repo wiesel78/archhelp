@@ -564,7 +564,7 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
    Set the timeout to your needs.
 ]]
 
-local wp_path = os.getenv("HOME").."/Bilder/Wallpaper/Sexy/bestof"
+local wp_path = os.getenv("HOME").."/Bilder/Wallpaper/bestof"
 wp.init(wp_path, true)
 -- get the frist wp on start up
 wp.change_wp()
