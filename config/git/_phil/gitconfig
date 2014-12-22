@@ -1,0 +1,5 @@
+[user]
+	email = wurst78@gmail.com
+	name = Philip Ullrich
+[push]
+	default = simple
