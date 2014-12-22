@@ -1,4 +1,5 @@
 ntfsprogs
+lilyterm
 zsh
 grml-zsh-config
 ntfs-3g
