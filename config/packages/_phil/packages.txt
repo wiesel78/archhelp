@@ -13,6 +13,8 @@ network-manager-applet
 networkmanager-openvpn
 networkmanager-pptp
 avahi
+postgresql
+xterm
 nss-mdns
 nfs-utils 
 nmap
@@ -24,6 +26,8 @@ vim
 sudo
 openssh
 lshw
+qemu
+libvirt
 gdisk
 rsync
 arch-install-scripts
