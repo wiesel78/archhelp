@@ -46,14 +46,19 @@ start bashets at the end of your rc.lua
     bashets.start()
 ```
   
-Create a new quit function.
+Create a new quit and restart function.
 
 ```
    function quit()
        bashets.stop()
        awesome.quit()
    end
+
+   function restart()
+       bashets.stop()
+       awesome.restart()
+   end
 ```
 
-and rename all awesome.quit() functions with quit()
+and rename all awesome.quit and awesome.restart calls with quit or restart
 
