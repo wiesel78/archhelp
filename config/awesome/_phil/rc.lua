@@ -19,6 +19,16 @@ local bashets   = require("bashets")
 
 local wp = require("wp_changer")
 
+function quit()
+    bashets.stop()
+    awesome.quit()
+end
+
+function restart()
+    bashets.stop()
+    awesome.restart()
+end
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -116,11 +126,8 @@ end
 myawesomemenu = {
    { "manual", terminal .. " -e man awesome" },
    { "edit config", editor_cmd .. " " .. awesome.conffile },
-   { "restart", awesome.restart },
-   { "quit", function()
-                    bashets.stop()
-                    awesome.quit()
-             end}
+   { "restart", restart },
+   { "quit", quit}
 }
 
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
@@ -200,7 +207,7 @@ mytasklist.buttons = awful.util.table.join(
 
 -- battery widget
 
-mybatterystatus = wibox.widget.textbox()
+local mybatterystatus = wibox.widget.textbox()
 bashets.register("/usr/bin/acpi -b | cut -d , -f 2 | cut -c 2-",
     {
         widget = mybatterystatus,
@@ -301,14 +308,8 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "Return", 
             function () awful.util.spawn(terminal) end,
             "Terminal"),
-    awful.key({ modkey, "Control" }, "r", function () 
-                                                bashets.stop()
-                                                awesome.restart()
-                                          end),
-    awful.key({ modkey, "Shift"   }, "q", function () 
-                                                bashets.stop()
-                                                awesome.quit() 
-                                          end),
+    awful.key({ modkey, "Control" }, "r", restart ), 
+    awful.key({ modkey, "Shift"   }, "q", quit ),
 
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)    end),
     awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)    end),
