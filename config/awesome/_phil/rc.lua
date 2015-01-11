@@ -15,6 +15,7 @@ local keydoc    = require("keydoc")
 local autostart = require("autostart")
 
 local vicious   = require("vicious")
+local bashets   = require("bashets")
 
 local wp = require("wp_changer")
 
@@ -72,6 +73,9 @@ file_manager = "nautilus"
 -- However, you can use another modifier like Mod1, but it may interact with others.
 modkey = "Mod4"
 
+
+
+
 -- Table of layouts to cover with awful.layout.inc, order matters.
 local layouts =
 {
@@ -113,7 +117,10 @@ myawesomemenu = {
    { "manual", terminal .. " -e man awesome" },
    { "edit config", editor_cmd .. " " .. awesome.conffile },
    { "restart", awesome.restart },
-   { "quit", awesome.quit }
+   { "quit", function()
+                    bashets.stop()
+                    awesome.quit()
+             end}
 }
 
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
@@ -189,6 +196,23 @@ mytasklist.buttons = awful.util.table.join(
                                               if client.focus then client.focus:raise() end
                                           end))
 
+
+
+-- battery widget
+
+mybatterystatus = wibox.widget.textbox()
+bashets.register("/usr/bin/acpi -b | cut -d , -f 2 | cut -c 2-",
+    {
+        widget = mybatterystatus,
+        update_time = 60,
+        seperator = '|',
+        format = " Battery: $1"
+    }
+)
+
+-- end battery widget
+
+
 for s = 1, screen.count() do
     -- Create a promptbox for each screen
     mypromptbox[s] = awful.widget.prompt()
@@ -219,6 +243,7 @@ for s = 1, screen.count() do
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
     right_layout:add(mytextmem)
+    right_layout:add(mybatterystatus)
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
     
@@ -276,8 +301,14 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "Return", 
             function () awful.util.spawn(terminal) end,
             "Terminal"),
-    awful.key({ modkey, "Control" }, "r", awesome.restart),
-    awful.key({ modkey, "Shift"   }, "q", awesome.quit),
+    awful.key({ modkey, "Control" }, "r", function () 
+                                                bashets.stop()
+                                                awesome.restart()
+                                          end),
+    awful.key({ modkey, "Shift"   }, "q", function () 
+                                                bashets.stop()
+                                                awesome.quit() 
+                                          end),
 
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)    end),
     awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)    end),
@@ -564,15 +595,20 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
    Set the timeout to your needs.
 ]]
 
-local wp_path = os.getenv("HOME").."/Bilder/Wallpaper/bestof"
-wp.init(wp_path, true)
--- get the frist wp on start up
-wp.change_wp()
+--local wp_path = os.getenv("HOME").."/Bilder/Wallpaper/ArchLinux"
+--wp.init(wp_path, true)
+---- get the frist wp on start up
+--wp.change_wp()
+--
+---- startup timer and set it to 5 minutes
+--local timer = timer({ timeout = (5 * 60)})
+--timer:connect_signal("timeout", function() wp.change_wp() end)
+--timer:start()
+--
 
--- startup timer and set it to 5 minutes
-local timer = timer({ timeout = (5 * 60)})
-timer:connect_signal("timeout", function() wp.change_wp() end)
-timer:start()
 
+
+
+bashets.start()
 require("autostart")
 

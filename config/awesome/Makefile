@@ -10,9 +10,9 @@ push-phil:
 pull-phil:
 	mkdir -p $(CONFIG)/awesome/
 	cp -r ./_phil/* $(CONFIG)/awesome/
-	sudo pacman -S luarocks vicious    
-	sudo luarocks install luafilesystem 
-	mkdir -p ~/Bilder/Wallpaper/bestof    
+	sudo pacman -S luarocks vicious acpi    
+	sudo luarocks install luafilesystem
+	mkdir -p ~/Bilder/Wallpaper/bestof
 
 
 # henriks configuration, dateien im ordner _henrik
