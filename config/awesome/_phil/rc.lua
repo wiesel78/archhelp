@@ -16,6 +16,7 @@ local autostart = require("autostart")
 
 local vicious   = require("vicious")
 local bashets   = require("bashets")
+local battery   = require("battery")
 
 local wp = require("wp_changer")
 
@@ -205,20 +206,6 @@ mytasklist.buttons = awful.util.table.join(
 
 
 
--- battery widget
-
-local mybatterystatus = wibox.widget.textbox()
-bashets.register("/usr/bin/acpi -b | cut -d , -f 2 | cut -c 2-",
-    {
-        widget = mybatterystatus,
-        update_time = 60,
-        seperator = '|',
-        format = " Battery: $1"
-    }
-)
-
--- end battery widget
-
 
 for s = 1, screen.count() do
     -- Create a promptbox for each screen
@@ -250,7 +237,7 @@ for s = 1, screen.count() do
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
     right_layout:add(mytextmem)
-    right_layout:add(mybatterystatus)
+    right_layout:add(battery.status)
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
     
