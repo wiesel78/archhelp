@@ -1,0 +1,20 @@
+## Eine Partition mit dm-crypt Verschluesseln
+
+um eine partition zu verschlüsseln : 
+
+```
+    cryptsetup -c aes-xts-plain -y -s 512 luksFormat /dev/sda1
+```
+wenn die Platte größer als 2TB ist sollte man statt aes-xts-plain -> aes-xts-plain64 verwenden.  
+  
+
+## Verschlüsselte Platte einhängen
+um eine verschlüsselte Platte einzuhängen : 
+
+```
+    cryptsetup luksOpen /dev/sda1 name
+```
+  
+statt name gibt man irgendwas ein. Dieser Name wird später unter /dev/mapper/name sichtbar.  
+Ab hier kann man mit /dev/mapper/name arbeiten wie mit jeder anderen Partition
+
