@@ -1,0 +1,6 @@
+## Empfohlene Optionen für BTRFS auf einer SSD
+
+```
+mount -o noatime,discard,autodefrag,compress=lzo,ssd,space_cache,subvol=root -L ROOT /mnt
+```
+
