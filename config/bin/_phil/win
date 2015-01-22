@@ -1,0 +1,4 @@
+
+
+# qemu-system-x86_64 -machine type=pc,accel=kvm -cpu host -smp 2 -m 4096 -hda /home/wiesel/vm/platten/windows8.1.img -vga vmware -usb -smb /home/wiesel/
+qemu-system-x86_64 -redir tcp:14000::14000 --enable-kvm -cpu host -smp 2 -m 4096 -hda /home/wiesel/vm/platten/windows8.1.img -vga vmware -usb -smb /home/wiesel/ 

@@ -1,5 +1,5 @@
 prompt off
-PATH=${PATH}:~/bin
+PATH=${PATH}:~/bin:~/Dokumente/Canwell/bin:~/.gem/ruby/2.2.0/bin
 PS1='%F{green}%B%n%b@%F{red}%B%m%b %F{blue}%~%b %% '
 eval `dircolors -b ~/.dircolors`
 
