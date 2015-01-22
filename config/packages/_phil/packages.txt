@@ -79,7 +79,6 @@ thunderbird
 nodejs
 lilyterm
 btrfs-progs
-glxinfo
 gstreamer0.10
 gstreamer0.10-bad
 gstreamer0.10-bad-plugins
