@@ -1,5 +1,5 @@
 
-container="~/Dokumente/Verschlüsseltes/vertraulich.img"
+container="/home/wiesel/Dokumente/Verschlüsseltes/vertraulich.img"
 mountpoint="/mnt/vertraulich"
 lname=vertraulich
 
