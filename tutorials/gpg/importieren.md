@@ -5,12 +5,6 @@
 Um jede Art von Schlüssel zu importieren
 
 ```
-gpg --with-fingerprint <keyfile>
-```
-
-oder
-
-```
 gpg --import <keyfile>
 ```
 
