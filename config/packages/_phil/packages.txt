@@ -3,6 +3,7 @@ lilyterm
 zsh
 monodevelop
 mono-basic
+psi
 htop
 mtpfs
 texlive-core
