@@ -1,0 +1,18 @@
+# Ablaufdatum eines GPG-Keys verlängern
+
+Um seinen Schlüssel zu verlängern :
+
+```
+gpg --edit-key deinkey
+> expire
+```
+
+danach noch die Unterschlüssel verlängern
+
+```
+> key 1
+> expire
+```
+
+wenn du mehr als einen Unterkey hast, solltest du natürlich auch diese
+verlängern.
