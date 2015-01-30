@@ -492,10 +492,14 @@ awful.rules.rules = {
       properties = { floating = true } },
     { rule = { class = "urxvt" },
       properties = { size_hints_honor = false } },
+    { rule = { class = "qemu-system-x86_64"},
+      properties = { floating = true, fullscreen = true } },
     { rule = { class = "Chromium" }, 
       properties = { floating = false } },
     { rule = { class = "Firefox" },
-      properties = { floating = false} }
+      properties = { floating = false} },
+    { rule = { class = "psi" },
+      properties = { floating = true, tag = tags[1][9] } }
     -- Set Firefox to always map on tags number 2 of screen 1.
     -- { rule = { class = "Firefox" },
     --   properties = { tag = tags[1][2] } },
