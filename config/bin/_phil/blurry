@@ -1,0 +1,1 @@
+xdotool windowsize `xdotool search --name QEMU` 1919 1079

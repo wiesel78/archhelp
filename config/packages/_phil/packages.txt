@@ -50,6 +50,7 @@ xorg-server-utils
 xorg-utils
 xorg-xinit
 gnome
+system-config-printer
 awesome
 transmission-gtk
 file-roller
