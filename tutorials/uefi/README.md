@@ -12,7 +12,7 @@ Den Rest kannst du belegen wie du willst. Hier gehe ich von einer weiteren Parti
 ## Dateisysteme erstellen
 
 ```
-    mkfs.fat -n EFISYSTEM -f /dev/sdX128
+    mkfs.fat -n EFISYSTEM /dev/sdX128
     mkfs.ext4 -L LINUX /dev/sdX1
 ```
   
