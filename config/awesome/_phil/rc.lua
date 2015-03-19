@@ -368,30 +368,33 @@ globalkeys = awful.util.table.join(
 
 	-- Fn Buttons
     awful.key({ }, "XF86AudioRaiseVolume", 
-              function ()
-                  awful.util.spawn(
-                      "/usr/bin/amixer -q set Master 5\\%+", false)
-              end),
+            function ()
+                awful.util.spawn("/usr/bin/amixer -q set Master 5\\%+", false)
+            end),
     awful.key({ }, "XF86AudioLowerVolume",
-              function()
-                  awful.util.spawn(
-                      "/usr/bin/amixer -q set Master 5\\%-", false)
-              end),
+            function()
+                awful.util.spawn("/usr/bin/amixer -q set Master 5\\%-", false)
+            end),
     awful.key({ }, "XF86AudioMute",
-              function()
-                  awful.util.spawn(
-                      "/usr/bin/amixer -q set Master toggle", false)
-              end),
+            function()
+                awful.util.spawn("/usr/bin/amixer -q set Master toggle", false)
+            end),
     awful.key({ }, "XF86ScreenSaver", 
-              function ()
-                  awful.util.spawn(
-                      "/usr/bin/xset dpms force off", false)
-              end),
+            function ()
+                awful.util.spawn("/usr/bin/xset dpms force off", false)
+            end),
+    awful.key({ }, "XF86MonBrightnessUp", 
+            function()
+                awful.util.spawn("/usr/bin/xbacklight -inc 15")    
+            end),
+    awful.key({ }, "XF86MonBrightnessDown", 
+            function()
+                awful.util.spawn("/usr/bin/xbacklight -dec 15")    
+            end),
     awful.key({ }, "XF86Launch1", 
-              function ()
-                  awful.util.spawn(
-                      "/usr/bin/systemctl suspend", false)
-              end),
+            function ()
+                awful.util.spawn("/usr/bin/systemctl suspend", false)
+            end),
     awful.key({ modkey }, "F1", 
             keydoc.display, 
             "Show this Page" )
