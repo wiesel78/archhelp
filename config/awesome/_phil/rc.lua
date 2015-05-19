@@ -18,7 +18,7 @@ local vicious   = require("vicious")
 local bashets   = require("bashets")
 local battery   = require("battery")
 
-local wp = require("wp_changer")
+--local wp = require("wp_changer")
 
 function quit()
     bashets.stop()
