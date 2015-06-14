@@ -10,7 +10,7 @@ push-phil:
 pull-phil:
 	mkdir -p $(CONFIG)/awesome/
 	cp -r ./_phil/* $(CONFIG)/awesome/
-	sudo pacman -S luarocks vicious acpi    
+	sudo pacman -S luarocks vicious acpi lilyterm   
 	sudo luarocks install luafilesystem
 	mkdir -p ~/Bilder/Wallpaper/bestof
 
