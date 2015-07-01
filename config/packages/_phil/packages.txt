@@ -1,6 +1,8 @@
 ntfsprogs
 lilyterm
 zsh
+xdotool
+xclip
 monodevelop
 mono-basic
 psi
