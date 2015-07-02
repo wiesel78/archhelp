@@ -1,7 +1,7 @@
---[[ Wpchange is a script written in lua.
+--[[ wp_changer 
    Usage: Initialize this script with it's init() function.
    After that you can change the wallpaper everytime you call
-   change_wp().]]
+   change_wp().]]--
 
 local math = math
 local os = os
@@ -14,11 +14,18 @@ local lfs = require("lfs")
 local screen = screen
 local gears = require("gears")
 local beautiful = require("beautiful")
-local awfule = require("awful")
+local bashets = require("bashets")
+local wibox = require("wibox")
 
 module("wp_changer")
 
 local files = {}
+
+function wp(time, dir)
+   init(dir, true)
+   bashets.schedule(change_wp(), time)
+end
+
 
 -- changes the background theme with gears
 function change_wp()

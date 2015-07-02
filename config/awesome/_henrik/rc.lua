@@ -12,10 +12,13 @@ local naughty = require("naughty")
 local menubar = require("menubar")
 -- loading vicious
 local vicious = require("vicious")
--- loading battery
--- local battery = require("battery")
+local bashets = require("bashets")
+-- plugins
+local hw = require("hw_plugins")
 -- loading wallpaper
 local wp = require("wp_changer")
+-- loading keydoc
+local keydoc = require("keydoc")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -49,8 +52,10 @@ beautiful.init(awful.util.getdir("config").."/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "lilyterm"
-editor = os.getenv("EDITOR") or "emacs -nw"
+editor = os.getenv("EDITOR") or "emacs"
 editor_cmd = terminal .. " -e " .. editor
+www = "chromium"
+
 
 -- Run xmodmap if .Xmodmap exists.
 local f = io.open(os.getenv("HOME") .. ".Xmodmap", "r")
@@ -103,7 +108,8 @@ myawesomemenu = {
    { "manual", terminal .. " -e man awesome" },
    { "edit config", editor_cmd .. " " .. awesome.conffile },
    { "restart", awesome.restart },
-   { "quit", awesome.quit }
+   { "quit", awesome.quit },
+   { "www", www}
 }
 
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
@@ -121,57 +127,19 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 
 --[[ wallpaper changer
    Changes the desktop wallpaper after n seconds.
-   You have to change the wp_path to your wallpaper folder
-   and choose if seek files recursivly or not.
+   You have to change the wp_path to your wallpaper folder.
    Set the timeout to your needs.
-]]
+ ]]--
 
 local wp_path = os.getenv("HOME").."/Bilder/ponyThings/ponyLand/ponySpace"
-wp.init(wp_path, true)
--- get the frist wp on start up
-wp.change_wp()
-
--- startup timer and set it to 20 minutes
-local timer = timer({ timeout = (20 * 60) })
-timer:connect_signal("timeout", function() wp.change_wp()  end)
-timer:start()
+local time = 20 * 60 * 60 -- set time to 20 minutes
+wp.wp(time, wp_path)
 
 -- {{{ Wibox
 -- init widgets
-
--- date
-datewidget = wibox.widget.textbox()
-
--- battery
--- batterywidget = wibox.widget.textbox()
-
--- memory progress
-memwidget = awful.widget.progressbar()
-
--- progress prop
-memwidget:set_width(8)
-memwidget:set_height(10)
-memwidget:set_vertical(true)
-memwidget:set_background_color("#494B4F")
-memwidget:set_border_color(nil)
-memwidget:set_color({ type = "linear", from = {0,0}, to = {10,0}, stops = {{0, "#AECFE96"}, {0,5, "#88A175"}, {1, "#FF5656"}}})
-
--- cpu graph
-cpuwidget = awful.widget.graph()
-
--- graph prop
-cpuwidget:set_width(50)
-cpuwidget:set_background_color("#494B4F")
-cpuwidget:set_color({ type = "linear", from = {0,0}, to = {10,0}, stops = {{0, "#FF5656"}, {0.5, "#88A175"}, {1, "#AECF96"}}})
-
--- register widgets
-vicious.register(datewidget, vicious.widgets.date, "%b %d, %R", 60)
--- vicious.register(batterywidget, vicious.widgets.bat, battery.batclosure("BAT0"), 31, "BAT0")
-vicious.register(memwidget, vicious.widgets.mem, "$1", 13)
-vicious.register(cpuwidget, vicious.widgets.cpu, "$1")
-
--- Create a textclock widget
-mytextclock = awful.widget.textclock()
+hw.date()
+hw.mem()
+hw.cpu()
 
 -- Create a wibox for each screen and add it
 mywibox = {}
@@ -250,10 +218,9 @@ for s = 1, screen.count() do
    -- Widgets that are aligned to the right
    local right_layout = wibox.layout.fixed.horizontal()
    if s == 1 then right_layout:add(wibox.widget.systray()) end
-   -- right_layout:add(batterywidget)
-   right_layout:add(cpuwidget)
-   right_layout:add(memwidget)
-   right_layout:add(mytextclock)
+   right_layout:add(hw.cpuwidget)
+   right_layout:add(hw.memwidget)
+   right_layout:add(hw.datewidget)
    right_layout:add(mylayoutbox[s])
    -- Now bring it all together (with the tasklist in the middle)
    local layout = wibox.layout.align.horizontal()
@@ -275,11 +242,18 @@ root.buttons(awful.util.table.join(
 
 -- {{{ Key bindings
 globalkeys = awful.util.table.join(
-   awful.key({ modkey,           }, "Left",   awful.tag.viewprev       ),
-   awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
+   keydoc.group("Basics"),
+   awful.key({ modkey,           }, "Left",   awful.tag.viewprev       ,
+      "Switch to left desktop"),
+   awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ,
+      "Switch to right destop"),
    awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
-   awful.key({ modkey,           }, "e",      function() awful.util.spawn("emacsclient -c") end),
-   awful.key({ modkey            }, "c",      function() awful.util.spawn("chromium") end),
+   awful.key({ modkey,           }, "e",      function() awful.util.spawn("emacs") end,
+      "Start emacs"),
+   awful.key({ modkey            }, "c",      function() awful.util.spawn("chromium --ssl-version-min=tls1") end,
+      "Start chromium"),
+   awful.key({ modkey,           }, "a",      function() awful.util.spawn("pcmanfm") end,
+      "Start filemanager"),
    awful.key({ modkey,           }, "j",
       function ()
          awful.client.focus.byidx( 1)
@@ -304,11 +278,14 @@ globalkeys = awful.util.table.join(
          if client.focus then
             client.focus:raise()
          end
-   end),
+      end,
+      "Toggel focus"),
 
    -- Standard program
-   awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end),
-   awful.key({ modkey, "Control" }, "r", awesome.restart),
+   awful.key({ modkey,           }, "Return", function () awful.util.spawn(terminal) end,
+      "Launch terminal"),
+   awful.key({ modkey, "Control" }, "r", awesome.restart,
+      "Restart awesome"),
    awful.key({ modkey, "Shift"   }, "q", awesome.quit),
 
    awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)    end),
@@ -340,17 +317,18 @@ globalkeys = awful.util.table.join(
       function ()
          awful.util.spawn(
             "/usr/bin/amixer -q set Master 5\\%+", false)
-   end),
+      end),
    awful.key({ }, "XF86AudioLowerVolume",
       function()
          awful.util.spawn(
             "/usr/bin/amixer -q set Master 5\\%-", false)
-   end),
+      end),
    awful.key({ }, "XF86AudioMute",
       function()
          awful.util.spawn(
             "/usr/bin/amixer -q set Master toggle", false)
-   end)
+      end),
+   awful.key({ }, "F1", keydoc.display)
 )
 
 clientkeys = awful.util.table.join(
@@ -428,9 +406,9 @@ awful.rules.rules = {
                     focus = awful.client.focus.filter,
                     keys = clientkeys,
                     buttons = clientbuttons } },
-   { rule = { class = "MPlayer" },
+   { rule = { class = "mpv" },
      properties = { floating = true } },
-   { rule = { class = "pinentry" },
+   { rule = { class = "eclipse" },
      properties = { floating = true } },
    { rule = { class = "gimp" },
      properties = { floating = true } },
@@ -512,3 +490,7 @@ end)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
+
+
+-- at least start bashets
+bashets.start()
