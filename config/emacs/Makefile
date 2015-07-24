@@ -3,7 +3,8 @@ CONFIG=${HOME}/.emacs.d/
 all:
 
 pull-henrik:
-	cp _henrik/ ${CONFIG}
+	mkdir -p ~/.emacs.d
+	cp _henrik/init.el ${CONFIG}
 
 push-henrik:
 	cp ${CONFIG}/init.el ./_henrik/

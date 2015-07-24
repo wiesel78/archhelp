@@ -32,7 +32,7 @@ theme.colors.green   = "#859900ff"
 -- }}}
 
 -- {{{ Styles
-theme.font      = "Terminus 9"
+theme.font      = "Terminus 18"
 
 -- {{{ Colors
 theme.fg_normal  = theme.colors.base02

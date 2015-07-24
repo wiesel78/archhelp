@@ -14,9 +14,7 @@ local menubar = require("menubar")
 local vicious = require("vicious")
 local bashets = require("bashets")
 -- plugins
-local hw = require("hw_plugins")
--- loading wallpaper
-local wp = require("wp_changer")
+local bundle = require("functionbundle")
 -- loading keydoc
 local keydoc = require("keydoc")
 
@@ -124,22 +122,15 @@ mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- }}}
 
+-- wallpaper changer, change every hour
+local wp_path = os.getenv("HOME").."/Bilder/ponyThings/ponyDay"
+bundle.scheduleWallpaperChanger(wp_path, true, 60 * 60)
 
---[[ wallpaper changer
-   Changes the desktop wallpaper after n seconds.
-   You have to change the wp_path to your wallpaper folder.
-   Set the timeout to your needs.
- ]]--
-
-local wp_path = os.getenv("HOME").."/Bilder/ponyThings/ponyLand/ponySpace"
-local time = 20 * 60 * 60 -- set time to 20 minutes
-wp.wp(time, wp_path)
-
--- {{{ Wibox
--- init widgets
-hw.date()
-hw.mem()
-hw.cpu()
+-- run autostart
+local autostart = bundle.autostart()
+for s = 1, #autostart do
+   autostart[s]()
+end
 
 -- Create a wibox for each screen and add it
 mywibox = {}
@@ -218,9 +209,10 @@ for s = 1, screen.count() do
    -- Widgets that are aligned to the right
    local right_layout = wibox.layout.fixed.horizontal()
    if s == 1 then right_layout:add(wibox.widget.systray()) end
-   right_layout:add(hw.cpuwidget)
-   right_layout:add(hw.memwidget)
-   right_layout:add(hw.datewidget)
+   local widgets = bundle.widgets()
+   for s = 1, #widgets do
+      right_layout:add(widgets[s])
+   end
    right_layout:add(mylayoutbox[s])
    -- Now bring it all together (with the tasklist in the middle)
    local layout = wibox.layout.align.horizontal()

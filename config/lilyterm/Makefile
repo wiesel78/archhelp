@@ -2,10 +2,11 @@ CONFIG = ${HOME}/.config
 
 all:
 
-from-client:
+push-henrik:
 	if [ -e $(CONFIG)/lilyterm/ ]; then \
-	cp -r $(CONFIG)/lilyterm/default.conf ./default.conf; \
+	cp $(CONFIG)/lilyterm/default.conf ./default.conf; \
 	fi
 
-to-client:
+pull-henrik:
+	mkdir -p ~/.config/lilyterm
 	cp default.conf $(CONFIG)/lilyterm/default.conf
