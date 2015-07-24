@@ -1,5 +1,6 @@
 ntfsprogs
 lilyterm
+calc
 zsh
 xdotool
 xclip
@@ -71,7 +72,6 @@ clementine
 gimp
 p7zip
 libreoffice-fresh-de
-eclipse-cdt
 redis
 elasticsearch
 acpi
