@@ -19,5 +19,6 @@ stat -c "User %U : Group %G" /data/data/org.thoughtcrime.securesms >> $backup_in
 backup_elements="$backup_elements /data/data/org.thoughtcrime.securesms/"
 backup_elements="$backup_elements /data/data/com.whatsapp/" 
 
-tar czf $backup_file $backup_elements
+tar czf $backup_dir/backup.tar.gz $backup_elements
 
+cp $backup_dir/backup.tar.gz $backup_file
