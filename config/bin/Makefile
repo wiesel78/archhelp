@@ -7,7 +7,7 @@ all:
 
 pull-phil:
 	mkdir -p ${HOME}/$(BINDIRPHIL)/
-	cp _phil/* ${HOME}/$(BINDIRPHIL)/
+	cp -r _phil/* ${HOME}/$(BINDIRPHIL)/
 
 push-phil:
 	cp -r ${HOME}/$(BINDIRPHIL)/* _phil/
