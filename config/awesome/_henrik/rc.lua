@@ -123,7 +123,7 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- }}}
 
 -- wallpaper changer, change every hour
-local wp_path = os.getenv("HOME").."/Bilder/ponyThings/ponyDay"
+local wp_path = os.getenv("HOME").."/Bilder/ponyThings/ponyDay/ponySpace"
 bundle.scheduleWallpaperChanger(wp_path, true, 60 * 60)
 
 -- run autostart
@@ -319,6 +319,16 @@ globalkeys = awful.util.table.join(
       function()
          awful.util.spawn(
             "/usr/bin/amixer -q set Master toggle", false)
+      end),
+   awful.key({ }, "XF86MonBrightnessUp",
+      function()
+        awful.util.spawn(
+            "/usr/bin/xbacklight +5", false)
+      end),
+   awful.key({ }, "XF86MonBrightnessDown",
+      function()
+        awful.util.spawn(
+            "/usr/bin/xbacklight -5", false)
       end),
    awful.key({ }, "F1", keydoc.display)
 )
