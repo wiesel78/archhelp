@@ -1,0 +1,24 @@
+
+backup_dir=/sdcard/backup/
+backup_file=$backup_dir`date +"%s-%Y.%m.%d-%H-%M-%S"`.tar.gz
+backup_info=$backup_dir/info.txt
+backup_elements=$backup_info
+
+
+mkdir -p $backup_dir
+
+# Log
+echo "----" >> $backup_info
+echo "Backup $backup_file" >> $backup_info
+echo $backup_dir erstellt >> $backup_info
+
+# Nutzer und Gruppe von Signal feststellen
+stat -c "User %U : Group %G" /data/data/org.thoughtcrime.securesms >> $backup_info
+
+# sichern der Data Ordner von Signal und Whatsapp
+backup_elements="$backup_elements /data/data/org.thoughtcrime.securesms/"
+backup_elements="$backup_elements /data/data/com.whatsapp/" 
+
+tar czf $backup_dir/backup.tar.gz $backup_elements
+
+cp $backup_dir/backup.tar.gz $backup_file

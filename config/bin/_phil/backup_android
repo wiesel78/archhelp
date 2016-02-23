@@ -1,0 +1,7 @@
+
+adb push ~/bin/utils/backup_android_script /sdcard/backup_android_script
+adb shell source /sdcard/backup_android_script
+adb pull /sdcard/backup/backup.tar.gz ~/backup_android.tar.gz
+adb shell rm /sdcard/backup/backup.tar.gz
+
+

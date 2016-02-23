@@ -1,0 +1,5 @@
+#!/usr/bin/zsh
+
+sudo systemctl stop NetworkManager
+sudo systemctl start netctl
+sudo netctl start upCampus
