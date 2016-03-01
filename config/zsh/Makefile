@@ -10,13 +10,8 @@ push-phil:
 
 
 push-henrik:
-	cp -fr ${HOME}/.oh-my-zsh/custom ./_henrik/
-	cp -f ${HOME}/.zshrc ./_henrik/zshrc
+	cp -f ${HOME}/.zshrc.local ./_henrik/.zshrc.local
 
 pull-henrik:
-	cp -fr ./_henrik/custom ${HOME}/.oh-my-zsh/
-	cp -f ./_henrik/zshrc ${HOME}/.zshrc
+	cp -f ./_henrik/.zshrc.local ${HOME}/.zshrc.local
 
-fresh-henrik:
-	curl -L http://install.ohmyz.sh | sh
-	pull-henrik

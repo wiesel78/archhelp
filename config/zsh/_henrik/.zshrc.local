@@ -1,0 +1,29 @@
+PATH=$PATH:~/.cabal/bin
+
+/usr/bin/setxkbmap -option "ctrl:nocaps" # replace caps with control
+alias sz='du -sh *(/)'                   # list ordner size
+alias '..'='cd ..'                       # shorten cd commands
+alias -g ...='../..'
+alias -g ....='../../..'
+alias -g .....='../../../..'
+alias pacup='sudo pacman -Syu'           # shorten system upgrade
+alias pacin='sudo pacman -S'             # shorten package install
+
+# define a netctl switch if autostart hangs
+netstart() {
+  emulate -L zsh
+  sudo systemctl stop netctl-auto@wlp7s0.service
+  sudo netctl switch-to $1
+}
+
+# pull haskell skeleton repo
+hskel() {
+  emulate -L zsh
+  hi $1 --repository git://github.com/tfausak/haskeleton.git
+}
+
+# manage cups
+cups() {
+  emulate -L zsh
+  sudo systemctl $1 org.cups.cupsd.service
+}
