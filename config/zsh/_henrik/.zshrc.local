@@ -1,13 +1,16 @@
 PATH=$PATH:~/.cabal/bin
 
-/usr/bin/setxkbmap -option "ctrl:nocaps" # replace caps with control
-alias sz='du -sh *(/)'                   # list ordner size
-alias '..'='cd ..'                       # shorten cd commands
+/usr/bin/setxkbmap -option "ctrl:nocaps"        # replace caps with control
+alias sz='du -sh *(/)'                          # list ordner size
+alias '..'='cd ..'                              # shorten cd commands
 alias -g ...='../..'
 alias -g ....='../../..'
 alias -g .....='../../../..'
-alias pacup='sudo pacman -Syu'           # shorten system upgrade
-alias pacin='sudo pacman -S'             # shorten package install
+alias pacup='sudo pacman -Syu'                  # shorten system upgrade
+alias pacin='sudo pacman -S'                    # shorten package install
+alias pacs='sudo pacman -Ss'                    # shorten package search
+alias pacr='sudo pacman -Rs'                    # shorten package remove
+alias pacar='sudo pacman -Rs $(pacman -Qqddt)'  # shorten autoremove
 
 # define a netctl switch if autostart hangs
 netstart() {
