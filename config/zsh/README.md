@@ -1,6 +1,7 @@
 # ZSH
 
 ## _henrik
-Main configuration is from [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) .
+Main configuration is from [grml](https://grml.org/zsh/).
+I just added some aliases and functions I need on a daily basis.
 
 ## _phill
